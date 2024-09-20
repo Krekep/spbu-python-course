@@ -55,3 +55,11 @@ jobs:
       - name: Run pre-commit
         run: |
           pre-commit run --all-files --color always --verbose --show-diff-on-failure
+
+      - name: Run pytest
+        run: |
+          pytest
+
+      - name: Run mypy
+        run: |
+          mypy .
