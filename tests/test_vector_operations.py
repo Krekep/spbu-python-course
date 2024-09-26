@@ -1,6 +1,6 @@
 import math
 import pytest
-from project.vectors_and_matrices import (
+from project.vector_operations import (
     scalar_product,
     vector_length,
     angle_between_vectors,
