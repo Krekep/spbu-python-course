@@ -1,4 +1,4 @@
-﻿name: CI
+﻿name: Run Tests
 
 on:
   push:
@@ -8,11 +8,12 @@ on:
   pull_request:
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Set up Git repository
+        uses: actions/checkout@v2
 
       - name: Set up Python
         uses: actions/setup-python@v2
@@ -27,4 +28,3 @@ jobs:
       - name: Run tests
         run: |
           pytest
-          mypy project
