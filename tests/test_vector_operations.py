@@ -7,14 +7,14 @@ from project.vector_operations import (
 )
 
 
-def test_dot_product():
+def test_scalar_product():
     v1 = [2, 3, 4]
     v2 = [5, 6, 7]
     assert scalar_product(v1, v2) == 56
 
 
 def test_vector_length():
-    v = [6, 8]
+    v = [-6, 8]
     assert math.isclose(vector_length(v), 10.0)
 
 
