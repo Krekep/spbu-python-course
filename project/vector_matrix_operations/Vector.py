@@ -1,6 +1,5 @@
 import numpy as np
-from math import acos
-from collections.abc import Sequence
+from math import acos, sqrt
 
 
 class Vector:
@@ -14,6 +13,9 @@ class Vector:
 
     Methods:
     -------
+    __array__()
+        Allows the Vector object to be treated as a NumPy array directly.
+
     __getitem__(index: int) -> float
         Returns the element at the specified index.
 
@@ -26,7 +28,7 @@ class Vector:
     __xor__(other: "Vector") -> float
         Returns the angle (in radians) between the current vector and another vector.
 
-    norm(ord: int = 2) -> float
+    norm() -> float
         Returns the norm (magnitude) of the vector.
     """
 
@@ -41,6 +43,17 @@ class Vector:
         """
 
         self.vector = np.array(object=object)
+
+    def __array__(self):
+        """
+        Allows the Vector object to be treated as a NumPy array directly.
+
+        Returns:
+        -------
+        np.ndarray
+            The Vector object as a NumPy array.
+        """
+        return self.vector
 
     def __getitem__(self, index: int) -> float:
         """
@@ -84,9 +97,17 @@ class Vector:
         -------
         float
             The dot product of the two vectors.
+
+        Raises:
+        ------
+        ValueError
+            If vectors are not of the same length.
         """
 
-        return np.dot(self.vector, other.vector)
+        if len(self.vector) != len(other.vector):
+            raise ValueError("Vectors must be of the same length.")
+
+        return sum([x * y for x, y in zip(self.vector, other.vector)])
 
     def __xor__(self, other: "Vector") -> float:
         """
@@ -105,23 +126,23 @@ class Vector:
 
         Raises:
         ------
+        ValueError
+            If vectors are not of the same length.
+
         ZeroDivisionError
             If one of the vectors has zero magnitude.
         """
+        if len(self.vector) != len(other.vector):
+            raise ValueError("Vectors must be of the same length.")
 
         if (self.norm() * other.norm()) == 0:
-            raise ZeroDivisionError
+            raise ZeroDivisionError("None of the vectors must have a zero magnitude")
 
-        return acos(np.dot(self.vector, other.vector) / (self.norm() * other.norm()))
+        return acos((self * other) / (self.norm() * other.norm()))
 
-    def norm(self, ord: int = 2) -> float:
+    def norm(self) -> float:
         """
         Calculates and returns the norm (magnitude) of the vector. By default, this is the Euclidean norm (L2 norm).
-
-        Parameters:
-        ----------
-        ord : int, optional
-            The order of the norm (default is 2, which is the Euclidean norm).
 
         Returns:
         -------
@@ -129,84 +150,4 @@ class Vector:
             The norm (magnitude) of the vector.
         """
 
-        return float(np.linalg.norm(self.vector, ord=ord))
-
-
-class Matrix:
-    """
-    A class to represent a mathematical matrix and provide basic matrix operations.
-
-    Attributes:
-    ----------
-    matrix : np.ndarray
-        The 2D array representing the matrix.
-
-    Methods:
-    -------
-    __add__(other: "Matrix") -> "Matrix"
-        Returns the result of matrix addition with another matrix.
-
-    __matmul__(other: "Matrix") -> "Matrix"
-        Returns the result of matrix multiplication with another matrix.
-
-    T() -> "Matrix"
-        Returns the transpose of the matrix.
-    """
-
-    def __init__(self, object):
-        """
-        Initializes the Matrix object with the given elements.
-
-        Parameters:
-        ----------
-        object : iterable
-            A 2D iterable (list of lists or array-like) to form the matrix.
-        """
-
-        self.matrix = np.array(object)  # Changed to np.array
-
-    def __add__(self, other: "Matrix") -> "Matrix":
-        """
-        Adds the current matrix to another matrix.
-
-        Parameters:
-        ----------
-        other : Matrix
-            The matrix to be added.
-
-        Returns:
-        -------
-        Matrix
-            The resulting matrix after addition.
-        """
-
-        return Matrix(self.matrix + other.matrix)
-
-    def __matmul__(self, other: "Matrix") -> "Matrix":
-        """
-        Multiplies the current matrix with another matrix.
-
-        Parameters:
-        ----------
-        other : Matrix
-            The matrix to multiply with.
-
-        Returns:
-        -------
-        Matrix
-            The resulting matrix after multiplication.
-        """
-
-        return Matrix(np.matmul(self.matrix, other.matrix))  # Changed to np.matmul
-
-    def T(self) -> "Matrix":
-        """
-        Returns the transpose of the current matrix.
-
-        Returns:
-        -------
-        Matrix
-            The transposed matrix.
-        """
-
-        return Matrix(self.matrix.T)
+        return sqrt(self * self)
