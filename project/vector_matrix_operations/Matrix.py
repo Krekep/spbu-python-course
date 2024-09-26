@@ -12,16 +12,16 @@ class Matrix:
 
     Methods:
     -------
-    __array__(self)
+    __array__()
         Allows the Matrix object to be treated as a NumPy array directly.
 
-    __repr__(self) -> str
+    __repr__() -> str
         Provides a detailed string representation of the Matrix object for debugging.
 
-    __str__(self) -> str
+    __str__() -> str
         Provides a clean, user-friendly string representation of the Matrix.
 
-    __getitem__(self, indices: tuple) -> float
+    __getitem__(indices: tuple) -> float
         Allows access to matrix elements using mat[i, j].
 
     __add__(other: "Matrix") -> "Matrix"
