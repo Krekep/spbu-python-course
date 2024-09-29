@@ -1,24 +1,33 @@
 import math
-from typing import Tuple
+from typing import List
 
 
-def scalar_product(len_a: float, len_b: float, angle: float) -> float:
-    """Возвращает скалярное произведение векторов через длины и угол между ними."""
-    return abs(len_a) * abs(len_b) * math.cos(math.radians(angle))
+def scalar_product(v1: List[float], v2: List[float]) -> float:
+    if len(v1) != len(v2):
+        raise ValueError("Векторы должны быть одинаковой длины.")
+    if not v1 or not v2:
+        raise ValueError("Векторы не могут быть пустыми.")
+    if not all(isinstance(x, (int, float)) for x in v1):
+        raise TypeError("Все элементы вектора v1 должны быть числами.")
+    if not all(isinstance(x, (int, float)) for x in v2):
+        raise TypeError("Все элементы вектора v2 должны быть числами.")
+
+    return sum(x * y for x, y in zip(v1, v2))
 
 
-def length_vec(A: Tuple[float, float, float], B: Tuple[float, float, float]) -> float:
-    """Вычисляет длину вектора между двумя точками A и B."""
-    return math.sqrt((B[0] - A[0]) ** 2 + (B[1] - A[1]) ** 2 + (B[2] - A[2]) ** 2)
+def vector_length(v: List[float]) -> float:
+    if not v:
+        raise ValueError("Вектор не должен быть пустым.")
+    if not all(isinstance(x, (int, float)) for x in v):
+        raise TypeError("Все элементы вектора должны быть числами.")
+
+    return math.sqrt(sum(x**2 for x in v))
 
 
-def cos_AB(A: Tuple[float, float, float], B: Tuple[float, float, float]) -> float:
-    """Вычисляет косинус угла между векторами A и B."""
-    dot_product = (A[0] * B[0]) + (A[1] * B[1]) + (A[2] * B[2])
-    magnitude_A = math.sqrt(A[0] ** 2 + A[1] ** 2 + A[2] ** 2)
-    magnitude_B = math.sqrt(B[0] ** 2 + B[1] ** 2 + B[2] ** 2)
-
-    if magnitude_A == 0 or magnitude_B == 0:
-        raise ValueError("Длина одного из векторов равна нулю, невозможно вычислить косинус угла")
-
-    return dot_product / (magnitude_A * magnitude_B)
+def angle_between_vectors(v1: List[float], v2: List[float]) -> float:
+    prod = scalar_product(v1, v2)
+    len_v1 = vector_length(v1)
+    len_v2 = vector_length(v2)
+    if len_v1 == 0 or len_v2 == 0:
+        raise ValueError("Длина вектора не может быть нулевой.")
+    return math.acos(prod / (len_v1 * len_v2))
