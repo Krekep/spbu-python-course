@@ -1,64 +1,41 @@
-from typing import List, Optional
+from typing import List
 
 
-def get_row_matrix(matrix: Optional[List[List[int]]]) -> int:
-    """Возвращает количество строк в матрице."""
-    if matrix is None or not matrix:
-        raise ValueError("Матрица пуста или None")
-    return len(matrix)
+def matrix_addition(m1: List[List[float]], m2: List[List[float]]) -> List[List[float]]:
+    if not m1 or not m2:
+        raise ValueError("Матрицы не должны быть пустыми.")
+    if len(m1) != len(m2) or any(len(row1) != len(row2) for row1, row2 in zip(m1, m2)):
+        raise ValueError("Матрицы должны иметь одинаковые размеры для сложения.")
+    if any(len(row) != len(m1[0]) for row in m1) or any(
+        len(row) != len(m2[0]) for row in m2
+    ):
+        raise ValueError("Все строки матрицы должны иметь одинаковую длину.")
+    return [[x + y for x, y in zip(row1, row2)] for row1, row2 in zip(m1, m2)]
 
 
-def get_cols_matrix(matrix: Optional[List[List[int]]]) -> int:
-    """Возвращает количество столбцов в матрице."""
-    rows = get_row_matrix(matrix)
-    return len(matrix[0]) if rows > 0 else 0
-
-
-def sum_matrix(A: Optional[List[List[int]]], B: Optional[List[List[int]]]) -> List[List[int]]:
-    """Сложение двух матриц."""
-    row_a = get_row_matrix(A)
-    cols_a = get_cols_matrix(A)
-
-    row_b = get_row_matrix(B)
-    cols_b = get_cols_matrix(B)
-
-    if row_a != row_b or cols_a != cols_b:
-        raise ValueError("Размеры матриц не совпадают")
-
-    result = [[A[i][j] + B[i][j] for j in range(cols_a)] for i in range(row_a)]
+def matrix_multiplication(
+    m1: List[List[float]], m2: List[List[float]]
+) -> List[List[float]]:
+    if any(len(row) != len(m1[0]) for row in m1) or any(
+        len(row) != len(m2[0]) for row in m2
+    ):
+        raise ValueError("Все строки матрицы должны иметь одинаковую длину.")
+    if not m1 or not m2 or len(m1[0]) != len(m2):
+        raise ValueError(
+            "Невозможно выполнить умножение матриц: несоответствие размеров."
+        )
+    result = []
+    for row in m1:
+        new_row = []
+        for col in zip(*m2):
+            new_row.append(sum(x * y for x, y in zip(row, col)))
+        result.append(new_row)
     return result
 
 
-def product_matrix(A: Optional[List[List[int]]], B: Optional[List[List[int]]]) -> List[List[int]]:
-    """Умножение двух матриц."""
-    row_a = get_row_matrix(A)
-    cols_a = get_cols_matrix(A)
-
-    row_b = get_row_matrix(B)
-    cols_b = get_cols_matrix(B)
-
-    if cols_a != row_b:
-        raise ValueError("Число столбцов первой матрицы должно быть равно числу строк второй матрицы")
-
-    result = [[0 for _ in range(cols_b)] for _ in range(row_a)]
-
-    for i in range(row_a):
-        for j in range(cols_b):
-            for k in range(cols_a):
-                result[i][j] += A[i][k] * B[k][j]
-
-    return result
-
-
-def transpose_matrix(matrix: Optional[List[List[int]]]) -> List[List[int]]:
-    """Транспонирование матрицы."""
-    rows = get_row_matrix(matrix)
-    cols = get_cols_matrix(matrix)
-
-    result = [[0 for _ in range(rows)] for _ in range(cols)]
-
-    for i in range(rows):
-        for j in range(cols):
-            result[j][i] = matrix[i][j]
-
-    return result
+def transpose_matrix(m: List[List[float]]) -> List[List[float]]:
+    if not m:
+        raise ValueError("Матрица не должна быть пустой.")
+    if any(len(row) != len(m[0]) for row in m):
+        raise ValueError("Все строки матрицы должны иметь одинаковую длину.")
+    return [list(col) for col in zip(*m)]
