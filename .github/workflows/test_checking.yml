@@ -1,4 +1,4 @@
-﻿name: Test checking
+name: Test checking
 
 on:
   push:
@@ -26,5 +26,8 @@ jobs:
           pip install pytest mypy
 
       - name: Run tests
+        env:
+          PYTHONPATH: ${{ github.workspace }} 
         run: |
           pytest
+
