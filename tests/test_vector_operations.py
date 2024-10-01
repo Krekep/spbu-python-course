@@ -6,7 +6,9 @@ from project.vector_operations import scalar_product, length_vec, cos_ab
 def test_scalar_product():
     vector_a = (5, 0, 0)  # Пример вектора
     vector_b = (10 * math.cos(math.radians(30)), 10 * math.sin(math.radians(30)), 0)
-    expected = scalar_product(vector_a, vector_b)  # Используем функцию для получения ожидаемого значения
+    expected = scalar_product(
+        vector_a, vector_b
+    )  # Используем функцию для получения ожидаемого значения
     assert scalar_product(vector_a, vector_b) == pytest.approx(expected, rel=1e-5)
 
 
