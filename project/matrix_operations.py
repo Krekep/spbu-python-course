@@ -21,7 +21,7 @@ def get_row_matrix(matrix: Optional[List[List[int]]]) -> int:
         If the matrix is None or empty.
     """
     if matrix is None or not matrix:
-        raise ValueError("The matrix is empty or None")
+        raise ValueError("Matrix is empty or None")
     return len(matrix)
 
 
@@ -45,7 +45,7 @@ def get_cols_matrix(matrix: Optional[List[List[int]]]) -> int:
         If the matrix is None or empty.
     """
     if matrix is None or not matrix:
-        raise ValueError("The matrix is empty or None")
+        raise ValueError("Matrix is empty or None")
     rows = get_row_matrix(matrix)
     return len(matrix[0]) if rows > 0 else 0
 
@@ -83,7 +83,7 @@ def sum_matrix(
     cols_b = get_cols_matrix(b)
 
     if row_a != row_b or cols_a != cols_b:
-        raise ValueError("Matrix dimensions do not match")
+        raise ValueError("Matrix sizes do not match")
 
     result = [[a[i][j] + b[i][j] for j in range(cols_a)] for i in range(row_a)]
     return result
