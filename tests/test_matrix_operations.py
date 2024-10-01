@@ -28,7 +28,7 @@ def test_get_row_matrix():
 def test_get_cols_matrix():
     """
     Tests the function get_cols_matrix to ensure it returns the correct number of columns.
-    
+
     Parameters
     ----------
     None
