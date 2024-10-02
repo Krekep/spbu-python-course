@@ -53,6 +53,22 @@ def test_matrix_multiplication():
     assert np.array_equal(result, expected), "Matrix multiplication is incorrect"
 
 
+def test_matrix_multiplication_non_square():
+    # Define non-square matrices
+    mat1 = Matrix([[1, 2, 3], [4, 5, 6]])  # 2x3 matrix
+    mat2 = Matrix([[7, 8], [9, 10], [11, 12]])  # 3x2 matrix
+
+    # Perform matrix multiplication
+    result = mat1 @ mat2
+
+    # Expected result after multiplication
+    expected_result = np.array([[58, 64], [139, 154]])
+
+    # Check if result matches the expected matrix
+    assert result.matrix.shape == (2, 2)
+    assert np.array_equal(result.matrix, expected_result)
+
+
 def test_identity_multiplication():
     matrix1 = Matrix([[1, 2], [3, 4]])
     identity = Matrix([[1, 0], [0, 1]])
