@@ -1,5 +1,5 @@
 import pytest
-from project.operation_vector import ( scalar, length, angle)
+from project.operation_vector import scalar, length, angle
 
 def test_scalar():
     assert scalar([1, 6, 9], [-5, 0, 7]) == 58.0

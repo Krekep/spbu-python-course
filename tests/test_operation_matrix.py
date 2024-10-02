@@ -1,5 +1,5 @@
 import pytest
-from project.operation_matrix import ( add, mul, transpose)
+from project.operation_matrix import add, mul, transpose
 
 def test_add():
     A = [[1, 0], [2, 5]]

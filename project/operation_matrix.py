@@ -11,7 +11,7 @@ def add(A: List[List[float]], B: List[List[float]]) -> List[List[float]]:
             res[i][j] = A[i][j] + B[i][j]
     return res
 
-def mul( A: List[List[float]], B: List[List[float]]) -> List[List[float]]:
+def mul(A: List[List[float]], B: List[List[float]]) -> List[List[float]]:
     
     if len(A[0]) != len(B):
         raise ValueError("!Matrices cannot be multiplied!")
@@ -32,4 +32,5 @@ def transpose(A: List[List[float]]) -> List[List[float]]:
     for i in range(len(A[0])):
         for j in range(len(A)):
             res[i][j] = A[j][i]
+
     return res
