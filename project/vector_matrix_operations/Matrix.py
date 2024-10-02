@@ -41,7 +41,7 @@ class Matrix:
 
         Parameters:
         ----------
-        object : iterable
+        object : Iterable[Iterable[float | int]]
             A 2D iterable (list of lists or array-like) to form the matrix.
         """
 

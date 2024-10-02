@@ -39,7 +39,7 @@ class Vector:
 
         Parameters:
         ----------
-        object : iterable
+        object : Iterable[float | int]
             An iterable of numbers to form the vector.
         """
 
