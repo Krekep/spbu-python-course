@@ -1,5 +1,6 @@
 import numpy as np
 from math import acos, sqrt
+from typing import Iterable
 
 
 class Vector:
@@ -32,7 +33,7 @@ class Vector:
         Returns the norm (magnitude) of the vector.
     """
 
-    def __init__(self, object):
+    def __init__(self, object: Iterable[float | int]):
         """
         Initializes the Vector object with the given elements.
 

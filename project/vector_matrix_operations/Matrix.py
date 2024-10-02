@@ -1,4 +1,5 @@
 import numpy as np
+from typing import Iterable
 
 
 class Matrix:
@@ -34,7 +35,7 @@ class Matrix:
         Returns the transpose of the matrix.
     """
 
-    def __init__(self, object):
+    def __init__(self, object: Iterable[Iterable[float | int]]):
         """
         Initializes the Matrix object with the given elements.
 
