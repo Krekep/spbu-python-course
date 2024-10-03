@@ -6,16 +6,14 @@ class Vector:
 
     def __str__(self):
         return f"Vector: {self.component}"
-
         
     def dot(self, other):
         if len(self.component) != len(other.component):
             raise ValueError("vectors must have the same number of component")
         return sum(a * b for a, b in zip(self.component, other.component))
     
-
     def length(self):
-        return math.sqrt(sum(x ** 2 for x in self.component))
+        return math.sqrt(sum(x**2 for x in self.component))
     
     def angle(self, other):
         dot_product = self.dot(other)
@@ -33,4 +31,3 @@ class Vector:
         angle_degree = math.degrees(math.acos(cosine_angle))
 
         return angle_degree
-    
