@@ -32,12 +32,13 @@ def matrix_multiply(mat1:list[list[float]], mat2:list[list[float]]) -> list[list
     """
     res: list[list[float]] = []
     for i in range(len(mat1)):
+        row: list = []
         for j in range(len(mat2[0])):
             temp: int = 0
             for n in range(len(mat1[0])):
                 temp += mat1[i][n] * mat2[n][j]
-            res.append(temp)
-
+            row.append(temp)
+        res.append(row)
     return res
 
 def matrix_transpose(mat:list[list[float]]) -> list[list[float]]:
