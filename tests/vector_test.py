@@ -4,7 +4,7 @@ from project.vector_operations import vector_multiply, vector_length, vector_ang
 def test_vector_multiply():
     v1 = [1, 2, 3, 4]
     v2 = [5, 5, 5, 5]
-    assert vector_multiply(v1, v2) == 30
+    assert vector_multiply(v1, v2) == 50
 
     v1 = [95, 100, 4, 1]
     v2 = [0, 0, 0, 0]
