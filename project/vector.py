@@ -1,5 +1,6 @@
 import math
 
+
 class Vector:
     def __init__(self, *component):
         self.component = component
