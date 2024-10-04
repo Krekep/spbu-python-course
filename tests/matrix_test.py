@@ -31,6 +31,6 @@ def test_multiply_invalid_dimensions():
     m2 = Matrix([[5, 6, 3]])
     with pytest.raises(
         ValueError, 
-        match="Number of columns in the first matrix must be equal to the number of rows in the second matrix."
+        match="Number of columns in the first matrix must be equal to the number of rows in the second matrix"
     ):
         m1.multiply(m2)
