@@ -42,3 +42,4 @@ def test_invalid_dot(vector1):
     vector3 = Vector(1, 2)
     with pytest.raises(ValueError):
         vector1.dot(vector3)
+        
