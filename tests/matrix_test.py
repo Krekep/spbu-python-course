@@ -21,11 +21,16 @@ def test_matrix_transpose():
 def test_add_invalid_dimensions():
     m1 = Matrix([[1, 2], [3, 4]])
     m2 = Matrix([[5, 6, 7], [8, 9, 10]])
-    with pytest.raises(ValueError, match="Matrices must have the same dimensions for addition"):
+    with pytest.raises(
+        ValueError, match="Matrices must have the same dimensions for addition"
+    ):
         m1.add(m2)
 
 def test_multiply_invalid_dimensions():
     m1 = Matrix([[1, 2], [3, 4]])
     m2 = Matrix([[5, 6, 3]])
-    with pytest.raises(ValueError, match="Number of columns in the first matrix must be equal to the number of rows in the second matrix."):
+    with pytest.raises(
+        ValueError, 
+        match="Number of columns in the first matrix must be equal to the number of rows in the second matrix."
+    ):
         m1.multiply(m2)
