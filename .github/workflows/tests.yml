@@ -2,12 +2,7 @@ name: Run Tests
 
 # Triggers the workflow on push or pull request events
 on:
-  push:
-    branches:
-      - main  # Change this to the branch you want to trigger on
-  pull_request:
-    branches:
-      - main  # This will trigger the workflow for pull requests targeting the main branch
+[ push, pull_request ]
 
 jobs:
   test:
@@ -22,7 +17,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.8'  # Specify the version of Python you want to use
+        python-version: '3.12'  # Specify the version of Python you want to use
 
     # Install dependencies
     - name: Install dependencies
@@ -32,6 +27,6 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
     # Run tests
-    - name: Run pytest
+    - name: Run tests
       run: |
-        pytest
+        python -m pytest tests/
