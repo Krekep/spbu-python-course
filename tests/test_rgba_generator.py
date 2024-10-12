@@ -32,17 +32,17 @@ def test_get_rgba_element(i, expected):
     [
         (
             -1,
-            "Error: index must be greater than 0. The numbering of elements in a set of vectors starts from 1.",
+            "Error: i must be greater than 0. The numbering of elements in a set of vectors starts from 1.",
         ),
         (
             0,
-            "Error: index must be greater than 0. The numbering of elements in a set of vectors starts from 1.",
+            "Error: i must be greater than 0. The numbering of elements in a set of vectors starts from 1.",
         ),
         (
             256**3 * 51 + 1,
-            "Error: index must be within the number of possible vectors.",
+            "Error: i must be within the number of possible vectors.",
         ),
-        ("a", "Error: k must be an integer."),
+        ("a", "Error: i must be an integer."),
     ],
 )
 def test_get_rgba_element_errors(i, expected_error):
