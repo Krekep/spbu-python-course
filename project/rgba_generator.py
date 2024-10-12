@@ -10,6 +10,8 @@ def rgba_generator():
 
 
 def get_rgba_element(i):
+    if not isinstance(i, int):
+        return "Error: k must be an integer."
     if i <= 0:
         return "Error: index must be greater than 0. The numbering of elements in a set of vectors starts from 1."
     max_elements = 256 * 256 * 256 * 51

@@ -42,6 +42,7 @@ def test_get_rgba_element(i, expected):
             256**3 * 51 + 1,
             "Error: index must be within the number of possible vectors.",
         ),
+        ("a", "Error: k must be an integer."),
     ],
 )
 def test_get_rgba_element_errors(i, expected_error):
