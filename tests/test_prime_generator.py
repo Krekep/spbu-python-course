@@ -1,5 +1,5 @@
 import pytest
-from project.prime_generator import prime_generator, get_k
+from project.prime_generator import prime_generator, prime_generator_decorated
 
 
 @pytest.mark.parametrize("expected_primes", [[2, 3, 5, 7, 11, 13, 17, 19, 23, 29]])
@@ -20,11 +20,7 @@ def test_prime_generator(expected_primes):
     ],
 )
 def test_k_prime(k, expected):
-    @get_k(k)
-    def generate_k_prime():
-        return prime_generator()
-
-    assert generate_k_prime() == expected
+    assert prime_generator_decorated(k) == expected
 
 
 @pytest.mark.parametrize(
@@ -36,4 +32,4 @@ def test_k_prime(k, expected):
     ],
 )
 def test_invalid_k(k, expected_error):
-    assert get_k(k) == expected_error
+    assert prime_generator_decorated(k) == expected_error
