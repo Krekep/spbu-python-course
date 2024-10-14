@@ -1,24 +1,30 @@
-name: Test Suite
+name: Test checking
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - main
+      - task2
+  pull_request:
 
 jobs:
   test:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - name: Set up Git repository
+        uses: actions/checkout@v3
 
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v3
         with:
-          python-version: '3.9'  # Specify your Python version here
+          python-version: '3.12.6'
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install pytest
+          pip install pytest mypy
 
       - name: Run tests
         run: |
-          pytest  # Adjust the command if you have a specific test file
+          pytest
