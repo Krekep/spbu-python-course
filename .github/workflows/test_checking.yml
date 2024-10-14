@@ -22,4 +22,3 @@ jobs:
       - name: Run tests
         run: |
           pytest  # Adjust the command if you have a specific test file
-
