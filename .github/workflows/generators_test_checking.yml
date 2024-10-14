@@ -1,11 +1,7 @@
 name: Test checking
 
 on:
-  push:
-    branches:
-      - main
-      - Generators
-  pull_request:
+  [ push, pull_request ]
 
 jobs:
   test:
