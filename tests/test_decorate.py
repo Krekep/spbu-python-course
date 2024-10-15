@@ -1,5 +1,11 @@
 import pytest
-from decorate import smart_args, Isolated, Evaluated, check_isolation, check_evaluation
+from project.decorate import (
+    smart_args,
+    Isolated,
+    Evaluated,
+    check_isolation,
+    check_evaluation,
+)
 
 
 def test_check_isolation():
