@@ -25,6 +25,12 @@ def test_uncurry_multiple_arguments():
     assert uncurried(2, 3, 4) == 24
 
 
+def test_curry_multiple_at_once_arguments():
+    f = curry_explicit(lambda x, y: x + y, 2)
+    with pytest.raises(TypeError):
+        assert f(5, 6) == 11
+
+
 def test_curry_arity_mismatch():
     f = curry_explicit(lambda x, y: x + y, 2)
     with pytest.raises(TypeError):

@@ -31,8 +31,15 @@ def curry_explicit(function: Callable, arity: int) -> Callable:
     if arity == 0:
         return function
 
+    numargs = 0
+
     @wraps(function)
     def curried(*args):
+        nonlocal numargs
+        if numargs != len(args) - 1:
+            raise TypeError(f"Expected 1 argument")
+        numargs += 1
+
         if len(args) == arity:
             return function(*args)
         if len(args) < arity:
