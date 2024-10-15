@@ -2,15 +2,21 @@ import pytest
 from project.rgba_generator import rgba_generator, get_rgba_element
 
 
-def test_rgba_generator():
+@pytest.mark.parametrize(
+    "expected_rgba, index",
+    [
+        ((0, 0, 0, 0), 0),
+        ((0, 0, 0, 2), 1),
+        ((0, 0, 0, 4), 2),
+        ((0, 0, 0, 6), 3),
+        ((0, 0, 1, 0), 51),
+    ],
+)
+def test_rgba_generator(expected_rgba, index):
     gen = rgba_generator()
-    assert next(gen) == (0, 0, 0, 0)
-    assert next(gen) == (0, 0, 0, 2)
-    assert next(gen) == (0, 0, 0, 4)
-    assert next(gen) == (0, 0, 0, 6)
-    for _ in range(51 - 4):
+    for _ in range(index):
         next(gen)
-    assert next(gen) == (0, 0, 1, 0)
+    assert next(gen) == expected_rgba
 
 
 @pytest.mark.parametrize(

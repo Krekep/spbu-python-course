@@ -2,11 +2,14 @@ import itertools
 
 
 def rgba_generator():
-    for r in range(256):
-        for g in range(256):
-            for b in range(256):
-                for a in range(0, 101, 2):
-                    yield r, g, b, a
+    return (
+        (r, g, b, a)
+        for r in range(256)
+        for g in range(256)
+        for b in range(256)
+        for a in range(101)
+        if a % 2 == 0
+    )
 
 
 def get_rgba_element(i):
