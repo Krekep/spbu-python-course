@@ -1,11 +1,6 @@
 name: Type checking
 
-on:
-  push:
-    branches:
-      - main
-      - task2
-  pull_request:
+on: [push, pull_request]
 
 jobs:
   type_check:
