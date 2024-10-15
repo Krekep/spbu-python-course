@@ -1,11 +1,6 @@
 name: Test checking
 
-on:
-  push:
-    branches:
-      - main
-      - task2
-  pull_request:
+on: [push, pull_request]  # Срабатывает на push и pull_request
 
 jobs:
   test:
