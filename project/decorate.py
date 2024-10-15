@@ -75,7 +75,7 @@ def smart_args(func):
                 default_values[param_name] = kwargs[param_name]
             elif param.default != inspect.Parameter.empty:
                 # Check if default argument is Evaluated or Isolated
-                if isinstance(param.default, Evaluated):
+                if param.default is Evaluated:  # Changed this line
                     default_values[param_name] = Evaluated(param.default.func)
                 elif param.default == Isolated():
                     default_values[param_name] = None  # Set default to None
