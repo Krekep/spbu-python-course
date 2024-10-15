@@ -131,6 +131,6 @@ def check_evaluation(*, x=get_random_number(), y=Evaluated(get_random_number)):
                            the Evaluated marker. Can be manually overridden.
 
     Returns:
-        None
+        tuple: A tuple containing the values of x and y.
     """
-    print(x, y)
+    return x, y  # Возвращаем значения x и y
