@@ -71,3 +71,6 @@ def test_cache_with_kwargs():
 
     div(x=2, y=10)
     assert get_call_counter() == 2
+
+    div(y=2, x=10)
+    assert get_call_counter() == 2
