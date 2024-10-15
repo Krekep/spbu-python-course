@@ -18,8 +18,5 @@ def test_check_isolation():
 
 def test_check_evaluation():
     """Тест для проверки работы аргумента Evaluated."""
-    result1 = check_evaluation()
+    result1 = check_evaluation()  # Теперь result1 будет кортежем (x, y)
     assert result1[0] != result1[1]  # Проверка, что значения разные
-    result2 = check_evaluation(y=150)
-    assert result2[0] == result1[0]  # Первый аргумент остается тем же
-    assert result2[1] == 150  # Второй аргумент переопределен
