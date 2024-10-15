@@ -64,3 +64,11 @@ def test_uncurry_arity_zero():
     f = curry_explicit(lambda: "world", 0)
     uncurried = uncurry_explicit(f, 0)
     assert uncurried() == "world"
+
+
+def test_with_builtin_function():
+    # Test with a built-in function: pow(base, exp)
+    curried_pow = curry_explicit(pow, 2)
+    assert curried_pow(2)(3) == 8
+    with pytest.raises(TypeError):
+        curried_pow(2)(3)(4)  # Should raise TypeError because arity is 2

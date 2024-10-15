@@ -1,8 +1,9 @@
 from functools import wraps
 from collections import OrderedDict
+from typing import Callable
 
 
-def cache_results(max_cache_size=0):
+def cache_results(max_cache_size: int = 0):
     """
     Decorator for caching function results. Supports both positional and keyword arguments.
 
@@ -17,8 +18,8 @@ def cache_results(max_cache_size=0):
         The decorated function with caching enabled.
     """
 
-    def decorator(function):
-        cache = OrderedDict()
+    def decorator(function: Callable) -> Callable:
+        cache: OrderedDict = OrderedDict()
 
         @wraps(function)
         def wrapper(*args, **kwargs):
