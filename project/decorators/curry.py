@@ -28,14 +28,16 @@ def curry_explicit(function: Callable, arity: int) -> Callable:
     """
     if arity < 0:
         raise ValueError("Arity cannot be negative")
+    if arity == 0:
+        return function
 
     @wraps(function)
     def curried(*args):
-        if len(args) > arity:
-            raise TypeError(f"Expected {arity} arguments, but got {len(args)}")
         if len(args) == arity:
             return function(*args)
-        return lambda *more_args: curried(*(args + more_args))
+        if len(args) < arity:
+            return lambda arg: curried(*(args + (arg,)))
+        raise TypeError(f"Expected exactly {arity} arguments, but got {len(args)}")
 
     return curried
 
