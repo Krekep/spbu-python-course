@@ -2,7 +2,7 @@ from functools import wraps
 from typing import Callable
 
 
-def curry_explicit(function: Callable, arity: int):
+def curry_explicit(function: Callable, arity: int) -> Callable:
     """
     Curries a function with a specified arity.
 
@@ -40,7 +40,7 @@ def curry_explicit(function: Callable, arity: int):
     return curried
 
 
-def uncurry_explicit(function: Callable, arity: int):
+def uncurry_explicit(function: Callable, arity: int) -> Callable:
     """
     Uncurries a curried function with a specified arity.
 
