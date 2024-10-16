@@ -1,5 +1,5 @@
 import pytest
-from project.operation_vector import scalar, length, angle
+from project.operation_matrix_vector.operation_vector import scalar, length, angle
 from math import isclose, pi
 
 
