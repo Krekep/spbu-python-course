@@ -31,7 +31,7 @@ def curry_explicit(function: Callable, arity: int) -> Callable:
     if arity == 0:
         return function
 
-    numargs = 0
+    numargs: int = 0
 
     @wraps(function)
     def curried(*args):
