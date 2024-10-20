@@ -2,33 +2,30 @@ import pytest
 from project.generators.primes import get_k_prime, prime_generator
 
 
-@pytest.fixture
-def prime_gen():
-    return prime_generator()
-
-
 @pytest.mark.parametrize(
     "k, expected",
-    [(1, 2), (2, 3), (3, 5), (4, 7), (5, 11), (6, 13), (10, 29), (100, 541)],
+    [(1, [2, 3]), (3, [5, 7]), (10, [29, 31])],
 )
 def test_get_k_prime_valid_k(k, expected):
     decorated_gen = get_k_prime(prime_generator)
-    assert decorated_gen(k) == expected
+    for exp in expected:
+        assert decorated_gen(k) == exp
+        k += 1
 
 
-def test_get_k_prime_invalid_k():
+@pytest.mark.parametrize("k", [-1, 0])
+def test_get_k_prime_invalid_k(k):
     decorated_gen = get_k_prime(prime_generator)
     with pytest.raises(AssertionError):
-        decorated_gen(0)  # k is less than or equal to 0
-    with pytest.raises(AssertionError):
-        decorated_gen(-1)  # k is less than or equal to 0
+        decorated_gen(k)
 
 
-def test_prime_generator_first_primes(prime_gen):
+def test_prime_generator_first_primes():
     """Test if the first few prime numbers are generated correctly."""
-    assert next(prime_gen) == 2
-    assert next(prime_gen) == 3
-    assert next(prime_gen) == 5
-    assert next(prime_gen) == 7
-    assert next(prime_gen) == 11
-    assert next(prime_gen) == 13
+    gen = prime_generator()
+    assert next(gen) == 2
+    assert next(gen) == 3
+    assert next(gen) == 5
+    assert next(gen) == 7
+    assert next(gen) == 11
+    assert next(gen) == 13
