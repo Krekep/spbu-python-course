@@ -8,21 +8,16 @@ def prime_generator() -> Generator[int, None, None]:
     Yields:
         int: The next prime number in the sequence.
     """
-    primes = [2]
-    i = 2
-    yield 2
-
+    prime = 2
     while True:
-        i += 1
         is_prime = True
-        for prime in primes:
-            if i % prime == 0:
+        for den in range(2, int(prime**0.5) + 1):
+            if prime % den == 0:
                 is_prime = False
                 break
         if is_prime:
-            primes.append(i)
-            yield i
-        i += 1
+            yield prime
+        prime += 1
 
 
 def get_k_prime(k: int) -> int:
