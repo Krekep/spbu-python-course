@@ -14,11 +14,14 @@ def rgba_generator() -> Generator[Tuple[int, int, int, int], None, None]:
     Yields:
         tuple: A tuple representing an RGBA color vector.
     """
-    for r in range(256):
-        for g in range(256):
-            for b in range(256):
-                for a in range(0, 101, 2):
-                    yield (r, g, b, a)
+    return (
+        (r, g, b, a)
+        for r in range(256)
+        for g in range(256)
+        for b in range(256)
+        for a in range(0, 101)
+        if a % 2 == 0
+    )
 
 
 def get_rgba_color(i: int) -> Tuple[int, int, int, int]:
