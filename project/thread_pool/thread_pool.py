@@ -1,6 +1,8 @@
 from threading import Thread
 from queue import Queue
-from typing import List, Callable
+from typing import List, Callable, Set
+from concurrent.futures import ThreadPoolExecutor
+from itertools import product
 
 
 class ThreadPool:
@@ -98,3 +100,19 @@ class ThreadPool:
             self.tasks.put(None)
         for thread in self.threads:
             thread.join()
+
+
+def parallel_cartesian_sum(sets: List[Set[int]]):
+    """
+    Computes the sum of the Cartesian product of multiple sets of integers in parallel.
+
+    Arguments:
+        sets (list of list of int): A list of sets of integers for which the Cartesian product and sum need to be computed.
+
+    Returns:
+        int: The sum of all elements in the Cartesian product of the input sets.
+    """
+    with ThreadPoolExecutor() as executor:
+        cartesian_product = list(product(*sets))
+        result = executor.submit(sum, (sum(t) for t in cartesian_product))
+        return result.result()

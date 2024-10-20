@@ -1,7 +1,7 @@
 import pytest
 import time
 from queue import Queue
-from project.thread_pool.thread_pool import ThreadPool
+from project.thread_pool.thread_pool import ThreadPool, parallel_cartesian_sum
 
 
 def simple_task(results, task_num, delay=0.25):
@@ -54,7 +54,7 @@ def test_enqueue_tasks():
 
     total_time = end_time - start_time
 
-    # Time if concurent: delay * n /  num_threads = 0.4 < 0.5.
+    # Time if concurrent: delay * n /  num_threads = 0.4 < 0.5.
     # Time if sequencial: delay * n = 1.2 > 0.5.
 
     assert (
@@ -69,3 +69,11 @@ def test_enqueue_tasks():
         len(completed_tasks) == n
     ), f"Expected {n} tasks completed, got {len(completed_tasks)}"
     assert all(f"Task {i} completed" in completed_tasks for i in range(n))
+
+
+@pytest.mark.parametrize(
+    "expected_sum, list_of_sets",
+    [(33, [{22}, {11}]), (20, [{1, 2}, {3, 4}]), (84, [{1, 2}, {3, 4}, {5, 6}])],
+)
+def test_cartessian_sum(expected_sum, list_of_sets):
+    assert expected_sum == parallel_cartesian_sum(list_of_sets)
