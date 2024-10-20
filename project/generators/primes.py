@@ -1,4 +1,4 @@
-from typing import Generator
+from typing import Generator, Callable
 
 
 def prime_generator() -> Generator[int, None, None]:
@@ -20,23 +20,36 @@ def prime_generator() -> Generator[int, None, None]:
         prime += 1
 
 
-def get_k_prime(k: int) -> int:
+def get_k_prime(generator: Callable[[], Generator[int, None, None]]) -> Callable:
     """
     Retrieve the k-th prime number.
 
     Parameters:
-        k (int): The index of the prime number to retrieve (1-based).
+        gen: Generator[Any, None, None]
+            Generator for our prime sequence
 
     Returns:
-        int: The k-th prime number.
+        Callable: the function which gives the k-th prime number.
 
     Raises:
         AssertionError: If k is not greater than 0.
     """
-    assert k > 0
+    gen = generator()
+    index = 0
 
-    gen = prime_generator()
-    prime = 0
-    for _ in range(k):
-        prime = next(gen)
-    return prime
+    def inner(k: int) -> int | None:
+        assert k > 0
+        nonlocal gen
+        nonlocal index
+
+        if k <= index:
+            gen = generator()
+            index = 0
+
+        result = None
+        while index != k:
+            result = next(gen)
+            index += 1
+        return result
+
+    return inner

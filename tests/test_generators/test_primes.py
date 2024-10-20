@@ -12,14 +12,16 @@ def prime_gen():
     [(1, 2), (2, 3), (3, 5), (4, 7), (5, 11), (6, 13), (10, 29), (100, 541)],
 )
 def test_get_k_prime_valid_k(k, expected):
-    assert get_k_prime(k) == expected
+    decorated_gen = get_k_prime(prime_generator)
+    assert decorated_gen(k) == expected
 
 
 def test_get_k_prime_invalid_k():
+    decorated_gen = get_k_prime(prime_generator)
     with pytest.raises(AssertionError):
-        get_k_prime(0)  # k is less than or equal to 0
+        decorated_gen(0)  # k is less than or equal to 0
     with pytest.raises(AssertionError):
-        get_k_prime(-1)  # k is less than or equal to 0
+        decorated_gen(-1)  # k is less than or equal to 0
 
 
 def test_prime_generator_first_primes(prime_gen):
