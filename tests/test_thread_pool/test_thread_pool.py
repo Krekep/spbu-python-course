@@ -71,9 +71,11 @@ def test_enqueue_tasks():
     assert all(f"Task {i} completed" in completed_tasks for i in range(n))
 
 
-@pytest.mark.parametrize(
-    "expected_sum, list_of_sets",
-    [(33, [{22}, {11}]), (20, [{1, 2}, {3, 4}]), (84, [{1, 2}, {3, 4}, {5, 6}])],
-)
-def test_cartessian_sum(expected_sum, list_of_sets):
+@pytest.mark.parametrize("expected_sum, list_of_sets", 
+                        [
+                            (33, [{22},{11}]),
+                            (20, [{1,2},{3,4}]),
+                            (84, [{1, 2}, {3, 4}, {5, 6}])
+                        ])
+def test_parallel_cartesian_sum(expected_sum, list_of_sets):
     assert expected_sum == parallel_cartesian_sum(list_of_sets)
