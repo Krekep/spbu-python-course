@@ -38,7 +38,7 @@ class Game:
         self.total_rounds = total_rounds
         self.current_round = 0
         self.results = {f"Bot {i + 1}": 0 for i in range(num_bots)}
-        self.last_winners = []
+        self.last_winners: List[str] = []
 
     def start_game(self) -> None:
         """Starts the game by shuffling the deck and preparing the first round."""
