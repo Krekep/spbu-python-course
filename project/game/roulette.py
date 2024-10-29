@@ -1,5 +1,6 @@
 from typing import List
-from project.game.bot import Bot
+from project.game.players import Bot
+from project.game.table import RouletteTable
 
 
 class RouletteGame:
@@ -8,17 +9,6 @@ class RouletteGame:
         self.bots = bots
         self.step = 0
         self.max_steps = max_steps
-
-    def play_round(self) -> None:
-        for bot in self.bots:
-            bot.play()
-        self.step += 1
-
-    def run_game(self) -> None:
-        while not self.is_game_over():
-            self.play_round()
-            self.display_game_state()
-        self.display_winner()
 
     def is_game_over(self) -> bool:
         if self.step >= self.max_steps:
@@ -34,6 +24,22 @@ class RouletteGame:
             print(f"{bot.name}: Balance = {bot.balance}")
         print()
 
-    def display_winner(self) -> None:
-        winner = max(self.bots, key=lambda bot: bot.balance)
-        print(f"Winner is {winner.name} with balance {winner.balance}")
+    def find_winner(self) -> List[Bot]:
+        max_balance = max(bot.balance for bot in self.bots)
+        return [bot for bot in self.bots if bot.balance == max_balance]
+
+    def run_game(self) -> None:
+        while not self.is_game_over():
+            print(f"Раунд {self.step + 1}:")
+            for bot in self.bots:
+                if bot.balance > 0:
+                    table = RouletteTable()
+                    table.play_game(bot)
+            self.step += 1
+            self.display_game_state()
+        winners = self.find_winner()
+        if winners:
+            winner_names = ", ".join(winner.name for winner in winners)
+            print(f"Winner(s): {winner_names} with balance: {winners[0].balance}")
+        else:
+            print("All the players have lost!")
