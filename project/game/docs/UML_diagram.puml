@@ -1,0 +1,67 @@
+@startuml
+class Croupier {
+    + spin_wheel(): tuple[int, str]
+    + get_color(number: int): str
+}
+
+class Bet {
+    - amount: int
+    - bet_type: str
+    - choice: int | str
+    + __init__(amount: int, bet_type: str, choice: int | str)
+}
+
+abstract class Bot {
+    - name: str
+    - balance: int
+    + __init__(name: str, balance: int)
+    + place_bet(): Optional[Bet]
+    + update_balance(amount: int): None
+    + play(croupier: Croupier): None
+}
+
+class AggressiveStrategy {
+    + place_bet(): Optional[Bet]
+    + play(croupier: Croupier): None
+}
+
+class BasicStrategy {
+    + place_bet(): Optional[Bet]
+    + play(croupier: Croupier): None
+}
+
+class OptimalStrategy {
+    + place_bet(): Optional[Bet]
+    + play(croupier: Croupier): None
+}
+
+class RouletteTable {
+    - croupier: Croupier
+    + __init__()
+    + play_game(bot: Bot): None
+}
+
+class RouletteGame {
+    - bots: List[Bot]
+    - step: int
+    - max_steps: int
+    + __init__(bots: List[Bot], max_steps: int)
+    + is_game_over(): bool
+    + display_game_state(): None
+    + find_winner(): List[Bot]
+    + run_game(): None
+}
+
+Bot <|-- AggressiveStrategy
+Bot <|-- BasicStrategy
+Bot <|-- OptimalStrategy
+
+RouletteTable --> Croupier : "has"
+RouletteGame --> Bot : "contains"
+RouletteGame --> RouletteTable : "uses"
+
+Bet --> Croupier : "used in"
+AggressiveStrategy --> Bet : "makes"
+BasicStrategy --> Bet : "makes"
+OptimalStrategy --> Bet : "makes"
+@enduml

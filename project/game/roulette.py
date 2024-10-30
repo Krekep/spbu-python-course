@@ -30,7 +30,7 @@ class RouletteGame:
 
     def run_game(self) -> None:
         while not self.is_game_over():
-            print(f"Раунд {self.step + 1}:")
+            print(f"Round {self.step + 1}:")
             for bot in self.bots:
                 if bot.balance > 0:
                     table = RouletteTable()
