@@ -1,5 +1,5 @@
 import random
-from typing import Optional, Any
+from typing import Optional
 from project.game.players import Bot, Bet, Croupier
 
 
