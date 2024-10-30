@@ -1,7 +1,7 @@
 import pytest
 from project.game.strategy import AggressiveStrategy, BasicStrategy, OptimalStrategy
 from project.game.roulette import RouletteGame
-from project.game.players import Bot, Bet, Croupier
+from project.game.players import Croupier
 from project.game.table import RouletteTable
 
 
@@ -41,11 +41,13 @@ def test_play_game_steps(setup_game, capsys):
 
 
 def test_bet_placement(setup_game):
+    initial_balances = [bot.balance for bot in setup_game.bots]
     setup_game.run_game()
     print("Final Balances after betting:")
     for bot in setup_game.bots:
         print(f"{bot.name}: {bot.balance}")
-    assert any(bot.balance <= 100 for bot in setup_game.bots)
+    final_balances = [bot.balance for bot in setup_game.bots]
+    assert initial_balances != final_balances
 
 
 def test_bots_place_bets_correctly(setup_game):
