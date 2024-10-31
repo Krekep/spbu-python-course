@@ -5,6 +5,7 @@ from project.matrix import (
     matrix_transpose,
 )
 
+
 def test_matrix_addition():
     A = [[2, 3], [5, 7]]
     B = [[4, 1], [2, 3]]
