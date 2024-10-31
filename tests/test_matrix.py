@@ -42,7 +42,7 @@ def test_matrix_multiplication():
     # Multiplication of 3x2 and 2x3 matrices
     A = [[1, 2], [3, 1], [4, 5]]
     B = [[2, 3, 4], [1, 0, 2]]
-    assert matrix_multiplication(A, B) == [[4, 9, 14], [9, 12, 15], [27, 39, 32]]
+    assert matrix_multiplication(A, B) == [[4, 3, 8], [7, 9, 14], [13, 12, 26]]
 
     # Test case for multiplying a 1x2 matrix by a 2x1 matrix
     A = [[1, 3]]
