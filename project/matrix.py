@@ -25,7 +25,7 @@ def matrix_addition(A: List[List[float]], B: List[List[float]]) -> List[List[flo
     for i in range(len(A)):
         for j in range(len(A[0])):
             result_m[i][j] = A[i][j] + B[i][j]
- 
+
     return result_m
 
 
