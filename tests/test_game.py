@@ -1,6 +1,6 @@
 import pytest
 from project.game import Game
-from project.bot import Bot
+from project.bot import CautiousBot
 from project.dealer import Dealer
 from project.deck import Deck
 from project.card import Card
@@ -71,8 +71,8 @@ def test_reset_game(game: Game) -> None:
     game.play_round()
     game.reset_game()
 
-    assert all(len(bot.cards_on_hand) == 0 for bot in game.bots)
-    assert len(game.dealer.cards_on_hand) == 0
+    assert all(len(bot.hand.cards) == 0 for bot in game.bots)
+    assert len(game.dealer.hand.cards) == 0
     assert game.round_active is False
 
 
@@ -89,33 +89,8 @@ def test_dealer_play_turn(dealer: Dealer) -> None:
     Tests that the dealer plays until reaching a score of 17 or higher.
     """
     dealer.play_turn(deck=Deck())
-    score = dealer.calculate_score()
-    assert score >= 17 or len(dealer.cards_on_hand) >= 2
-
-
-@pytest.fixture
-def bot() -> Bot:
-    """
-    Fixture to create a bot with a cautious strategy.
-    """
-    return Bot(strategy="Cautious")
-
-
-def test_bot_initial_hand(bot: Bot) -> None:
-    """
-    Tests that a bot starts with an empty hand.
-    """
-    assert len(bot.cards_on_hand) == 0
-
-
-def test_bot_decide_action(bot: Bot) -> None:
-    """
-    Tests that the bot decides actions based on a cautious strategy.
-    """
-    bot.add_card(Card("Hearts", "7"))
-    bot.add_card(Card("Diamonds", "10"))
-    action = bot.decide_action(Card("Spades", "6"))
-    assert action == "stand"
+    score = dealer.hand.calculate_score()
+    assert score >= 17
 
 
 @pytest.fixture
@@ -152,3 +127,30 @@ def test_deal_card(deck: Deck) -> None:
     card = deck.deal_card()
     assert card is not None
     assert len(deck.cards) == initial_size - 1
+
+
+@pytest.fixture
+def cautious_bot() -> CautiousBot:
+    """Fixture to create a bot with a cautious strategy."""
+    return CautiousBot()
+
+
+def test_bot_initial_hand(cautious_bot: CautiousBot) -> None:
+    """Tests that a cautious bot starts with an empty hand."""
+    assert len(cautious_bot.hand.cards) == 0
+
+
+def test_bot_cautious_does_not_draw_extra_card(
+    cautious_bot: CautiousBot, deck: Deck
+) -> None:
+    """
+    Tests that a cautious bot does not draw an extra card when it has a high score.
+    """
+    cautious_bot.hand.add_card(Card("Hearts", "7"))
+    cautious_bot.hand.add_card(Card("Diamonds", "10"))
+
+    initial_card_count = len(cautious_bot.hand.cards)
+
+    cautious_bot.decide_action(Card("Spades", "6"), deck)
+
+    assert len(cautious_bot.hand.cards) == initial_card_count
