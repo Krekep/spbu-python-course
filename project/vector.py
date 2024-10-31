@@ -1,6 +1,7 @@
 from math import sqrt, acos, degrees
 from typing import List
 
+
 def dot_product(v1: List[float], v2: List[float]) -> float:
     """
     Calculate the dot product of two vectors.
@@ -42,7 +43,7 @@ def vector_length(v: List[float]) -> float:
     float
         The length of the vector.
     """
-    return sqrt(sum(x ** 2 for x in v))
+    return sqrt(sum(x**2 for x in v))
 
 
 def angle(v1: List[float], v2: List[float]) -> float:
