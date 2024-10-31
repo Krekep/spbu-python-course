@@ -1,9 +1,10 @@
 import pytest
-from project.vector_operations import (
+from project.vector import (
     dot_product,
     vector_length,
     angle,
 )
+
 
 def test_dot_product():
     assert dot_product([2, 5, 1], [3, 4, 2]) == 28.0
