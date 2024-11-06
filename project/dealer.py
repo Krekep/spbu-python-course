@@ -40,7 +40,7 @@ class Dealer:
         score = self.hand.calculate_score()
         if score == 21:
             print(f"The dealer has blackjack!")
-        while score < 17 or score != 21:
+        while score < 17:
             if score >= 17:
                 break
             self.hit(deck)

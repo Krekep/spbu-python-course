@@ -2,6 +2,7 @@ from .deck import Deck
 from .dealer import Dealer
 from .bot import Bot, CautiousBot, StrategicBot, ThoughtfulBot
 from typing import List, Dict
+from decimal import Decimal
 
 
 class Game:
@@ -53,7 +54,9 @@ class Game:
         print("\nEach player places a bet.")
         for i, bot in enumerate(self.bots):
             bot.place_bet()
-            print(f"Bot {i + 1} places a bet of {bot.current_bet:.2f}")
+            print(
+                f"Bot {i + 1} places a bet of {bot.current_bet.quantize(Decimal('0.01'))}"
+            )
 
         self.dealer.draw_initial_cards(self.deck)
         dealer_blackjack = self.dealer.hand.calculate_score() == 21
@@ -100,20 +103,19 @@ class Game:
             print(f"Dealer's final score: {dealer_score}\n")
 
             for i, bot in enumerate(self.bots):
-                if not dealer_blackjack:
-                    bot_score = bot.hand.calculate_score()
-                    if bot_score > 21:
-                        bot.lose_bet()
-                    elif dealer_score > 21 or bot_score > dealer_score:
-                        bot.win_bet()
-                        print(f"Bot {i + 1} wins against the dealer!")
-                        self.results[f"Bot {i + 1}"] += 1
-                        self.last_winners.append(f"Bot {i + 1}")
-                    elif bot_score == dealer_score:
-                        print(f"Bot {i + 1} ties with the dealer!")
-                    else:
-                        bot.lose_bet()
-                        print(f"Bot {i + 1} loses to the dealer!")
+                bot_score = bot.hand.calculate_score()
+                if bot_score > 21:
+                    bot.lose_bet()
+                elif dealer_score > 21 or bot_score > dealer_score:
+                    bot.win_bet()
+                    print(f"Bot {i + 1} wins against the dealer!")
+                    self.results[f"Bot {i + 1}"] += 1
+                    self.last_winners.append(f"Bot {i + 1}")
+                elif bot_score == dealer_score:
+                    print(f"Bot {i + 1} ties with the dealer!")
+                else:
+                    bot.lose_bet()
+                    print(f"Bot {i + 1} loses to the dealer!")
 
         self.display_round_results()
         self.reset_game()
@@ -122,7 +124,9 @@ class Game:
         """Displays the results of the current round, including each bot's balance."""
         print("\nRound Results:")
         for i, bot in enumerate(self.bots):
-            print(f"Bot {i + 1} balance: {bot.balance:.2f}, bet: {bot.current_bet:.2f}")
+            print(
+                f"Bot {i + 1} balance: {bot.balance.quantize(Decimal('0.01'))}, bet: {bot.current_bet.quantize(Decimal('0.01'))}"
+            )
 
     def reset_game(self) -> None:
         """Resets the game state for a new round."""
