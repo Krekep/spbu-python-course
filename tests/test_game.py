@@ -26,9 +26,9 @@ def test_initial_state(game: Game) -> None:
         - The results dictionary is initialized correctly for all bots.
         - The game is not active upon initialization.
     """
-    assert game.current_round == 0
-    assert all(wins == 0 for wins in game.results.values())
-    assert game.round_active is False
+    assert game._current_round == 0
+    assert all(wins == 0 for wins in game._results.values())
+    assert game._round_active is False
 
 
 def test_state_changes_with_rounds(game: Game) -> None:
@@ -40,11 +40,11 @@ def test_state_changes_with_rounds(game: Game) -> None:
         - The game is active during each round.
     """
     game.play_round()
-    for _ in range(game.total_rounds - 1):
-        current_round = game.current_round
+    for _ in range(game._total_rounds - 1):
+        current_round = game._current_round
         game.play_round()
-        assert game.current_round == current_round + 1
-        assert game.round_active is False
+        assert game._current_round == current_round + 1
+        assert game._round_active is False
 
 
 def test_deck_reduction_after_deals(game: Game) -> None:
@@ -54,9 +54,9 @@ def test_deck_reduction_after_deals(game: Game) -> None:
     Verifies:
         - The deck size decreases after initial card deals and each "hit" action.
     """
-    initial_deck_size = len(game.deck.cards)
+    initial_deck_size = len(game._deck.cards)
     game.play_round()
-    final_deck_size = len(game.deck.cards)
+    final_deck_size = len(game._deck.cards)
     assert final_deck_size < initial_deck_size
 
 
@@ -71,9 +71,9 @@ def test_reset_game(game: Game) -> None:
     game.play_round()
     game.reset_game()
 
-    assert all(len(bot.hand.cards) == 0 for bot in game.bots)
-    assert len(game.dealer.hand.cards) == 0
-    assert game.round_active is False
+    assert all(len(bot.hand.cards) == 0 for bot in game._bots)
+    assert len(game._dealer.hand.cards) == 0
+    assert game._round_active is False
 
 
 @pytest.fixture

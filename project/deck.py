@@ -15,9 +15,9 @@ class Deck:
         Initializes a new deck of cards, creating 52 standard cards.
         """
         self.cards: list[Card] = []
-        self.create_deck()
+        self._create_deck()
 
-    def create_deck(self) -> None:
+    def _create_deck(self) -> None:
         """
         Creates a standard deck of 52 cards.
         """

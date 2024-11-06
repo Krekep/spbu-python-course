@@ -10,7 +10,7 @@ class Bot:
 
     Attributes:
         hand (Hand): The bot's hand of cards.
-        balance (Decimal): The bot's current balance.
+        _balance (Decimal): The bot's current balance.
     """
 
     def __init__(self, initial_balance: Decimal = Decimal("100.00")) -> None:
@@ -21,12 +21,14 @@ class Bot:
             initial_balance (float): Starting balance for the bot.
         """
         self.hand = Hand()
-        self.balance = initial_balance.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
-        self.current_bet = Decimal("0.00")
+        self._balance = initial_balance.quantize(
+            Decimal("0.01"), rounding=ROUND_HALF_UP
+        )
+        self._current_bet = Decimal("0.00")
 
     def place_bet(self) -> None:
         """Sets a default bet amount for each round."""
-        self.current_bet = min(Decimal("10.00"), self.balance)
+        self._current_bet = min(Decimal("10.00"), self._balance)
 
     def decide_action(self, dealer_card: Card, deck: Deck) -> None:
         """
@@ -60,13 +62,13 @@ class Bot:
             blackjack (bool): True if the bot won with a blackjack, applying a higher payout.
         """
         payout = Decimal("1.5") if blackjack else Decimal("1.0")
-        self.balance += (self.current_bet * payout).quantize(
+        self._balance += (self._current_bet * payout).quantize(
             Decimal("0.01"), rounding=ROUND_HALF_UP
         )
 
     def lose_bet(self) -> None:
         """Subtracts the current bet from the balance if the bot loses."""
-        self.balance -= self.current_bet.quantize(
+        self._balance -= self._current_bet.quantize(
             Decimal("0.01"), rounding=ROUND_HALF_UP
         )
 
@@ -106,9 +108,11 @@ class StrategicBot(Bot):
 
     def place_bet(self) -> None:
         """Adjusts the bet based on remaining balance to manage risk."""
-        if self.current_bet > Decimal("0.00") and self.balance > Decimal("50.00"):
-            self.current_bet = min(self.current_bet * Decimal("1.1"), self.balance)
-        elif self.current_bet > Decimal("0.00") and self.balance <= Decimal("50.00"):
-            self.current_bet = max(self.current_bet * Decimal("0.8"), Decimal("10.00"))
-        elif self.current_bet == Decimal("0.00"):
-            self.current_bet = min(Decimal("10.00"), self.balance)
+        if self._current_bet > Decimal("0.00") and self._balance > Decimal("50.00"):
+            self._current_bet = min(self._current_bet * Decimal("1.1"), self._balance)
+        elif self._current_bet > Decimal("0.00") and self._balance <= Decimal("50.00"):
+            self._current_bet = max(
+                self._current_bet * Decimal("0.8"), Decimal("10.00")
+            )
+        elif self._current_bet == Decimal("0.00"):
+            self._current_bet = min(Decimal("10.00"), self._balance)
