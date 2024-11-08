@@ -182,14 +182,10 @@ class CartesianTree(MutableMapping):
         if t is None:
             return None
 
-        assert isinstance(
-            t, CartesianTree._Node
-        ), "Expected t to be an instance of _Node"
-
         if key < t.key:
-            t.left = self.remove_node(t.left, key)
+            t.left = self.remove_node(t.left, key)  # type: ignore
         elif key > t.key:
-            t.right = self.remove_node(t.right, key)
+            t.right = self.remove_node(t.right, key)  # type: ignore
         else:
             if t.left is None:
                 return t.right
@@ -198,10 +194,10 @@ class CartesianTree(MutableMapping):
             if t.left is not None and t.right is not None:
                 if t.left.priority > t.right.priority:
                     t = self._rotate_right(t)
-                    t.right = self.remove_node(t.right, key)
+                    t.right = self.remove_node(t.right, key)  # type: ignore
                 else:
                     t = self._rotate_left(t)
-                    t.left = self.remove_node(t.left, key)
+                    t.left = self.remove_node(t.left, key)  # type: ignore
 
         return t
 
