@@ -32,8 +32,8 @@ class CartesianTree(MutableMapping):
 
     def __init__(self):
         """Initialize an empty cartesian tree."""
-        self._root: Optional[CartesianTree._Node] = None
-        self._size: int = 0
+        self._root = None
+        self._size = 0
 
     def _insert(
         self, node: Optional[_Node], key: Any, value: Any, priority: int
@@ -191,15 +191,13 @@ class CartesianTree(MutableMapping):
                 return t.right
             elif t.right is None:
                 return t.left
-            else:
+            if t.right and t.left:
                 if t.left.priority > t.right.priority:
                     t = self._rotate_right(t)
-                    if t.right is not None:
-                        t.right = self.remove_node(t.right, key)
+                    t.right = self.remove_node(t.right, key)
                 else:
                     t = self._rotate_left(t)
-                    if t.left is not None:
-                        t.left = self.remove_node(t.left, key)
+                    t.left = self.remove_node(t.left, key)
 
         return t
 
