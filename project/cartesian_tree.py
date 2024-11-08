@@ -183,9 +183,9 @@ class CartesianTree(MutableMapping):
             return None
 
         if key < t.key:
-            t.left = self.remove_node(t.left, key)  # type: ignore
+            t.left = self.remove_node(t.left, key)
         elif key > t.key:
-            t.right = self.remove_node(t.right, key)  # type: ignore
+            t.right = self.remove_node(t.right, key)
         else:
             if t.left is None:
                 return t.right
