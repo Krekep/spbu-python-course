@@ -201,29 +201,35 @@ class CartesianTree(MutableMapping):
 
         return t
 
-    def _rotate_right(self, node: _Node) -> _Node:
+    def _rotate_right(self, node: Optional[_Node]) -> Optional[_Node]:
         """Perform a right rotation around the given node.
 
         Args:
-            node (_Node): The node to rotate.
+            node (Optional[_Node]): The node to rotate.
 
         Returns:
-            _Node: The new root of the rotated subtree.
+            Optional[_Node]: The new root of the rotated subtree.
         """
+        if node is None or node.left is None:
+            return node
+
         left_child = node.left
         node.left = left_child.right
         left_child.right = node
         return left_child
 
-    def _rotate_left(self, node: _Node) -> _Node:
+    def _rotate_left(self, node: Optional[_Node]) -> Optional[_Node]:
         """Perform a left rotation around the given node.
 
         Args:
-            node (_Node): The node to rotate.
+            node (Optional[_Node]): The node to rotate.
 
         Returns:
-            _Node: The new root of the rotated subtree.
+            Optional[_Node]: The new root of the rotated subtree.
         """
+        if node is None or node.right is None:
+            return node
+
         right_child = node.right
         node.right = right_child.left
         right_child.left = node
