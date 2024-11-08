@@ -169,9 +169,7 @@ class CartesianTree(MutableMapping):
         self._root = self.merge(t1, t2)
         self._size -= 1
 
-    def remove_node(
-        self, t: Optional["CartesianTree._Node"], key: Any
-    ) -> Optional["CartesianTree._Node"]:
+    def remove_node(self, t: Optional[_Node], key: Any) -> Optional[_Node]:
         """Remove the node by key from the tree.
 
         Args:
@@ -183,6 +181,10 @@ class CartesianTree(MutableMapping):
         """
         if t is None:
             return None
+
+        assert isinstance(
+            t, CartesianTree._Node
+        ), "Expected t to be an instance of _Node"
 
         if key < t.key:
             t.left = self.remove_node(t.left, key)
@@ -196,8 +198,7 @@ class CartesianTree(MutableMapping):
             if t.left is not None and t.right is not None:
                 if t.left.priority > t.right.priority:
                     t = self._rotate_right(t)
-                    if isinstance(t.right, CartesianTree._Node):
-                        t.right = self.remove_node(t.right, key)
+                    t.right = self.remove_node(t.right, key)
                 else:
                     t = self._rotate_left(t)
                     t.left = self.remove_node(t.left, key)
