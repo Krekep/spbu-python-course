@@ -131,3 +131,35 @@ class Treap(MutableMapping):
                 node = self.rotate_left(node)
                 node.left = self._delete(node.left, key)
         return node
+
+    def find(self, key):
+        """
+        Searches for a node with the specified key.
+        """
+        node = self.root
+        while node is not None:
+            if key == node.key:
+                return node
+            elif key < node.key:
+                node = node.left
+            else:
+                node = node.right
+        return None
+
+    def rotate_right(self, node):
+        """
+        Performs a right turn around the specified node.
+        """
+        new_root = node.left
+        node.left = new_root.right
+        new_root.right = node
+        return new_root
+
+    def rotate_left(self, node):
+        """
+        Performs a left turn around the specified node.
+        """
+        new_root = node.right
+        node.right = new_root.left
+        new_root.left = node
+        return new_root
