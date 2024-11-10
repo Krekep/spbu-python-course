@@ -68,3 +68,66 @@ class Treap(MutableMapping):
         if node is None:
             raise KeyError(key)
         return node.value
+
+    def __setitem__(self, key, value):
+        """
+        Inserts a new node with the specified key and value
+        """
+        self.root = self._insert(self.root, key, value)
+
+    def __delitem__(self, key):
+        """
+        Deletes the node with the specified key.
+        """
+        self.root = self._delete(self.root, key)
+
+    def insert(self, key, value=None):
+        """
+        Inserts a new node with the specified key and value.
+        """
+        self.root = self._insert(self.root, key, value)
+
+    def _insert(self, node, key, value):
+        """
+        An auxiliary function for recursively inserting a node.
+        """
+        if node is None:
+            return Node(key, random.randint(0, 100000), value)
+
+        if key < node.key:
+            node.left = self._insert(node.left, key, value)
+        else:
+            node.right = self._insert(node.right, key, value)
+
+        if node.priority < node.left.priority if node.left else float("inf"):
+            node = self.rotate_right(node)
+        elif node.priority < node.left.priority if node.right else float("inf"):
+            node = self.rotate_left(node)
+        return node
+
+    def delete(self, node, key):
+        """
+        Deletes the node with the specified key.
+        """
+        self.root = self._delete(self.root, key)
+
+    def _delete(self, node, key):
+        """
+        An auxiliary function for recursively deleting a node.
+        """
+        if node is None:
+            return None
+
+        if key < node.key:
+            node.left = self._delete(node.left, key)
+        elif key > node.key:
+            node.right = self._delete(node.right, key)
+        else:
+            if node.left is None:
+                return node.right
+            elif node.right is None:
+                return node.left
+            else:
+                node = self.rotate_left(node)
+                node.left = self._delete(node.left, key)
+        return node
