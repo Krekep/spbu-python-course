@@ -105,7 +105,7 @@ class Treap(MutableMapping):
             node = self.rotate_left(node)
         return node
 
-    def delete(self, node, key):
+    def delete(self, key):
         """
         Deletes the node with the specified key.
         """
@@ -128,8 +128,12 @@ class Treap(MutableMapping):
             elif node.right is None:
                 return node.left
             else:
-                node = self.rotate_left(node)
-                node.left = self._delete(node.left, key)
+                if node.left.priority > node.right.priority:
+                    node = self.rotate_right(node)
+                    node.right = self._delete(node.right, key)
+                else:
+                    node = self.rotate_left(node)
+                    node.left = self._delete(node.left, key)
         return node
 
     def find(self, key):
@@ -151,6 +155,8 @@ class Treap(MutableMapping):
         Performs a right turn around the specified node.
         """
         new_root = node.left
+        if new_root is None:
+            return node
         node.left = new_root.right
         new_root.right = node
         return new_root
@@ -163,3 +169,107 @@ class Treap(MutableMapping):
         node.right = new_root.left
         new_root.left = node
         return new_root
+
+    def inorder_traversal(self):
+        """
+        Displays the tree elements in the traversal order.
+        """
+        self._inorder_traversal(self.root)
+
+    def _inorder_traversal(self, node):
+        """
+        an auxiliary function for traversing the tree.
+        """
+        if node is not None:
+            self._inorder_traversal(node.left)
+            print(f"Key: {node.key}, Priority: {node.priority}, Value: {node.value}")
+            self._inorder_traversal(node.right)
+
+    def _treap_keys(self):
+        """
+        Returns the key iterator.
+        """
+        return self._keys(self.root)
+
+    def _keys(self, node):
+        """
+        An auxiliary function for obtaining keys.
+        """
+        if node is None:
+            return []
+        return self._keys(node.left) + [node.key] + self._keys(node.right)
+
+    def _treap_values(self):
+        """
+        Returns an iterator of values.
+        """
+        return self._values(self.root)
+
+    def _values(self, node):
+        """
+        An auxiliary function for getting values.
+        """
+        if node is None:
+            return []
+        return self._values(node.left) + [node.value] + self._values(node.right)
+
+    def _treap_items(self):
+        """
+        Returns an iterator of key-value pairs.
+        """
+        return self._items(self.root)
+
+    def _items(self, node):
+        """
+        An auxiliary function for obtaining key-value pairs.
+        """
+        if node is None:
+            return []
+        return (
+            self._items(node.left) + [(node.key, node.value)] + self._items(node.right)
+        )
+
+    def __iter__(self):
+        """
+        Returns the key iterator.
+        """
+        return iter(self._treap_keys())
+
+
+treap = Treap()
+
+
+treap[5] = "A"
+treap[10] = "B"
+treap[3] = "C"
+treap[8] = "D"
+treap[1] = "E"
+
+
+print("The tree is in the order of traversal:")
+treap.inorder_traversal()
+
+
+print(f"\nThe value of the element with the key  8: {treap[8]}")
+
+
+del treap[8]
+print("\nThe tree after deleting the key element 8:")
+treap.inorder_traversal()
+
+
+print("\nKeys:")
+for key in treap.keys():
+    print(key)
+print("\nValues:")
+for value in treap.values():
+    print(value)
+print("\nKey-value:")
+for key, value in treap.items():
+    print(f"{key}: {value}")
+
+
+print(f"\nNumber of elements: {len(treap)}")
+
+
+print(f"\nDoes the key element contain 3: {3 in treap}")
