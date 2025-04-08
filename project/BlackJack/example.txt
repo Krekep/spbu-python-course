@@ -1,0 +1,274 @@
+Round 1
+________________________
+Bot1: A♦ 2♦
+
+Bot2: 2♣ 10♠
+
+Counting: 7♠ 9♦
+
+Dealer: 9♣
+____________
+Bot1: A♦ 2♦ Q♥
+
+Bot2: 2♣ 10♠
+
+Counting: 7♠ 9♦
+
+Dealer: 9♣
+____________
+Bot1: A♦ 2♦ Q♥ 4♥
+
+Bot2: 2♣ 10♠
+
+Counting: 7♠ 9♦
+
+Dealer: 9♣
+____________
+Bot1: A♦ 2♦ Q♥ 4♥
+
+Bot2: 2♣ 10♠ 3♦
+
+Counting: 7♠ 9♦
+
+Dealer: 9♣
+____________
+Bot1: A♦ 2♦ Q♥ 4♥
+
+Bot2: 2♣ 10♠ 3♦ J♣
+
+Counting: 7♠ 9♦
+
+Dealer: 9♣
+____________
+Bot1: A♦ 2♦ Q♥ 4♥
+
+Bot2: 2♣ 10♠ 3♦ J♣
+
+Counting: 7♠ 9♦ 5♦
+
+Dealer: 9♣
+____________
+Bot1: A♦ 2♦ Q♥ 4♥
+
+Bot2: 2♣ 10♠ 3♦ J♣
+
+Counting: 7♠ 9♦ 5♦
+
+Dealer: 9♣ 6♣
+____________
+Bot1: A♦ 2♦ Q♥ 4♥
+
+Bot2: 2♣ 10♠ 3♦ J♣
+
+Counting: 7♠ 9♦ 5♦
+
+Dealer: 9♣ 6♣ 9♥
+____________
+Dealer: 24
+Bot1: 17 win 99 (dealer is overage). Chips number: 1099
+Bot2: 25 lost 19 (overage). Chips number: 981
+Counting: 21 win 86 (dealer is overage). Chips number: 1086
+
+Round 2
+________________________
+Bot1: 5♣ 5♠
+
+Bot2: 7♦ A♣
+
+Counting: 10♣ Q♠
+
+Dealer: Q♣
+____________
+Bot1: 5♣ 5♠ J♥
+
+Bot2: 7♦ A♣
+
+Counting: 10♣ Q♠
+
+Dealer: Q♣
+____________
+Bot1: 5♣ 5♠ J♥
+
+Bot2: 7♦ A♣
+
+Counting: 10♣ Q♠
+
+Dealer: Q♣ 4♣
+____________
+Bot1: 5♣ 5♠ J♥
+
+Bot2: 7♦ A♣
+
+Counting: 10♣ Q♠
+
+Dealer: Q♣ 4♣ 10♦
+____________
+Dealer: 24
+Bot1: 20 win 27 (dealer is overage). Chips number: 1126
+Bot2: 18 win 46 (dealer is overage). Chips number: 1027
+Counting: 20 win 38 (dealer is overage). Chips number: 1124
+
+Round 3
+________________________
+Bot1: 7♣ 6♥
+
+Bot2: 4♠ J♠
+
+Counting: 6♠ 2♥
+
+Dealer: 3♣
+____________
+Bot1: 7♣ 6♥ 5♥
+
+Bot2: 4♠ J♠
+
+Counting: 6♠ 2♥
+
+Dealer: 3♣
+____________
+Bot1: 7♣ 6♥ 5♥
+
+Bot2: 4♠ J♠ 8♦
+
+Counting: 6♠ 2♥
+
+Dealer: 3♣
+____________
+Bot1: 7♣ 6♥ 5♥
+
+Bot2: 4♠ J♠ 8♦
+
+Counting: 6♠ 2♥ 2♠
+
+Dealer: 3♣
+____________
+Bot1: 7♣ 6♥ 5♥
+
+Bot2: 4♠ J♠ 8♦
+
+Counting: 6♠ 2♥ 2♠ 7♥
+
+Dealer: 3♣
+____________
+Bot1: 7♣ 6♥ 5♥
+
+Bot2: 4♠ J♠ 8♦
+
+Counting: 6♠ 2♥ 2♠ 7♥ K♥
+
+Dealer: 3♣
+____________
+Bot1: 7♣ 6♥ 5♥
+
+Bot2: 4♠ J♠ 8♦
+
+Counting: 6♠ 2♥ 2♠ 7♥ K♥
+
+Dealer: 3♣ 8♠
+____________
+Bot1: 7♣ 6♥ 5♥
+
+Bot2: 4♠ J♠ 8♦
+
+Counting: 6♠ 2♥ 2♠ 7♥ K♥
+
+Dealer: 3♣ 8♠ 3♠
+____________
+Bot1: 7♣ 6♥ 5♥
+
+Bot2: 4♠ J♠ 8♦
+
+Counting: 6♠ 2♥ 2♠ 7♥ K♥
+
+Dealer: 3♣ 8♠ 3♠ K♣
+____________
+Dealer: 24
+Bot1: 18 win 52 (dealer is overage). Chips number: 1178
+Bot2: 22 lost 30 (overage). Chips number: 997
+Counting: 27 lost 56 (overage). Chips number: 1068
+
+Round 4
+________________________
+Bot1: 4♥ 7♣
+
+Bot2: 5♣ 7♦
+
+Counting: J♠ K♠
+
+Dealer: J♣
+____________
+Bot1: 4♥ 7♣ 8♥
+
+Bot2: 5♣ 7♦
+
+Counting: J♠ K♠
+
+Dealer: J♣
+____________
+Bot1: 4♥ 7♣ 8♥
+
+Bot2: 5♣ 7♦ 3♠
+
+Counting: J♠ K♠
+
+Dealer: J♣
+____________
+Bot1: 4♥ 7♣ 8♥
+
+Bot2: 5♣ 7♦ 3♠ 7♠
+
+Counting: J♠ K♠
+
+Dealer: J♣
+____________
+Bot1: 4♥ 7♣ 8♥
+
+Bot2: 5♣ 7♦ 3♠ 7♠
+
+Counting: J♠ K♠
+
+Dealer: J♣ 7♥
+____________
+Dealer: 17
+Bot1: 19 win 47. Chips number: 1225
+Bot2: 22 lost 44 (overage). Chips number: 953
+Counting: 20 win 92. Chips number: 1160
+
+Round 5
+________________________
+Bot1: 5♦ K♥
+
+Bot2: 9♥ 2♣
+
+Counting: 10♥ 8♠
+
+Dealer: 3♥
+____________
+Bot1: 5♦ K♥
+
+Bot2: 9♥ 2♣ 8♣
+
+Counting: 10♥ 8♠
+
+Dealer: 3♥
+____________
+Bot1: 5♦ K♥
+
+Bot2: 9♥ 2♣ 8♣
+
+Counting: 10♥ 8♠
+
+Dealer: 3♥ 4♣
+____________
+Bot1: 5♦ K♥
+
+Bot2: 9♥ 2♣ 8♣
+
+Counting: 10♥ 8♠
+
+Dealer: 3♥ 4♣ Q♥
+____________
+Dealer: 17
+Bot1: 15 lost 77. Chips number: 1148
+Bot2: 19 win 75. Chips number: 1028
+Counting: 18 win 46. Chips number: 1206
