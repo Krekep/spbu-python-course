@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Check code style
+name: Check code style and doing pytest, mypy
 
 # Controls when the workflow will run
 on:
@@ -55,3 +55,43 @@ jobs:
       - name: Run pre-commit
         run: |
           pre-commit run --all-files --color always --verbose --show-diff-on-failure
+  test:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+
+        with:
+          python-version: [ 3.8 ]
+
+      - name: Run tests
+        run: |
+          python scripts/run_tests.py  # ← Using run_tests
+
+  # 3. Checking types
+  type-check:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: [3.8]
+
+      - name: Install mypy
+        run: |
+          pip install mypy
+
+      - name: Check types
+        run: |
+          mypy project/
