@@ -60,4 +60,4 @@ jobs:
 
       - name: Run tests with pytest
         run: |
-         python -m pytest homeworke/tests/ -v --cov=your_folder_name --cov-report=xml
+         python -m pytest homeworks/tests_algebra.py/ -v --cov=your_folder_name --cov-report=xml
