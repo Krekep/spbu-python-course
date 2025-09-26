@@ -55,3 +55,10 @@ jobs:
       - name: Run pre-commit
         run: |
           pre-commit run --all-files --color always --verbose --show-diff-on-failure
+
+
+      - name: Run pytest
+        run: pytest tests/ -v
+
+      - name: Run mypy
+        run: mypy project/ --ignore-missing-imports
