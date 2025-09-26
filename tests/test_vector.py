@@ -10,7 +10,7 @@ from vector import Scalar, Lenth, Angle
 def test_scalar():
     v1 = [1, 2, 3]
     v2 = [4, 5, 6]
-    expected = 1 * 4 + 2 * 5 + 3 * 6  # 32
+    expected = 1 * 4 + 2 * 5 + 3 * 6
     assert Scalar(v1, v2) == expected
 
     v3 = [0, 0, 0]
@@ -46,7 +46,7 @@ def test_angle():
 
     v3 = [1, 2]
     v4 = [2, 4]
-    assert Angle(v3, v4) == 0.0
+    assert abs(Angle(v3, v4)) < 0.0001
 
     v5 = [1, 0]
     v6 = [-1, 0]

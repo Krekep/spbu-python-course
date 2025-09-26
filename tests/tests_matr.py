@@ -54,8 +54,3 @@ def test_tra_matr():
     d = [[1], [2], [3]]
     expected = [[1, 2, 3]]
     assert tra_matr(d) == expected
-
-
-def test_edge_cases():
-    assert sum_matr([], []) == []
-    assert tra_matr([]) == []

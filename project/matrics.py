@@ -7,8 +7,8 @@ def sum_matr(a: List[List[float]], b: List[List[float]]) -> Optional[List[List[f
 
 
 def pro_matr(a: List[List[float]], b: List[List[float]]) -> Optional[List[List[float]]]:
-    if len(a[0]) != len(a):
-        return "Er"
+    if len(a[0]) != len(b):
+        return None
 
     result = [[0 for _ in range(len(b[0]))] for _ in range(len(a))]
     for i in range(len(a)):
