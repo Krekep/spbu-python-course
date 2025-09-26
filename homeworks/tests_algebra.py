@@ -11,13 +11,13 @@ class TestAlgebra:
 
   def test_Scalar(self, a, b, expected): #скалярное произведение
     result = Scalar(a, b)
-    np.testing.assert_array_equal(result, expected)
+    assert result == expected
 
   def test_Normal(self):
     a = np.array([3, 4]) #длина вектора
     expected = 5.0
     result = Normal(a)
-    np.testing.assert_array_equal(result, expected)
+    assert result == expected
 
   def test_Angle(self):
     a = np.array([1, 0]) # 90 градусов
