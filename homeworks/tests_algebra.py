@@ -1,6 +1,6 @@
 import pytest
 import numpy as np
-from algebra import*
+from algebra import *
 
 class TestAlgebra:
   @pytest.mark.parametrize('a,b,expected', [
