@@ -14,7 +14,7 @@ class TestAlgebra:
     np.testing.assert_array_equal(result, expected)
 
   def test_Normal(self):
-    a = np.array([0, 1]) #длина вектора
+    a = np.array([3, 4]) #длина вектора
     expected = 5.0
     result = Normal(a)
     np.testing.assert_array_equal(result, expected)
