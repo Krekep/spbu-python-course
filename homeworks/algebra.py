@@ -26,7 +26,7 @@ def Multiplication(M, N): # умножение матриц
     return np.dot(M, N)
 
 def Summa(M, N): # сложение
-    if N.shape != M.shape:
+    if M.shape != N.shape:
         raise ValueError("Матрицы должны иметь одинаковую размерность")
     return M + N
 
