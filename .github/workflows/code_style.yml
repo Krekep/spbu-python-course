@@ -39,12 +39,14 @@ jobs:
 
       # Install requirements
       - name: Install requirements
-
-        # Runs command-line programs using the operating system's shell
         run: |
           python -m pip install --upgrade pip wheel setuptools
-          python -m pip install -r requirements.txt
+          python -m pip install pytest mypy pre-commit
+          if [ -f requirements.txt ]; then
+            python -m pip install -r requirements.txt
+          fi
           python -m pip list
+
 
       # Install pre-commit from .pre-commit-config.yaml
       - name: Install pre-commit
