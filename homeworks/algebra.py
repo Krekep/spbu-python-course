@@ -21,8 +21,8 @@ def Trans(M): # транспонирование
     return M.T
   
 def Multiplication(M, N): # умножение матриц
-    if M.shape[1] != N.shape[0]:
-        raise ValueError("Матрицы должны иметь одинаковую размерность")
+    #if M.shape[1] != N.shape[0]:
+        #raise ValueError("Матрицы должны иметь одинаковую размерность")
     return np.dot(M, N)
 
 def Summa(M, N): # сложение
