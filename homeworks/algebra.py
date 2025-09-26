@@ -6,7 +6,7 @@ def Scalar(a, b): #скалярное произведение
     return np.dot(a, b)
 
 def Normal(a):  #длина
-    return len(a)
+    return np.linalg.normal(a)
 
 def Angle(a, b): # угол между векторами
     if Normal(a) == 0 or Normal(b) == 0:
@@ -21,12 +21,12 @@ def Trans(M): # транспонирование
     return M.T
   
 def Multiplication(M, N): # умножение матриц
-    if N.shape != B.shape:
+    if N.shape[1] != B.shape[0]:
         raise ValueError("Матрицы должны иметь одинаковую размерность")
     return np.dot(M, N)
 
 def Summa(M, N): # сложение
-    if N.shape != B.shape:
+    if N.shape != M.shape:
         raise ValueError("Матрицы должны иметь одинаковую размерность")
     return M + N
 
