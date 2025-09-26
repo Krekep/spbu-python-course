@@ -55,3 +55,7 @@ jobs:
       - name: Run pre-commit
         run: |
           pre-commit run --all-files --color always --verbose --show-diff-on-failure
+
+      - name: Run tests with pytest
+        run: |
+         python -m pytest homeworke/tests/ -v --cov=your_folder_name --cov-report=xml
