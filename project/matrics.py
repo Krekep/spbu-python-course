@@ -1,3 +1,6 @@
+from typing import List, Optional
+
+
 def sum_matr(a: List[List[float]], b: List[List[float]]) -> Optional[List[List[float]]]:
 
     return [[a[i][j] + b[i][j] for j in range(len(a[0]))] for i in range(len(a))]

@@ -1,4 +1,5 @@
 from math import sqrt, acos
+from typing import List, Optional
 
 
 def Scalar(v1: List[float], v2: List[float]) -> float:
