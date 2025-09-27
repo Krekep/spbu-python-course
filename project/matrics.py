@@ -12,8 +12,12 @@ def sum_matr(a: List[List[float]], b: List[List[float]]) -> Optional[List[List[f
     Returns:
         Optional[List[List[float]]]: Sum of matrix a and matrix b
     """
+    if not a or not b:
+        return None
+
     if len(a) != len(b) or len(a[0]) != len(b[0]):
         return None
+
     return [[float(a[i][j] + b[i][j]) for j in range(len(a[0]))] for i in range(len(a))]
 
 
@@ -28,6 +32,9 @@ def pro_matr(a: List[List[float]], b: List[List[float]]) -> Optional[List[List[f
     Returns:
         Optional[List[List[float]]]: Product of matrix a and matrix b
     """
+    if not a or not b:
+        return None
+
     if len(a[0]) != len(b):
         return None
 
@@ -50,4 +57,7 @@ def tra_matr(a: List[List[float]]) -> List[List[float]]:
     Returns:
         List[List[float]]: Transposed matrix
     """
+    if not a:
+        return None
+
     return [[float(a[j][i]) for j in range(len(a))] for i in range(len(a[0]))]

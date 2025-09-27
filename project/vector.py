@@ -24,6 +24,8 @@ def Scalar(v1: List[float], v2: List[float]) -> float:
     Returns:
         float: Scalar product of vectors v1 and v2
     """
+    if len(v1) != len(v2):
+        return None
     return sum(v1[i] * v2[i] for i in range(len(v1)))
 
 
@@ -51,4 +53,6 @@ def Angle(v1: List[float], v2: List[float]) -> float:
     Returns:
         float: Angle between vectors in radians
     """
+    if len(v1) != len(v2):
+        return None
     return acos(Scalar(v1, v2) / (Lenth(v1) * Lenth(v2)))
