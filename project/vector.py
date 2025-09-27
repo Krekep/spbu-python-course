@@ -13,7 +13,7 @@ from math import sqrt, acos
 from typing import List, Optional
 
 
-def Scalar(v1: List[float], v2: List[float]) -> float:
+def Scalar(v1: List[float], v2: List[float]) -> Optional[float]:
     """
     Calculate scalar product of two vectors
 
@@ -29,7 +29,7 @@ def Scalar(v1: List[float], v2: List[float]) -> float:
     return sum(v1[i] * v2[i] for i in range(len(v1)))
 
 
-def Lenth(v: List[float]) -> float:
+def Lenth(v: List[float]) -> Optional[float]:
     """
     Calculate length of a vector
 
@@ -42,7 +42,7 @@ def Lenth(v: List[float]) -> float:
     return sqrt(sum(x**2 for x in v))
 
 
-def Angle(v1: List[float], v2: List[float]) -> float:
+def Angle(v1: List[float], v2: List[float]) -> Optional[float]:
     """
     Calculate angle between two vectors
 

@@ -47,7 +47,7 @@ def pro_matr(a: List[List[float]], b: List[List[float]]) -> Optional[List[List[f
     return result
 
 
-def tra_matr(a: List[List[float]]) -> List[List[float]]:
+def tra_matr(a: List[List[float]]) -> Optional[List[List[float]]]:
     """ "
      Transpose a matrix
 
