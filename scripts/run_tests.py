@@ -1,15 +1,10 @@
 import subprocess
-import sys
-import os
+import shared
 
 
 def main():
-    project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    sys.path.insert(0, project_root)
-
-    tests_dir = os.path.join(project_root, "tests")
-
-    subprocess.check_call([sys.executable, "-m", "pytest", "-vv", "-s", tests_dir])
+    shared.configure_python_path()
+    subprocess.check_call(["python", "-m", "pytest", "-vv", "-s", shared.TESTS])
 
 
 if __name__ == "__main__":
