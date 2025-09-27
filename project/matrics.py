@@ -22,7 +22,7 @@ def sum_matr(a: List[List[float]], b: List[List[float]]) -> Optional[List[List[f
 
 
 def pro_matr(a: List[List[float]], b: List[List[float]]) -> Optional[List[List[float]]]:
-    """ "
+    """
     Multiplicate two matrices
 
     Parameters:
@@ -48,14 +48,14 @@ def pro_matr(a: List[List[float]], b: List[List[float]]) -> Optional[List[List[f
 
 
 def tra_matr(a: List[List[float]]) -> Optional[List[List[float]]]:
-    """ "
+    """
      Transpose a matrix
 
     Parameters:
         a (List[List[float]]): Matrix
 
     Returns:
-        List[List[float]]: Transposed matrix
+        Optional[List[List[float]]]: Transposed matrix
     """
     if not a:
         return None

@@ -22,14 +22,18 @@ def Scalar(v1: List[float], v2: List[float]) -> Optional[float]:
         v2 (List[float]): Second vector
 
     Returns:
-        float: Scalar product of vectors v1 and v2
+        Optional[float]: Scalar product of vectors v1 and v2
     """
     if len(v1) != len(v2):
         return None
+
+    if not v1 or not v2:
+        return None
+
     return sum(v1[i] * v2[i] for i in range(len(v1)))
 
 
-def Lenth(v: List[float]) -> float:
+def Lenth(v: List[float]) -> Optional[float]:
     """
     Calculate length of a vector
 
@@ -37,8 +41,11 @@ def Lenth(v: List[float]) -> float:
         v (List[float]): Input vector
 
     Returns:
-        float: Length of vector v
+        Optional[float]: Length of vector v
     """
+    if not v:
+        return 0.0
+
     return sqrt(sum(x**2 for x in v))
 
 
@@ -51,8 +58,28 @@ def Angle(v1: List[float], v2: List[float]) -> Optional[float]:
         v2 (List[float]): Second vector
 
     Returns:
-        float: Angle between vectors in radians
+        Optional[float]: Angle between vectors in radians
     """
+
     if len(v1) != len(v2):
         return None
-    return acos(Scalar(v1, v2) / (Lenth(v1) * Lenth(v2)))
+
+    scalar_product = Scalar(v1, v2)
+    if scalar_product is None:
+        return None
+
+    length_v1 = Lenth(v1)
+    length_v2 = Lenth(v2)
+
+    if length_v1 == 0 or length_v2 == 0:
+        return None
+
+    denominator = length_v1 * length_v2
+    if denominator == 0:
+        return None
+
+    cos_angle = scalar_product / denominator
+    if cos_angle < -1 or cos_angle > 1:
+        return None
+
+    return acos(cos_angle)
