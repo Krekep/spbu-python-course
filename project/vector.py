@@ -29,7 +29,7 @@ def Scalar(v1: List[float], v2: List[float]) -> Optional[float]:
     return sum(v1[i] * v2[i] for i in range(len(v1)))
 
 
-def Lenth(v: List[float]) -> Optional[float]:
+def Lenth(v: List[float]) -> float:
     """
     Calculate length of a vector
 
