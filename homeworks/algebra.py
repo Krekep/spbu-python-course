@@ -1,14 +1,17 @@
 import numpy as np
 
-def Scalar(a, b): #скалярное произведение
+
+def Scalar(a, b):  # скалярное произведение
     if a.shape != b.shape:
         raise ValueError("Векторы должны иметь одинаковую размерность")
     return np.dot(a, b)
 
-def Normal(a):  #длина
+
+def Normal(a):  # длина
     return np.linalg.norm(a)
 
-def Angle(a, b): # угол между векторами
+
+def Angle(a, b):  # угол между векторами
     if Normal(a) == 0 or Normal(b) == 0:
         raise ValueError("Нулевой вектор использовать нельзя")
     cos_angle = Scalar(a, b) / (Normal(a) * Normal(b))
@@ -17,17 +20,21 @@ def Angle(a, b): # угол между векторами
     angle_deg = np.degrees(angle_rad)
     return angle_deg
 
-def Trans(M): # транспонирование
+
+def Trans(M):  # транспонирование
     return M.T
-  
-def Multiplication(M, N): # умножение матриц
-    #if M.shape[1] != N.shape[0]:
-        #raise ValueError("Матрицы должны иметь одинаковую размерность")
+
+
+def Multiplication(M, N):  # умножение матриц
+    # if M.shape[1] != N.shape[0]:
+    # raise ValueError("Матрицы должны иметь одинаковую размерность")
     return np.dot(M, N)
 
-def Summa(M, N): # сложение
+
+def Summa(M, N):  # сложение
     if M.shape != N.shape:
         raise ValueError("Матрицы должны иметь одинаковую размерность")
     return M + N
 
-ALGEBRA_OPERATIONS = ['Scalar','Normal','Angle','Trans','Multiplication','Summa']
+
+ALGEBRA_OPERATIONS = ["Scalar", "Normal", "Angle", "Trans", "Multiplication", "Summa"]
