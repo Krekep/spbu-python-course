@@ -27,4 +27,4 @@ jobs:
 
       - name: Run pre-commit
         run: |
-          pre-commit run --all-files || (echo "Code style issues found. Please run 'pre-commit run --all-files' locally to fix them." && exit 1)
+          pre-commit run --all-files || echo "Code style issues found. Please run 'pre-commit run --all-files' locally to fix them." && exit 1
