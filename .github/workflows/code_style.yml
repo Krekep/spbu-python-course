@@ -27,7 +27,6 @@ jobs:
           python -m pip install -r requirements.txt
           python -m pip install pre-commit mypy pytest pytest-cov
           python -m pip install types-requests
-          python -m pip list
           
       #- name: Install pre-commit
         #run: |
@@ -35,13 +34,7 @@ jobs:
           
       - name: Run pre-commit
         run: |
-          pre-commit run --all-files --color always --verbose --show-diff-on-failure
-          
-      - name: Commit auto-fixes
-        if: failure()
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
+          pre-commit run --all-files
           git add .
           git diff --staged --quiet || git commit -m "Apply automatic code style fixes"
           git push
