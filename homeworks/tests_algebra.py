@@ -50,4 +50,3 @@ class TestAlgebra:
         expected = A + B
         result = Summa(A, B)
         np.testing.assert_array_equal(result, expected)
-      
