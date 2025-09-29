@@ -10,5 +10,5 @@ jobs:
     - uses: actions/setup-python@v5
       with:
         python-version: '3.12'
-    - run: pip install mypy
-    - run: mypy .
+    - run: pip install mypy pytest types-pytest
+    - run: PYTHONPATH=$PYTHONPATH:$(pwd) mypy .
