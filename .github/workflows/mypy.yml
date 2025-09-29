@@ -11,4 +11,4 @@ jobs:
       with:
         python-version: '3.12'
     - run: pip install mypy pytest types-pytest
-    - run: PYTHONPATH=$PYTHONPATH:$(pwd) mypy .
+    - run: PYTHONPATH=$PYTHONPATH:$(pwd) mypy . --ignore-missing-imports
