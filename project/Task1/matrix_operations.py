@@ -14,7 +14,7 @@ def matrix_add(matrix1, matrix2):
     """
     if len(matrix1) != len(matrix2) or len(matrix1[0]) != len(matrix2[0]):
         raise ValueError("Matrices must have the same dimensions")
-    
+
     return [
         [matrix1[i][j] + matrix2[i][j] for j in range(len(matrix1[0]))]
         for i in range(len(matrix1))
@@ -33,7 +33,7 @@ def matrix_multiply(matrix1, matrix2):
         list: Resulting matrix after multiplication.
 
     Raises:
-        ValueError: If number of columns in first matrix doesn't match 
+        ValueError: If number of columns in first matrix doesn't match
                    number of rows in second matrix.
     """
     if len(matrix1[0]) != len(matrix2):
@@ -41,7 +41,7 @@ def matrix_multiply(matrix1, matrix2):
             "Number of columns in first matrix must equal "
             "number of rows in second matrix"
         )
-    
+
     result = [[0] * len(matrix2[0]) for _ in range(len(matrix1))]
     for i in range(len(matrix1)):
         for k in range(len(matrix2)):
@@ -66,18 +66,18 @@ def matrix_transpose(matrix):
 class Matrix:
     """
     A class representing a mathematical matrix.
-    
+
     Attributes:
         data (list): Matrix data as list of lists.
     """
-    
+
     def __init__(self, data):
         """
         Initialize a matrix with given data.
-        
+
         Args:
             data (list): Matrix data as list of lists.
-            
+
         Raises:
             ValueError: If rows have inconsistent lengths.
         """
@@ -86,43 +86,43 @@ class Matrix:
         self.data = data
         self.rows = len(data)
         self.cols = len(data[0])
-    
+
     def add(self, other):
         """
         Add another matrix to this matrix.
-        
+
         Args:
             other (Matrix): Another matrix.
-            
+
         Returns:
             Matrix: Result of addition.
         """
         return Matrix(matrix_add(self.data, other.data))
-    
+
     def multiply(self, other):
         """
         Multiply with another matrix.
-        
+
         Args:
             other (Matrix): Another matrix.
-            
+
         Returns:
             Matrix: Result of multiplication.
         """
         return Matrix(matrix_multiply(self.data, other.data))
-    
+
     def transpose(self):
         """
         Transpose the matrix.
-        
+
         Returns:
             Matrix: Transposed matrix.
         """
         return Matrix(matrix_transpose(self.data))
-    
+
     def __repr__(self):
         return f"Matrix({self.data})"
-    
+
     def __eq__(self, other):
         if not isinstance(other, Matrix):
             return False
