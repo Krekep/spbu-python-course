@@ -1,28 +1,23 @@
-name: Run Tests
+name: Run All Tests
 
 on: [push, pull_request]
 
 jobs:
   test:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: [3.9]
-
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
-    - name: Set up Python ${{ matrix.python-version }}
+    - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: ${{ matrix.python-version }}
+        python-version: '3.9'
 
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install pytest
+    - name: Install pytest
+      run: pip install pytest
 
-    - name: Run tests
-      run: |
-        PYTHONPATH=project python -m pytest tests/Tests1/matrix_tests.py tests/Tests1/vector_tests.py -v
+    - name: Run all tests
+      env:
+        PYTHONPATH: project
+      run: pytest tests/ -v
