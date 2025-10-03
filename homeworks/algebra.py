@@ -33,7 +33,7 @@ def normal(a: list) -> float:
     Returns:
         Длина вектора
     """
-    return math.sqrt(sum(x * x for x in a))  # ✅ Исправлено: убрана лишняя скобка
+    return math.sqrt(sum(x * x for x in a))
 
 
 def angle(a: list, b: list) -> float:
@@ -107,16 +107,16 @@ def multiplication(M: list, N: list) -> list:
     for i in range(row_M):
         new_row = []
         for j in range(stri_N):
-            sum_val = 0  # ✅ Исправлено: не использовать sum
+            sum_val = 0
             for k in range(stri_M):
-                sum_val += M[i][k] * N[k][j]  # ✅ Исправлено: sum_val вместо sum
+                sum_val += M[i][k] * N[k][j]
             new_row.append(sum_val)
         multi.append(new_row)
     return multi
 
 
 def summa(M: list, N: list) -> list:
-    """  # ✅ Исправлено: правильный отступ
+    """  
     Складывает две матрицы.
 
     Args:
