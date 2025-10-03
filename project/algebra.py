@@ -115,7 +115,7 @@ def multiplication(M: list, N: list) -> list:
 
 
 def summa(M: list, N: list) -> list:
-    """  
+    """
     Складывает две матрицы.
 
     Args:
