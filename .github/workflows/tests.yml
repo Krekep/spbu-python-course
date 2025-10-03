@@ -25,4 +25,4 @@ jobs:
 
     - name: Run tests
       run: |
-        PYTHONPATH=project python -m pytest tests/Tests1/ -v
+        PYTHONPATH=project python -m pytest tests/Tests1/matrix_tests.py tests/Tests1/vector_tests.py -v
