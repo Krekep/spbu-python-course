@@ -99,7 +99,6 @@ def multiplication(M: list, N: list) -> list:
     """
     if len(M[0]) != len(N):
         raise ValueError("Несовместимые размеры матриц")
-
     row_M = len(M)  # строк в M
     stri_M = len(M[0])  # столбцов в M (и строк в N)
     stri_N = len(N[0])  # столбцов в N
