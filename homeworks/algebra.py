@@ -1,19 +1,55 @@
 import math
 
 
-def scalar(a, b):  # скалярное произведение
+def scalar(a: list, b: list) -> float:
+    """
+    Вычисляет скалярное произведение двух векторов.
+    
+    Args:
+        a: Первый вектор (список чисел)
+        b: Второй вектор (список чисел)
+        
+    Returns:
+        Скалярное произведение векторов
+        
+    Raises:
+        ValueError: Если векторы разной длины
+    """
     if len(a) != len(b):
         raise ValueError("Векторы должны иметь одинаковую размерность")
+    sca = 0
     for i in range(len(a)):
-            scalar = a[i]*b[i]
-    return scalar
+            sca += a[i]*b[i]
+    return sca
 
 
-def normal(a):  # длина
-    return len(a)
+def normal(a: list) -> float:
+    """
+    Вычисляет длину (норму) вектора.
+    
+    Args:
+        a: Входной вектор (список чисел)
+        
+    Returns:
+        Длина вектора
+    """
+    return math.sqrt(sum(x * x for x in a)))
 
 
-def angle(a, b):  # угол между векторами
+def angle(a: list, b: list) -> float:
+    """
+    Вычисляет угол между двумя векторами в градусах.
+    
+    Args:
+        a: Первый вектор (список чисел)
+        b: Второй вектор (список чисел)
+        
+    Returns:
+        Угол между векторами в градусах
+        
+    Raises:
+        ValueError: Если один из векторов нулевой
+    """
     if normal(a) == 0 or normal(b) == 0:
         raise ValueError("Нулевой вектор использовать нельзя")
     cos_angle = scalar(a, b) / (normal(a) * normal(b))
@@ -26,7 +62,16 @@ def angle(a, b):  # угол между векторами
     return angle_deg
 
 
-def trans(M): # транспонирование
+def trans(M: list) -> list:
+    """
+    Транспонирует матрицу.
+    
+    Args:
+        M: Исходная матрица (список списков чисел)
+        
+    Returns:
+        Транспонированная матрица
+    """
     row = len(M) # элементы в первом столбце
     stri = len(M[0]) # элементы в первой строке 
     trans_matrix = []
@@ -38,8 +83,21 @@ def trans(M): # транспонирование
     return trans_matrix
 
 
-def multiplication(M, N):  # умножение матриц
-    if len(M) != len(N) or len(M[0]) != len(N[0]):
+def multiplication(M: list, N: list) -> list:
+    """
+    Умножает две матрицы.
+    
+    Args:
+        M: Первая матрица (список списков чисел)
+        N: Вторая матрица (список списков чисел)
+        
+    Returns:
+        Результат умножения матриц
+        
+    Raises:
+        ValueError: Если матрицы нельзя умножить
+    """
+    if len(M[0]) != len(N):
         raise ValueError("Матрицы должны иметь одинаковую размерность")
     row_M = len(M)      # строк в M
     stri_M = len(M[0])   # столбцов в M (и строк в N)
@@ -52,19 +110,32 @@ def multiplication(M, N):  # умножение матриц
             for k in range(stri_M):
                 sum += M[i][k] * N[k][j]
             new_row.append(sum)
-        result.append(new_row)  
-    return result
+        multi.append(new_row)  
+    return multi
 
 
-def summa(M, N):  # сложение
+def summa(M: list, N: list) -> list:
+     """
+    Складывает две матрицы.
+    
+    Args:
+        M: Первая матрица (список списков чисел)
+        N: Вторая матрица (список списков чисел)
+        
+    Returns:
+        Сумма матриц
+        
+    Raises:
+        ValueError: Если матрицы имеют разные размеры
+    """
     if len(M) != len(N) or len(M[0]) != len(N[0]):
         raise ValueError("Матрицы должны иметь одинаковую размерность")
     row = len(M) # элементы в первом столбце
     stri = len(M[0]) # элементы в первой строке
     suma = []
-    for i in range(stri):
+    for i in range(row):
         new_stri = []
-        for j in range(row):
+        for j in range(stri):
             k = M[i][j] + N[i][j]
             new_stri.append(k)
         suma.append(new_stri)    
