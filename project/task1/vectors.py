@@ -56,7 +56,7 @@ def angle_vectors(v1: List[float], v2: List[float]) -> float:
     Raises:
         ValueError: If the vector has zero length
     """
-    if len(v1) == 0 or len(v2) == 0:
+    if vector_length(v1) == 0 or vector_length(v2) == 0:
         raise ValueError("Vectors must be non-zero!")
     else:
         return (
