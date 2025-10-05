@@ -40,4 +40,3 @@ def pipeline(data: Iterable, *operations: Callable) -> Iterable:
     for operation in operations:
         result = operation(result)
     return result
-  
