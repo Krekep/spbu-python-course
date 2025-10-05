@@ -30,7 +30,7 @@ def filter_triad(num: Iterable) -> Iterable:
 def cube(num: Iterable) -> Iterable:
     """User-defined cube function"""
     for n in num:
-        yield n ** 3
+        yield n**3
 
 def pipeline(data: Iterable, *operations: Callable) -> Iterable:
     """
