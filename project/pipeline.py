@@ -7,9 +7,11 @@ def dataGen(n: int) -> Iterable[int]:
     for i in range(n):
         yield i
 
+
 def to_list(data: Iterable) -> List:
     """Collects results into a list"""
     return list(data)
+
 
 def to_dict(data: Iterable, key: Callable = None) -> dict:
     """Collects results into a dictionary"""
@@ -17,9 +19,11 @@ def to_dict(data: Iterable, key: Callable = None) -> dict:
         return dict(enumerate(data))
     return {key(i): i for i in data}
 
+
 def to_set(data: Iterable) -> set:
     """Collects results into a set"""
     return set(data)
+
 
 def filter_triad(num: Iterable) -> Iterable:
     """Custom function to filter numbers divisible by 3"""
@@ -27,10 +31,12 @@ def filter_triad(num: Iterable) -> Iterable:
         if n % 3 == 0:
             yield n
 
+
 def cube(num: Iterable) -> Iterable:
     """User-defined cube function"""
     for n in num:
         yield n**3
+
 
 def pipeline(data: Iterable, *operations: Callable) -> Iterable:
     """
