@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Check code style
+name: CI workflows
 
 # Controls when the workflow will run
 on:
@@ -55,3 +55,11 @@ jobs:
       - name: Run pre-commit
         run: |
           pre-commit run --all-files --color always --verbose --show-diff-on-failure
+
+      # Run tests
+      - name: Run tests
+        run: python ./scripts/run_tests.py
+
+      # Typechecking
+      - name: Typechecking with mypy
+        run: mypy .
