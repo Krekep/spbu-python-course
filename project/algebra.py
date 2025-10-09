@@ -1,145 +1,166 @@
 import math
+from typing import List, Union
 
 
-def scalar(a: list, b: list) -> float:
+def scalar(a: List[float], b: List[float]) -> float:
     """
-    Вычисляет скалярное произведение двух векторов.
+    Calculate the scalar product (dot product) of two vectors.
 
     Args:
-        a: Первый вектор (список чисел)
-        b: Второй вектор (список чисел)
+        a: First vector (list of numbers)
+        b: Second vector (list of numbers)
 
     Returns:
-        Скалярное произведение векторов
+        Scalar product of the vectors
 
     Raises:
-        ValueError: Если векторы разной длины
+        ValueError: If vectors have different dimensions
     """
     if len(a) != len(b):
-        raise ValueError("Векторы должны иметь одинаковую размерность")
+        raise ValueError("Vectors must have the same dimension")
+    
     result = 0
     for i in range(len(a)):
         result += a[i] * b[i]
     return result
 
 
-def normal(a: list) -> float:
+def normal(a: List[float]) -> float:
     """
-    Вычисляет длину (норму) вектора.
+    Calculate the length (norm) of a vector.
 
     Args:
-        a: Входной вектор (список чисел)
+        a: Input vector (list of numbers)
 
     Returns:
-        Длина вектора
+        Length of the vector
     """
     return math.sqrt(sum(x * x for x in a))
 
 
-def angle(a: list, b: list) -> float:
+def angle(a: List[float], b: List[float]) -> float:
     """
-    Вычисляет угол между двумя векторами в градусах.
+    Calculate the angle between two vectors in degrees.
 
     Args:
-        a: Первый вектор (список чисел)
-        b: Второй вектор (список чисел)
+        a: First vector (list of numbers)
+        b: Second vector (list of numbers)
 
     Returns:
-        Угол между векторами в градусах
+        Angle between vectors in degrees
 
     Raises:
-        ValueError: Если один из векторов нулевой
+        ValueError: If one of the vectors is zero
     """
-    if normal(a) == 0 or normal(b) == 0:
-        raise ValueError("Нулевой вектор использовать нельзя")
-    cos_angle = scalar(a, b) / (normal(a) * normal(b))
-    if -1 > cos_angle:
-        cos_angle = 1
-    if 1 < cos_angle:
-        cos_angle = -1
+    norm_a = normal(a)
+    norm_b = normal(b)
+    
+    if norm_a == 0 or norm_b == 0:
+        raise ValueError("Cannot use zero vector")
+    
+    cos_angle = scalar(a, b) / (norm_a * norm_b)
+    
+    # Ensure cosine value is within valid range [-1, 1]
+    cos_angle = max(-1.0, min(1.0, cos_angle))
+    
     rad_angle = math.acos(cos_angle)
-    angle_deg = rad_angle * (180 / (math.pi))
+    angle_deg = math.degrees(rad_angle)
+    
     return angle_deg
 
 
-def trans(M: list) -> list:
+def trans(M: List[List[float]]) -> List[List[float]]:
     """
-    Транспонирует матрицу.
+    Transpose a matrix.
 
     Args:
-        M: Исходная матрица (список списков чисел)
+        M: Input matrix (list of lists of numbers)
 
     Returns:
-        Транспонированная матрица
+        Transposed matrix
     """
-    row = len(M)  # элементы в первом столбце
-    stri = len(M[0])  # элементы в первой строке
-    trans_matrix = []
-    for i in range(stri):
-        new_row = []  # новый столбец новой матрицы
-        for j in range(row):
+    rows = len(M)
+    cols = len(M[0])
+    
+    transposed_matrix = []
+    for i in range(cols):
+        new_row = []
+        for j in range(rows):
             new_row.append(M[j][i])
-        trans_matrix.append(new_row)
-    return trans_matrix
+        transposed_matrix.append(new_row)
+    
+    return transposed_matrix
 
 
-def multiplication(M: list, N: list) -> list:
+def multiplication(M: List[List[float]], N: List[List[float]]) -> List[List[float]]:
     """
-    Умножает две матрицы.
+    Multiply two matrices.
 
     Args:
-        M: Первая матрица (список спиков чисел)
-        N: Вторая матрица (список списков чисел)
+        M: First matrix (list of lists of numbers)
+        N: Second matrix (list of lists of numbers)
 
     Returns:
-        Результат умножения матриц
+        Result of matrix multiplication
 
     Raises:
-        ValueError: Если матрицы нельзя умножить
+        ValueError: If matrices have incompatible dimensions
     """
     if len(M[0]) != len(N):
-        raise ValueError("Несовместимые размеры матриц")
-    row_M = len(M)  # строк в M
-    stri_M = len(M[0])  # столбцов в M (и строк в N)
-    stri_N = len(N[0])  # столбцов в N
-    multi = []  # Создаем результирующую матрицу rows_M × cols_N
-    for i in range(row_M):
+        raise ValueError("Incompatible matrix dimensions")
+    
+    rows_m = len(M)
+    cols_m = len(M[0])
+    cols_n = len(N[0])
+    
+    result = []
+    for i in range(rows_m):
         new_row = []
-        for j in range(stri_N):
+        for j in range(cols_n):
             sum_val = 0
-            for k in range(stri_M):
+            for k in range(cols_m):
                 sum_val += M[i][k] * N[k][j]
             new_row.append(sum_val)
-        multi.append(new_row)
-    return multi
+        result.append(new_row)
+    
+    return result
 
 
-def summa(M: list, N: list) -> list:
+def summa(M: List[List[float]], N: List[List[float]]) -> List[List[float]]:
     """
-    Складывает две матрицы.
+    Add two matrices.
 
     Args:
-        M: Первая матрица (список списков чисел)
-        N: Вторая матрица (список списков чисел)
+        M: First matrix (list of lists of numbers)
+        N: Second matrix (list of lists of numbers)
 
     Returns:
-        Сумма матриц
+        Sum of matrices
 
     Raises:
-        ValueError: Если матрицы имеют разные размеры
+        ValueError: If matrices have different dimensions
     """
     if len(M) != len(N) or len(M[0]) != len(N[0]):
-        raise ValueError("Матрицы должны иметь одинаковую размерность")
-    row = len(M)  # элементы в первом столбце
-    stri = len(M[0])  # элементы в первой строке
-    suma = []
-    for i in range(stri):
-        new_stri = []
-        for j in range(row):
-            k = M[i][j] + N[i][j]
-            new_stri.append(k)
-        suma.append(new_stri)
-    return suma
+        raise ValueError("Matrices must have the same dimensions")
+    
+    rows = len(M)
+    cols = len(M[0])
+    
+    result = []
+    for i in range(rows):
+        new_row = []
+        for j in range(cols):
+            new_row.append(M[i][j] + N[i][j])
+        result.append(new_row)
+    
+    return result
 
 
-ALGEBRA_OPERATIONS = ["scalar", "normal", "angle", "trans", "multiplication", "summa"]
+ALGEBRA_OPERATIONS: List[str] = [
+    "scalar", 
+    "normal", 
+    "angle", 
+    "trans", 
+    "multiplication", 
+    "summa"
+]
