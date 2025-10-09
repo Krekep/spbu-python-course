@@ -16,7 +16,7 @@ def zero_dataset() -> Iterator[int]:
 
 
 @pytest.fixture
-def my_operations() -> Dict[str, Callable[[Iterable], Iterable]]:
+def my_operations() -> Dict[str, Callable[[Iterable], Iterable]]]:
     """Fixture providing custom operations for testing."""
     return {
         'filter_triad': filter_triad,
