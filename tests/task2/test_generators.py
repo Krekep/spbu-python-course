@@ -1,6 +1,7 @@
 import pytest
 from typing import Generator, List, Tuple
 from functools import reduce
+from project.task2.generators import generator_data, pipeline, collect
 
 
 @pytest.fixture
