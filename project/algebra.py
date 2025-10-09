@@ -18,7 +18,6 @@ def scalar(a: List[float], b: List[float]) -> float:
     """
     if len(a) != len(b):
         raise ValueError("Vectors must have the same dimension")
-    
     result = 0
     for i in range(len(a)):
         result += a[i] * b[i]
@@ -54,18 +53,13 @@ def angle(a: List[float], b: List[float]) -> float:
     """
     norm_a = normal(a)
     norm_b = normal(b)
-    
     if norm_a == 0 or norm_b == 0:
         raise ValueError("Cannot use zero vector")
-    
     cos_angle = scalar(a, b) / (norm_a * norm_b)
-    
     # Ensure cosine value is within valid range [-1, 1]
     cos_angle = max(-1.0, min(1.0, cos_angle))
-    
     rad_angle = math.acos(cos_angle)
     angle_deg = math.degrees(rad_angle)
-    
     return angle_deg
 
 
@@ -81,14 +75,12 @@ def trans(M: List[List[float]]) -> List[List[float]]:
     """
     rows = len(M)
     cols = len(M[0])
-    
     transposed_matrix = []
     for i in range(cols):
         new_row = []
         for j in range(rows):
             new_row.append(M[j][i])
         transposed_matrix.append(new_row)
-    
     return transposed_matrix
 
 
@@ -108,11 +100,9 @@ def multiplication(M: List[List[float]], N: List[List[float]]) -> List[List[floa
     """
     if len(M[0]) != len(N):
         raise ValueError("Incompatible matrix dimensions")
-    
     rows_m = len(M)
     cols_m = len(M[0])
     cols_n = len(N[0])
-    
     result = []
     for i in range(rows_m):
         new_row = []
@@ -122,7 +112,6 @@ def multiplication(M: List[List[float]], N: List[List[float]]) -> List[List[floa
                 sum_val += M[i][k] * N[k][j]
             new_row.append(sum_val)
         result.append(new_row)
-    
     return result
 
 
@@ -142,25 +131,15 @@ def summa(M: List[List[float]], N: List[List[float]]) -> List[List[float]]:
     """
     if len(M) != len(N) or len(M[0]) != len(N[0]):
         raise ValueError("Matrices must have the same dimensions")
-    
     rows = len(M)
     cols = len(M[0])
-    
     result = []
     for i in range(rows):
         new_row = []
         for j in range(cols):
             new_row.append(M[i][j] + N[i][j])
         result.append(new_row)
-    
     return result
 
 
-ALGEBRA_OPERATIONS: List[str] = [
-    "scalar", 
-    "normal", 
-    "angle", 
-    "trans", 
-    "multiplication", 
-    "summa"
-]
+ALGEBRA_OPERATIONS: List[str] = ["scalar", "normal", "angle", "trans", "multiplication", "summa"]
