@@ -142,4 +142,11 @@ def summa(M: List[List[float]], N: List[List[float]]) -> List[List[float]]:
     return result
 
 
-ALGEBRA_OPERATIONS: List[str] = ["scalar", "normal", "angle", "trans", "multiplication", "summa"]
+ALGEBRA_OPERATIONS: List[str] = [
+    "scalar",
+    "normal",
+    "angle",
+    "trans",
+    "multiplication",
+    "summa"
+]
