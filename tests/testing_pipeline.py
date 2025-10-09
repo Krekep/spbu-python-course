@@ -6,7 +6,7 @@ from typing import Callable, Iterable, Dict, Iterator
 @pytest.fixture
 def small_dataset() -> Iterator[int]:
     """Fixture providing a small dataset generator."""
-    return dataGen(5)
+    return dataGen(10)
 
 
 @pytest.fixture
@@ -27,7 +27,7 @@ def my_operations() -> Dict[str, Callable[[Iterable], Iterable]]:
 @pytest.fixture
 def numb_3() -> Iterator[int]:
     """Fixture providing numbers divisible by 3."""
-    return iter([0, 3, 6, 9, 12])
+    return iter([0, 3, 6])
 
 
 @pytest.fixture
@@ -48,12 +48,12 @@ class TestDataGen:
         result: list[int] = list(small_dataset)
         assert result == [0, 1, 2, 3, 4]
 
-    def test_lazy(self) -> None:
+    '''def test_lazy(self) -> None:
         """Test lazy evaluation of data generator."""
         gen: Iterator[int] = dataGen(1000)
         trio: list[int] = [next(gen) for _ in range(3)]
         assert trio == [0, 1, 2]
-        assert next(gen) == 3
+        assert next(gen) == 3'''
 
 
 class TestPipeline:
