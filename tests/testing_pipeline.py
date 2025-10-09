@@ -18,10 +18,7 @@ def zero_dataset() -> Iterator[int]:
 @pytest.fixture
 def my_operations() -> Dict[str, Callable[[Iterable], Iterable]]]:
     """Fixture providing custom operations for testing."""
-    return {
-        'filter_triad': filter_triad,
-        'cube': cube
-    }
+    return {"filter_triad": filter_triad, "cube": cube}
 
 
 @pytest.fixture
@@ -34,9 +31,9 @@ def numb_3() -> Iterator[int]:
 def classic_operations() -> Dict[str, Callable[[Iterable], Iterable]]:
     """Fixture providing built-in style operations for testing."""
     return {
-        'd_map': lambda x: map(lambda y: y * 2, x),
-        'z_filter': lambda x: filter(lambda y: y % 2 == 0, x),
-        'add_zip': lambda x: zip(x, map(lambda y: y + 10, x))
+        "d_map": lambda x: map(lambda y: y * 2, x),
+        "z_filter": lambda x: filter(lambda y: y % 2 == 0, x),
+        "add_zip": lambda x: zip(x, map(lambda y: y + 10, x)),
     }
 
 
@@ -59,13 +56,14 @@ class TestDataGen:
 class TestPipeline:
     """Test cases for the pipeline function."""
     
-    def test_basic_flow(self, small_dataset: Iterator[int], 
-                        my_operations: Dict[str, Callable[[Iterable], Iterable]]) -> None:
+    def test_basic_flow(
+        self,
+        small_dataset: Iterator[int],
+        my_operations: Dict[str, Callable[[Iterable], Iterable]],
+    ) -> None:
         """Test basic pipeline flow with custom operations."""
         result: Iterable = pipeline(
-            small_dataset,
-            my_operations['filter_triad'],
-            my_operations['cube']
+            small_dataset, my_operations["filter_triad"], my_operations["cube"]
         )
         final: list[int] = to_list(result)
         assert final == [0, 27]
@@ -74,24 +72,33 @@ class TestPipeline:
 class TestFuncSupport:
     """Test cases for built-in function support."""
     
-    def test_map(self, small_dataset: Iterator[int],
-                 classic_operations: Dict[str, Callable[[Iterable], Iterable]]) -> None:
+    def test_map(
+        self,
+        small_dataset: Iterator[int],
+        classic_operations: Dict[str, Callable[[Iterable], Iterable]],
+    ) -> None:
         """Test pipeline support for map function."""
-        result: Iterable = pipeline(small_dataset, classic_operations['d_map'])
+        result: Iterable = pipeline(small_dataset, classic_operations["d_map"])
         final: list[int] = to_list(result)
         assert final == [0, 2, 4, 6, 8]
 
-    def test_filter(self, small_dataset: Iterator[int],
-                    classic_operations: Dict[str, Callable[[Iterable], Iterable]]) -> None:
+    def test_filter(
+        self,
+        small_dataset: Iterator[int],
+        classic_operations: Dict[str, Callable[[Iterable], Iterable]],
+    ) -> None:
         """Test pipeline support for filter function."""
-        result: Iterable = pipeline(small_dataset, classic_operations['z_filter'])
+        result: Iterable = pipeline(small_dataset, classic_operations["z_filter"])
         final: list[int] = to_list(result)
         assert final == [0, 2, 4]
 
-    def test_zip(self, small_dataset: Iterator[int],
-                 classic_operations: Dict[str, Callable[[Iterable], Iterable]]) -> None:
+    def test_zip(
+        self,
+        small_dataset: Iterator[int],
+        classic_operations: Dict[str, Callable[[Iterable], Iterable]],
+    ) -> None:
         """Test pipeline support for zip function."""
-        result: Iterable = pipeline(small_dataset, classic_operations['add_zip'])
+        result: Iterable = pipeline(small_dataset, classic_operations["add_zip"])
         final: list[tuple[int, int]] = to_list(result)
         assert final == [(0, 10), (1, 11), (2, 12), (3, 13), (4, 14)]
 
@@ -130,6 +137,7 @@ class TestAggregatorFunctions:
 
     def test_to_set(self) -> None:
         """Test to_set aggregator function with duplicate handling."""
+        
         def data_duplicates() -> Iterator[int]:
             """Generator yielding duplicate values for testing."""
             yield 1
