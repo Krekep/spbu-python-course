@@ -148,5 +148,5 @@ ALGEBRA_OPERATIONS: List[str] = [
     "angle",
     "trans",
     "multiplication",
-    "summa"
+    "summa",
 ]
