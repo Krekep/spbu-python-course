@@ -8,7 +8,7 @@ def data_generator(start: int = 0, end: int = 10) -> Iterator[int]:
         yield i
 
 
-def pipeline(source: Iterable, *operations: Callable) -> Iterator:
+def pipeline(source: Iterable, *operations: Callable) -> Iterable:
     """
     Takes a data source and sequence of operations,
     applies them sequentially, returning a lazy generator.
