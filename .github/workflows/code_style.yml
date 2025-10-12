@@ -23,15 +23,20 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           python -m pip install -r requirements.txt
-          python -m pip install pre-commit black
+          python -m pip install pre-commit black mypy pytest
+
+      - name: Install project in development mode
+        run: |
+          pip install -e .
 
       - name: Run pre-commit
         run: |
           pre-commit run --all-files --color always --verbose --show-diff-on-failure
 
-      - name: Cleanup
+      - name: Run static type checking with mypy
         run: |
-          # Очистка кеша (если есть доступ)
-          curl -X DELETE \
-            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-            "https://api.github.com/repos/${{ github.repository }}/actions/caches"
+          python -m mypy --ignore-missing-imports --show-error-codes .
+
+      - name: Run tests with pytest
+        run: |
+          python -m pytest -v --tb=short
