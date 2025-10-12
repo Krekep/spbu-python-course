@@ -45,9 +45,9 @@ class TestAlgebra:
 
     def test_multiplication(self) -> None:
         """Test matrix multiplication."""
-        a = [[1, 2], [3, 4]]
-        b = [[5, 6], [7, 8]]
-        expected = [[19, 22], [43, 50]]
+        a = [[1.0, 2.0], [3.0, 4.0]]
+        b = [[5.0, 6.0], [7.0, 8.0]]
+        expected = [[19.0, 22.0], [43.0, 50.0]]
         result = multiplication(a, b)
         assert result == expected
 
