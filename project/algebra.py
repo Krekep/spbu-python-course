@@ -18,7 +18,7 @@ def scalar(a: List[float], b: List[float]) -> float:
     """
     if len(a) != len(b):
         raise ValueError("Vectors must have the same dimension")
-    result = 0
+    result = 0.0
     for i in range(len(a)):
         result += a[i] * b[i]
     return result
@@ -107,7 +107,7 @@ def multiplication(M: List[List[float]], N: List[List[float]]) -> List[List[floa
     for i in range(rows_m):
         new_row = []
         for j in range(cols_n):
-            sum_val = 0
+            sum_val = 0.0
             for k in range(cols_m):
                 sum_val += M[i][k] * N[k][j]
             new_row.append(sum_val)
