@@ -41,7 +41,7 @@ def randomiser(num: int) -> Iterator[int]:
     """
     Generate a sequence of random integers.
     Args:
-        num: Number of random integers to generate   
+        num: Number of random integers to generate
     Yields:
         Random integers in the range 1-50
     """
@@ -53,7 +53,7 @@ def ran_stri(stri: int) -> Iterator[str]:
     """
     Generate random strings composed of lowercase English letters.
     Args:
-        stri: Number of random strings to generate    
+        stri: Number of random strings to generate
     Yields:
         Random strings of length 1-5 characters
     """
