@@ -1,5 +1,5 @@
 from functools import reduce
-from typing import Callable, Iterable, Any, List
+from typing import Iterable, Callable, Any, Optional, Dict, Set, List, Literal
 
 
 def dataGen(n: int) -> Iterable[int]:
@@ -9,8 +9,8 @@ def dataGen(n: int) -> Iterable[int]:
 
 
 def to_collect(
-    data: Iterable, key: Callable = None, *, flag: Literal["l", "s", "d"]
-) -> None:
+    data: Iterable, key: Optional[Callable[..., Any]] = None, *, flag: Literal["l", "s", "d"]
+) -> List | Set | Dict:
     """Collects results into a list"""
     if flag == "l":
         return list(data)
