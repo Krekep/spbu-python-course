@@ -1,25 +1,25 @@
 import pytest
 from functools import reduce
 from typing import Callable, Iterable, Dict, Iterator, Tuple, List, Set
-from project.pipeline import dataGen, filter_triad, cube, pipeline, to_collect
+from project.pipeline import dataGen, randomiser, ran_stri, pipeline, to_collect
 
 
 @pytest.fixture
 def small_dataset() -> Iterator[int]:
     """Fixture providing a small dataset generator."""
-    return dataGen(10)
+    return dataGen(5)
 
 
 @pytest.fixture
 def my_operations() -> Dict[str, Callable[[Iterable], Iterable]]:
     """Fixture providing custom operations for testing."""
-    return {"filter_triad": filter_triad, "cube": cube}
+    return {"randomiser": randomiser, "ran_stri": ran_stri}
 
 
 @pytest.fixture
 def numb_3() -> Iterator[int]:
-    """Fixture providing numbers divisible by 3."""
-    return iter([0, 3, 6, 9, 12])
+    """Fixture providing numbers for testing."""
+    return dataGen(5)
 
 
 class TestDataGen:
@@ -48,10 +48,11 @@ class TestPipeline:
     ) -> None:
         """Test basic pipeline flow with custom operations."""
         result: Iterable = pipeline(
-            small_dataset, my_operations["filter_triad"], my_operations["cube"]
+            small_dataset, my_operations["randomiser"]
         )
         final: List[int] = to_collect(result, flag="l")
-        assert final == [0, 27]
+        assert len(final) == 5
+        assert all(1 <= x <= 50 for x in final)
 
 
 class TestFuncSupport:
@@ -63,7 +64,7 @@ class TestFuncSupport:
         classic_operations: Dict[str, Callable[[Iterable], Iterable]],
     ) -> None:
         """Test pipeline support for map function."""
-        result: Iterable = pipeline(small_dataset, map)
+        result: Iterable = pipeline(small_dataset, lambda x: map(double, x))
         final: List[int] = to_collect(result, flag="l")
         assert final == [0, 2, 4, 6, 8]
 
@@ -73,7 +74,7 @@ class TestFuncSupport:
         classic_operations: Dict[str, Callable[[Iterable], Iterable]],
     ) -> None:
         """Test pipeline support for filter function."""
-        result: Iterable = pipeline(small_dataset, filter)
+        result: Iterable = pipeline(small_dataset, lambda x: filter(is_even, x))
         final: List[int] = to_collect(result, flag="l")
         assert final == [0, 2, 4]
 
@@ -83,32 +84,35 @@ class TestFuncSupport:
         classic_operations: Dict[str, Callable[[Iterable], Iterable]],
     ) -> None:
         """Test pipeline support for zip function."""
-        result: Iterable = pipeline(small_dataset, zip)
+        result: Iterable = pipeline(small_dataset, lambda x: zip(x, map(add_ten, x)))
         final: List[Tuple[int, int]] = to_collect(result, flag="l")
         assert final == [(0, 10), (1, 11), (2, 12), (3, 13), (4, 14)]
 
     def test_reduce(self, numb_3: Iterator[int]) -> None:
         """Test integration with reduce function."""
-        data: Iterable = pipeline(numb_3, cube)
+        data: Iterable = pipeline(numb_3, randomiser)
         result: int = reduce(lambda x, y: x + y, data)
-        assert result == 0 + 27 + 216 + 729 + 1728
+        assert isinstance(result, int)
 
 
 class TestCustomSupport:
     """Test cases for custom function support."""
 
-    def test_filter_triad(self, small_dataset: Iterator[int]) -> None:
-        """Test custom filter_triad function."""
-        result: Iterable = filter_triad(small_dataset)
+    def test_randomiser(self, small_dataset: Iterator[int]) -> None:
+        """Test custom randomiser function."""
+        result: Iterable = randomiser(5)
         final: List[int] = to_collect(result, flag="l")
-        assert final == [0, 3]
+        assert len(final) == 5
+        assert all(1 <= x <= 50 for x in final)
 
-    def test_cube_function(self) -> None:
-        """Test custom cube function."""
-        data: Iterator[int] = iter([1, 2, 3])
-        result: Iterable = cube(data)
-        final: List[int] = to_collect(result, flag="l")
-        assert final == [1, 8, 27]
+    def test_ran_stri_function(self) -> None:
+        """Test custom ran_stri function."""
+        result: Iterable = ran_stri(3)
+        final: List[str] = to_collect(result, flag="l")
+        assert len(final) == 3
+        for string in final:
+            assert 1 <= len(string) <= 5
+            assert all(char in "qwertyuiopasdfghjklzxcvbnm" for char in string)
 
 
 class TestAggregatorFunctions:
