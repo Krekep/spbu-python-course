@@ -1,6 +1,7 @@
 import pytest
 from functools import reduce
-from typing import Callable, Iterable, Dict, Iterator
+from typing import Callable, Iterable, Dict, Iterator, Tuple, List, Set
+from project.pipeline import dataGen, filter_triad, cube, pipeline, to_collect
 
 
 @pytest.fixture
@@ -26,13 +27,13 @@ class TestDataGen:
 
     def test_correct_gen(self, small_dataset: Iterator[int]) -> None:
         """Test that data generator produces correct sequence."""
-        result: list[int] = list(small_dataset)
+        result: List[int] = to_collect(small_dataset, flag="l")
         assert result == [0, 1, 2, 3, 4]
 
     def test_lazy(self) -> None:
         """Test lazy evaluation of data generator."""
         gen: Iterator[int] = dataGen(1000)
-        trio: list[int] = [next(gen) for _ in range(3)]
+        trio: List[int] = [next(gen) for _ in range(3)]
         assert trio == [0, 1, 2]
         assert next(gen) == 3
 
@@ -49,7 +50,7 @@ class TestPipeline:
         result: Iterable = pipeline(
             small_dataset, my_operations["filter_triad"], my_operations["cube"]
         )
-        final: list[int] = to_list(result)
+        final: List[int] = to_collect(result, flag="l")
         assert final == [0, 27]
 
 
@@ -63,7 +64,7 @@ class TestFuncSupport:
     ) -> None:
         """Test pipeline support for map function."""
         result: Iterable = pipeline(small_dataset, map)
-        final: list[int] = to_list(result)
+        final: List[int] = to_collect(result, flag="l")
         assert final == [0, 2, 4, 6, 8]
 
     def test_filter(
@@ -73,7 +74,7 @@ class TestFuncSupport:
     ) -> None:
         """Test pipeline support for filter function."""
         result: Iterable = pipeline(small_dataset, filter)
-        final: list[int] = to_list(result)
+        final: List[int] = to_collect(result, flag="l")
         assert final == [0, 2, 4]
 
     def test_zip(
@@ -83,7 +84,7 @@ class TestFuncSupport:
     ) -> None:
         """Test pipeline support for zip function."""
         result: Iterable = pipeline(small_dataset, zip)
-        final: list[tuple[int, int]] = to_list(result)
+        final: List[Tuple[int, int]] = to_collect(result, flag="l")
         assert final == [(0, 10), (1, 11), (2, 12), (3, 13), (4, 14)]
 
     def test_reduce(self, numb_3: Iterator[int]) -> None:
@@ -99,19 +100,19 @@ class TestCustomSupport:
     def test_filter_triad(self, small_dataset: Iterator[int]) -> None:
         """Test custom filter_triad function."""
         result: Iterable = filter_triad(small_dataset)
-        final: list[int] = to_list(result)
+        final: List[int] = to_collect(result, flag="l")
         assert final == [0, 3]
 
     def test_cube_function(self) -> None:
         """Test custom cube function."""
         data: Iterator[int] = iter([1, 2, 3])
         result: Iterable = cube(data)
-        final: list[int] = to_list(result)
+        final: List[int] = to_collect(result, flag="l")
         assert final == [1, 8, 27]
 
 
 class TestAggregatorFunctions:
-    def test_to_collect_all_flags(self) -> None:
+    def test_to_collect(self) -> None:
         """Test all collection modes in one test."""
         data = [1, 2, 3, 4]
 
