@@ -1,5 +1,6 @@
 from functools import reduce
-from typing import Iterable, Callable, Any, Optional, Dict, Set, List, Literal
+from random import randint
+from typing import Iterable, Callable, Any, Optional, Dict, Set, List, Literal, Union
 
 
 def dataGen(n: int) -> Iterable[int]:
@@ -13,7 +14,7 @@ def to_collect(
     key: Optional[Callable[..., Any]] = None,
     *,
     flag: Literal["l", "s", "d"]
-) -> List | Set | Dict:
+) -> Union[List, Set, Dict]:
     """Collects results into a list"""
     if flag == "l":
         return list(data)
@@ -25,17 +26,34 @@ def to_collect(
         return {key(i): i for i in data}
 
 
-def filter_triad(num: Iterable) -> Iterable:
-    """Custom function to filter numbers divisible by 3"""
-    for n in num:
-        if n % 3 == 0:
-            yield n
+def randomiser(num: int) -> Iterator[int]:
+    """
+    Generate a sequence of random integers.
+    
+    Args:
+        num: Number of random integers to generate
+        
+    Yields:
+        Random integers in the range 1-50
+    """
+    for _ in range(num):
+        yield randint(1, 50)
 
-
-def cube(num: Iterable) -> Iterable:
-    """User-defined cube function"""
-    for n in num:
-        yield n**3
+def ran_stri(stri: int) -> Iterator[str]:
+    """
+    Generate random strings composed of lowercase English letters.
+    
+    Args:
+        stri: Number of random strings to generate
+        
+    Yields:
+        Random strings of length 1-5 characters
+    """
+    base: str = "qwertyuiopasdfghjklzxcvbnm"
+    for _ in range(stri):
+        leni: int = randint(1, 5)
+        rand_str: str = ''.join(base[randint(0, 25)] for _ in range(leni))
+        yield rand_str
 
 
 def pipeline(data: Iterable, *operations: Callable) -> Iterable:
