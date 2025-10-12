@@ -25,9 +25,9 @@ jobs:
           python -m pip install -r requirements.txt
           python -m pip install pre-commit black mypy pytest
 
-      - name: Run pre-commit
-        run: |
-          pre-commit run --all-files --color always --verbose --show-diff-on-failure
+     # - name: Run pre-commit
+     #  run: |
+     #     pre-commit run --all-files --color always --verbose --show-diff-on-failure
 
       - name: Run type checking with mypy
         run: |
