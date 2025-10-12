@@ -1,6 +1,17 @@
 from functools import reduce
 from random import randint
-from typing import Iterable, Callable, Any, Optional, Dict, Set, List, Literal, Union, Iterator
+from typing import (
+    Iterable,
+    Callable,
+    Any,
+    Optional,
+    Dict,
+    Set,
+    List,
+    Literal,
+    Union,
+    Iterator,
+)
 
 
 def dataGen(n: int) -> Iterator[int]:
@@ -29,10 +40,8 @@ def to_collect(
 def randomiser(num: int) -> Iterator[int]:
     """
     Generate a sequence of random integers.
-    
     Args:
-        num: Number of random integers to generate
-        
+        num: Number of random integers to generate   
     Yields:
         Random integers in the range 1-50
     """
@@ -43,17 +52,15 @@ def randomiser(num: int) -> Iterator[int]:
 def ran_stri(stri: int) -> Iterator[str]:
     """
     Generate random strings composed of lowercase English letters.
-    
     Args:
-        stri: Number of random strings to generate
-        
+        stri: Number of random strings to generate    
     Yields:
         Random strings of length 1-5 characters
     """
     base: str = "qwertyuiopasdfghjklzxcvbnm"
     for _ in range(stri):
         leni: int = randint(1, 5)
-        rand_str: str = ''.join(base[randint(0, 25)] for _ in range(leni))
+        rand_str: str = rand_str: str = "".join(base[randint(0, 25)] for _ in range(leni))
         yield rand_str
 
 
