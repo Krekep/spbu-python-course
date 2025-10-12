@@ -47,9 +47,7 @@ class TestPipeline:
         my_operations: Dict[str, Callable[[Iterable], Iterable]],
     ) -> None:
         """Test basic pipeline flow with custom operations."""
-        result: Iterable = pipeline(
-            small_dataset, my_operations["randomiser"]
-        )
+        result: Iterable = pipeline(small_dataset, my_operations["randomiser"])
         final: List[int] = to_collect(result, flag="l")
         assert len(final) == 5
         assert all(1 <= x <= 50 for x in final)
