@@ -10,12 +10,6 @@ def small_dataset() -> Iterator[int]:
 
 
 @pytest.fixture
-def zero_dataset() -> Iterator[int]:
-    """Fixture providing an empty dataset generator."""
-    return dataGen(0)
-
-
-@pytest.fixture
 def my_operations() -> Dict[str, Callable[[Iterable], Iterable]]:
     """Fixture providing custom operations for testing."""
     return {"filter_triad": filter_triad, "cube": cube}
@@ -25,16 +19,6 @@ def my_operations() -> Dict[str, Callable[[Iterable], Iterable]]:
 def numb_3() -> Iterator[int]:
     """Fixture providing numbers divisible by 3."""
     return iter([0, 3, 6, 9, 12])
-
-
-@pytest.fixture
-def classic_operations() -> Dict[str, Callable[[Iterable], Iterable]]:
-    """Fixture providing built-in style operations for testing."""
-    return {
-        "d_map": lambda x: map(lambda y: y * 2, x),
-        "z_filter": lambda x: filter(lambda y: y % 2 == 0, x),
-        "add_zip": lambda x: zip(x, map(lambda y: y + 10, x)),
-    }
 
 
 class TestDataGen:
@@ -78,7 +62,7 @@ class TestFuncSupport:
         classic_operations: Dict[str, Callable[[Iterable], Iterable]],
     ) -> None:
         """Test pipeline support for map function."""
-        result: Iterable = pipeline(small_dataset, classic_operations["d_map"])
+        result: Iterable = pipeline(small_dataset, map)
         final: list[int] = to_list(result)
         assert final == [0, 2, 4, 6, 8]
 
@@ -88,7 +72,7 @@ class TestFuncSupport:
         classic_operations: Dict[str, Callable[[Iterable], Iterable]],
     ) -> None:
         """Test pipeline support for filter function."""
-        result: Iterable = pipeline(small_dataset, classic_operations["z_filter"])
+        result: Iterable = pipeline(small_dataset, filter)
         final: list[int] = to_list(result)
         assert final == [0, 2, 4]
 
@@ -98,7 +82,7 @@ class TestFuncSupport:
         classic_operations: Dict[str, Callable[[Iterable], Iterable]],
     ) -> None:
         """Test pipeline support for zip function."""
-        result: Iterable = pipeline(small_dataset, classic_operations["add_zip"])
+        result: Iterable = pipeline(small_dataset, zip)
         final: list[tuple[int, int]] = to_list(result)
         assert final == [(0, 10), (1, 11), (2, 12), (3, 13), (4, 14)]
 
