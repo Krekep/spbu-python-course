@@ -11,9 +11,9 @@ def dataGen(n: int) -> Iterable[int]:
 def to_collect(data: Iterable, key: Callable = None, *, flag: Literal["l", "s", "d"]) -> None:
     """Collects results into a list"""
     if flag == "l":
-      return list(data)
+        return list(data)
     if flag == "s":
-      return set(data)
+        return set(data)
     if flag == "d":
         if key is None:
             return dict(enumerate(data))
