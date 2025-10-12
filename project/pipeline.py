@@ -9,7 +9,10 @@ def dataGen(n: int) -> Iterable[int]:
 
 
 def to_collect(
-    data: Iterable, key: Optional[Callable[..., Any]] = None, *, flag: Literal["l", "s", "d"]
+    data: Iterable,
+    key: Optional[Callable[..., Any]] = None,
+    *,
+    flag: Literal["l", "s", "d"]
 ) -> List | Set | Dict:
     """Collects results into a list"""
     if flag == "l":
