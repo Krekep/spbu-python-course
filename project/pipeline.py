@@ -8,21 +8,16 @@ def dataGen(n: int) -> Iterable[int]:
         yield i
 
 
-def to_list(data: Iterable) -> List:
+def to_collect(data: Iterable, key: Callable = None, *, flag: Literal["l", "s", "d"]) -> None:
     """Collects results into a list"""
-    return list(data)
-
-
-def to_dict(data: Iterable, key: Callable = None) -> dict:
-    """Collects results into a dictionary"""
-    if key is None:
-        return dict(enumerate(data))
-    return {key(i): i for i in data}
-
-
-def to_set(data: Iterable) -> set:
-    """Collects results into a set"""
-    return set(data)
+    if flag == "l":
+      return list(data)
+    if flag == "s":
+      return set(data)
+    if flag == "d":
+        if key is None:
+            return dict(enumerate(data))
+        return {key(i): i for i in data}
 
 
 def filter_triad(num: Iterable) -> Iterable:
