@@ -8,7 +8,9 @@ def dataGen(n: int) -> Iterable[int]:
         yield i
 
 
-def to_collect(data: Iterable, key: Callable = None, *, flag: Literal["l", "s", "d"]) -> None:
+def to_collect(
+    data: Iterable, key: Callable = None, *, flag: Literal["l", "s", "d"]
+) -> None:
     """Collects results into a list"""
     if flag == "l":
         return list(data)
