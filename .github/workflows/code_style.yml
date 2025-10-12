@@ -28,3 +28,11 @@ jobs:
       - name: Run pre-commit
         run: |
           pre-commit run --all-files --color always --verbose --show-diff-on-failure
+
+      - name: Run static type checking with mypy
+        run: |
+          mypy --ignore-missing-imports --show-error-codes .
+
+      - name: Run tests with pytest
+        run: |
+          pytest -v --tb=short
