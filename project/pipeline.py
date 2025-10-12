@@ -60,7 +60,7 @@ def ran_stri(stri: int) -> Iterator[str]:
     base: str = "qwertyuiopasdfghjklzxcvbnm"
     for _ in range(stri):
         leni: int = randint(1, 5)
-        rand_str: str = rand_str: str = "".join(base[randint(0, 25)] for _ in range(leni))
+        rand_str: str = "".join(base[randint(0, 25)] for _ in range(leni))
         yield rand_str
 
 
