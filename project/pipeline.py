@@ -1,9 +1,9 @@
 from functools import reduce
 from random import randint
-from typing import Iterable, Callable, Any, Optional, Dict, Set, List, Literal, Union
+from typing import Iterable, Callable, Any, Optional, Dict, Set, List, Literal, Union, Iterator
 
 
-def dataGen(n: int) -> Iterable[int]:
+def dataGen(n: int) -> Iterator[int]:
     """Input data generator"""
     for i in range(n):
         yield i
@@ -15,7 +15,7 @@ def to_collect(
     *,
     flag: Literal["l", "s", "d"]
 ) -> Union[List, Set, Dict]:
-    """Collects results into a list"""
+    """Collects results into a list, set or dict"""
     if flag == "l":
         return list(data)
     if flag == "s":
@@ -38,6 +38,7 @@ def randomiser(num: int) -> Iterator[int]:
     """
     for _ in range(num):
         yield randint(1, 50)
+
 
 def ran_stri(stri: int) -> Iterator[str]:
     """
