@@ -112,25 +112,25 @@ class TestCustomSupport:
 
 class TestAggregatorFunctions:
     def test_to_collect_all_flags(self) -> None:
-    """Test all collection modes in one test."""
-    data = [1, 2, 3, 4]
-    
-    # Test list flag
-    result_list = to_collect(data, flag="l")
-    assert result_list == [1, 2, 3, 4]
-    assert isinstance(result_list, list)
-    
-    # Test set flag
-    result_set = to_collect(data, flag="s")
-    assert result_set == {1, 2, 3, 4}
-    assert isinstance(result_set, set)
-    
-    # Test dict flag without key
-    result_dict_default = to_collect(data, flag="d")
-    assert result_dict_default == {0: 1, 1: 2, 2: 3, 3: 4}
-    assert isinstance(result_dict_default, dict)
-    
-    # Test dict flag with key
-    result_dict_with_key = to_collect(data, key=lambda x: f"key_{x}", flag="d")
-    assert result_dict_with_key == {"key_1": 1, "key_2": 2, "key_3": 3, "key_4": 4}
-    assert isinstance(result_dict_with_key, dict)
+        """Test all collection modes in one test."""
+        data = [1, 2, 3, 4]
+
+        # Test list flag
+        result_list = to_collect(data, flag="l")
+        assert result_list == [1, 2, 3, 4]
+        assert isinstance(result_list, list)
+
+        # Test set flag
+        result_set = to_collect(data, flag="s")
+        assert result_set == {1, 2, 3, 4}
+        assert isinstance(result_set, set)
+
+        # Test dict flag without key
+        result_dict_default = to_collect(data, flag="d")
+        assert result_dict_default == {0: 1, 1: 2, 2: 3, 3: 4}
+        assert isinstance(result_dict_default, dict)
+
+        # Test dict flag with key
+        result_dict_with_key = to_collect(data, key=lambda x: f"key_{x}", flag="d")
+        assert result_dict_with_key == {"key_1": 1, "key_2": 2, "key_3": 3, "key_4": 4}
+        assert isinstance(result_dict_with_key, dict)
