@@ -51,6 +51,20 @@ class TestAlgebra:
         result = multiplication(a, b)
         assert result == expected
 
+        """Test 2x3 * 3x2 multiplication"""
+        a1 = [[1, 2, 3], [4, 5, 6]]
+        b1 = [[7, 8], [9, 10], [11, 12]]
+        expected1 = [[58, 64], [139, 154]]
+        result1 = multiplication(a1, a2)
+        assert result1 == expected1
+
+        """Test 3x2 * 2x3 multiplication"""
+        a2 = [[1, 2], [3, 4], [5, 6]]
+        b2 = [[7, 8, 9], [10, 11, 12]]
+        expected2 = [[27, 30, 33], [61, 68, 75], [95, 106, 117]]
+        result2 = multiplication(a2, b2)
+        assert result2 == expected2
+
     def test_summa(self) -> None:
         """Test matrix addition."""
         a = [[1, 2], [3, 4]]
