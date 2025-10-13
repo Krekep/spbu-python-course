@@ -53,16 +53,16 @@ def ran_stri(stri: int) -> Iterator[str]:
     """
     Generate random strings composed of lowercase English letters.
     Args:
-        stri: Number of random strings to generate
+        stri: Number of random strings to generate   
     Yields:
         Random strings of length 1-5 characters
     """
-    base = "qwertyuiopasdfghjklzxcvbnm"
+    base: str = "qwertyuiopasdfghjklzxcvbnm"
     for _ in range(stri):
-        leni = randint(1, 5)
-        rand_str = "".join(base[randint(0, 25)] for _ in range(leni))
+        leni: int = randint(1, 5)
+        rand_str: str = "".join(base[randint(0, 25)] for _ in range(leni))
         yield rand_str
-        
+
 
 def pipeline(data: Iterable, *operations: Callable) -> Iterable:
     """
