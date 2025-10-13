@@ -32,7 +32,9 @@ class TestDataGen:
 
 
 class TestPipeline:
-    def test_basic_flow(self, small_dataset: Iterator[int], my_operations: Dict[str, Any]) -> None:
+    def test_basic_flow(
+        self, small_dataset: Iterator[int], my_operations: Dict[str, Any]
+    ) -> None:
         result = pipeline(small_dataset, my_operations["randomiser"])
         final = to_collect(result, flag="l")
         assert len(final) == 5
