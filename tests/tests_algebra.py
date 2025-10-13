@@ -55,7 +55,7 @@ class TestAlgebra:
         a1 = [[1, 2, 3], [4, 5, 6]]
         b1 = [[7, 8], [9, 10], [11, 12]]
         expected1 = [[58, 64], [139, 154]]
-        result1 = multiplication(a1, a2)
+        result1 = multiplication(a1, b1)
         assert result1 == expected1
 
         """Test 3x2 * 2x3 multiplication"""
