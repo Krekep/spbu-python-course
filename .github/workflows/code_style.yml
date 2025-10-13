@@ -31,7 +31,7 @@ jobs:
 
       - name: Run static type checking with mypy
         run: |
-          python -m mypy --ignore-missing-imports --show-error-codes .
+          python -m mypy . --exclude venv
 
       - name: Run tests with pytest
         run: |
