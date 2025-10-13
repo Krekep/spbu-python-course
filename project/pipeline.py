@@ -53,7 +53,7 @@ def ran_stri(stri: int) -> Iterator[str]:
     """
     Generate random strings composed of lowercase English letters.
     Args:
-        stri: Number of random strings to generate   
+        stri: Number of random strings to generate
     Yields:
         Random strings of length 1-5 characters
     """
