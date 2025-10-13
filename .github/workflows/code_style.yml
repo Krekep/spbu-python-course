@@ -34,7 +34,7 @@ jobs:
 
       - name: Run static type checking with mypy
         run: |
-          python -m mypy algebra.py
+          python -m mypy project/ --exclude venv
 
       - name: Run tests with pytest
         run: |
