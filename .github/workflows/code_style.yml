@@ -25,7 +25,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install -e .
           python -m pip install -r requirements.txt
-          pip install pre-commit black isort autoflake mypy pytest
+          pip install pre-commit black mypy pytest
 
       - name: Apply automatic formatting
         run: |
@@ -44,7 +44,7 @@ jobs:
 
       - name: Run type checking with mypy
         run: |
-          python -m mypy . --exclude venv --ignore-missing-imports
+          python -m mypy . --exclude venv
 
       - name: Run tests with pytest
         run: |
