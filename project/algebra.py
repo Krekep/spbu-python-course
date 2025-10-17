@@ -56,8 +56,6 @@ def angle(a: List[float], b: List[float]) -> float:
     if norm_a == 0 or norm_b == 0:
         raise ValueError("Cannot use zero vector")
     cos_angle = scalar(a, b) / (norm_a * norm_b)
-    # Ensure cosine value is within valid range [-1, 1]
-    cos_angle = max(-1.0, min(1.0, cos_angle))
     rad_angle = math.acos(cos_angle)
     angle_deg = math.degrees(rad_angle)
     return angle_deg
