@@ -1,5 +1,4 @@
 import pytest
-import numpy as np
 from algebra import scalar, normal, angle, trans, multiplication, summa
 
 
