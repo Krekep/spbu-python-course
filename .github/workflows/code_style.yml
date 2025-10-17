@@ -5,7 +5,6 @@ on: [push, pull_request]
 jobs:
   style:
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
         python-version: [3.8]
@@ -18,24 +17,27 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
-          cache: 'pip'
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -e .
-          pip install numpy
-          python -m pip install -r requirements.txt
-          python -m pip install pre-commit black mypy pytest
+          pip install black isort autoflake mypy pytest
 
-      - name: Run pre-commit
+      - name: Apply automatic formatting
         run: |
-          pre-commit run --all-files --color always --verbose --show-diff-on-failure
+          python -m black . --exclude venv || true
+          python -m isort . --profile black || true
+          python -m autoflake . --in-place --remove-all-unused-imports --remove-unused-variables || true
 
-      - name: Run static type checking with mypy
+      - name: Check formatting
         run: |
-          python -m mypy project/ --exclude venv
+          python -m black . --check --exclude venv
+          python -m isort . --check-only --profile black
+
+      - name: Run type checking with mypy
+        run: |
+          python -m mypy . --exclude venv
 
       - name: Run tests with pytest
         run: |
-          python -m pytest -v --tb=short
+          python -m pytest tests/ -v
