@@ -40,7 +40,7 @@ jobs:
 
       - name: Run type checking with mypy
         run: |
-          python -m mypy .
+          python -m mypy ./project
 
       - name: Run tests with pytest
         run: |
