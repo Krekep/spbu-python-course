@@ -60,7 +60,6 @@ def matrix_mult(m1: List[List[float]], m2: List[List[float]]) -> List[List[float
 
 def matrix_transpose(matrix: List[List[float]]) -> List[List[float]]:
     """
-    Calculating the matrix transposition
 
     Parameters:
         matrix: (List[List[float]]): Matrix
