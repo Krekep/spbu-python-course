@@ -26,9 +26,9 @@ jobs:
           pip install -r requirements.txt
           pip install pre-commit black mypy pytest
 
-      - name: Apply automatic formatting
-        run: |
-          python -m black . || true
+      #- name: Apply automatic formatting
+      #  run: |
+      #   python -m black . || true
 
       - name: Check formatting
         run: |
