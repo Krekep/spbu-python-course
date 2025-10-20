@@ -25,7 +25,7 @@
   - [ ] Именованные аргументы поддерживать не нужно
 - Пример работы:
     ```python
-    f2 = curry_explicit((lambda x, y, z: f'<{x},{y}, {z}>'), 3)
+    f2 = curry_explicit((lambda x, y, z: f'<{x},{y},{z}>'), 3)
     g2 = uncurry_explicit(f2, 3)
     print(f2(123)(456)(562))
     print(g2(123, 456, 562))
