@@ -1,9 +1,35 @@
 from abc import ABC, abstractmethod
 from random import randint
+from typing import List, Dict, Any, Optional
+
+"""
+Roulette game implementation with bots and various strategies.
+"""
 
 
 class Player:
-    def __init__(self, balance, age, strategy, name="Unknown"):
+    """Class representing a player in the roulette game.
+
+    Parameters:
+        balance (int): Player balance
+        age (int): Player age (must be 18 or older)
+        strategy (Strategy): Strategy object
+        name (str): Player name, default "Unknown"
+
+    Raises:
+        ValueError: If age is less than 18
+
+    Attributes:
+        _name (str): Player name
+        balance (int): Current player balance
+        _age (int): Player age
+        strategy (Strategy): Betting strategy
+        current_bets (List[Bet]): List of current active bets
+    """
+
+    def __init__(
+        self, balance: int, age: int, strategy: "Strategy", name: str = "Unknown"
+    ):
         if age < 18:
             raise ValueError("Player must be over 18 years old")
         self._name = name
@@ -14,15 +40,36 @@ class Player:
 
 
 class Bet:
+    """Class a bet in roulette.
+
+    Parameters:
+        bet_type (str): Type of bet ('number', 'color', 'even_odd', 'dozen', 'column', 'half')
+        bet_value (Any): Value of the bet
+        amount (int): Amount of the bet
+
+    Raises:
+        ValueError: If bet type or value is invalid
+
+    Attributes:
+        bet_type (str): Type of bet
+        bet_value (Any): Bet value
+        amount (int): Bet amount
+    """
+
     VALID_TYPES = ["number", "color", "even_odd", "dozen", "column", "half"]
 
-    def __init__(self, type_bet, bet_value, sum_bet):
+    def __init__(self, type_bet: str, bet_value: Any, sum_bet: int):
         self.type_bet = type_bet
         self.bet_value = bet_value
         self.sum_bet = sum_bet
         self._validate_bet()
 
-    def _validate_bet(self):
+    def _validate_bet(self) -> None:
+        """Validates bet type and value
+
+        Raises:
+            ValueError: If bet parameters are invalid
+        """
         if self.type_bet not in self.VALID_TYPES:
             raise ValueError(f"Invalid bet type: {self.type_bet}")
 
@@ -41,17 +88,45 @@ class Bet:
 
 
 class Strategy(ABC):
+    """Abstract base class for betting strategies
+
+    All strategy classes must implement the make_bet method
+    """
+
     @abstractmethod
-    def make_bet(self, player):
-        """Должен возвращать объект Bet"""
+    def make_bet(self, player: Player) -> Bet:
+        """Creates a strategy logic.
+
+        Parameters:
+            player (Player): Player object containing current game state
+
+        Returns:
+            Bet: Bet object with type, value and amount
+        """
         pass
 
 
 class ConservativeStrategy(Strategy):
+    """Conservative betting strategy
+
+    This strategy alternates between red and black colors and bets 10% of balance.
+
+    Attributes:
+        last_color (str): Last color bet
+    """
+
     def __init__(self):
         self.last_color = "black"
 
-    def make_bet(self, player):
+    def make_bet(self, player: Player) -> Bet:
+        """Makes a conservative bet
+
+        Parameters:
+            player (Player): Player object with current balance
+
+        Returns:
+            Bet: Color bet
+        """
         color = "red" if self.last_color == "black" else "black"
         self.last_color = color
 
@@ -61,7 +136,20 @@ class ConservativeStrategy(Strategy):
 
 
 class RiskStrategy(Strategy):
-    def make_bet(self, player):
+    """Risky betting strategy
+
+    This strategy selects random numbers (0-36) and bets 10% of balance.
+    """
+
+    def make_bet(self, player: Player) -> Bet:
+        """Makes a risky bet
+
+        Parameters:
+            player (Player): Player object with current balance
+
+        Returns:
+            Bet: Number bet
+        """
         number = randint(0, 36)
 
         amount = max(1, int(player.balance * 0.1))
@@ -70,20 +158,50 @@ class RiskStrategy(Strategy):
 
 
 class MegaRiskStrategy(Strategy):
-    def make_bet(self, player):
+    """Very risky strategy
 
+    This strategy always bets on number zero with 50% of current balance.
+    """
+
+    def make_bet(self, player: Player) -> Bet:
+        """Makes a very risky bet on number zero.
+
+        Parameters:
+            player (Player): Player object with current balance
+
+        Returns:
+            Bet: Number bet
+        """
         amount = max(1, int(player.balance * 0.5))
-
         return Bet("number", 0, amount)
 
 
 class MathematicalStrategy(Strategy):
+    """Mathematical strategy Martingale
+
+    This strategy doubles the bet after losses and resets after wins.
+    Bets on alternating colors.
+
+    Attributes:
+        last_bet_amount (int): Amount of last bet
+        last_color (str): Last color bet
+        last_win (bool): Result of last bet
+    """
+
     def __init__(self):
         self.last_bet_amount = 1
         self.last_color = "red"
         self.last_win = True
 
-    def make_bet(self, player):
+    def make_bet(self, player: Player) -> Bet:
+        """Makes bet using Martingale
+
+        Parameters:
+            player (Player): Player object with current balance
+
+        Returns:
+            Bet: Color bet
+        """
         if not self.last_win:
             self.last_bet_amount *= 2
         else:
@@ -97,11 +215,23 @@ class MathematicalStrategy(Strategy):
 
         return Bet("color", self.last_color, amount)
 
-    def update_result(self, won):
+    def update_result(self, won: bool) -> None:
+        """Updates strategy with result of last bet.
+
+        Parameters:
+            won (bool): True if last bet won, else False
+        """
         self.last_win = won
 
 
 class RouletteWheel:
+    """Class representing a roulette wheel.
+
+    Attributes:
+        red_numbers (List[int]): List of red numbers
+        black_numbers (List[int]): List of black numbers
+    """
+
     def __init__(self):
         self.red_numbers = [
             1,
@@ -144,7 +274,16 @@ class RouletteWheel:
             35,
         ]
 
-    def spin(self):
+    def spin(self) -> Dict[str, Any]:
+        """Spins the roulette wheel
+
+        Returns:
+            Dict: Dictionary containing:
+                - number (int): Winning number
+                - color (str): 'red', 'black', or 'green' for 0
+                - is_even (bool): True if even number, False if odd or zero
+                - range (str): 'zero', '1-18', or '19-36'
+        """
         winning_number = randint(0, 36)
         return {
             "number": winning_number,
@@ -153,7 +292,15 @@ class RouletteWheel:
             "range": self._get_range(winning_number),
         }
 
-    def _get_color(self, number):
+    def _get_color(self, number: int) -> str:
+        """Determines color
+
+        Parameters:
+            number (int): Winning number
+
+        Returns:
+            str: 'green' for 0, 'red' or 'black' for other numbers
+        """
         if number == 0:
             return "green"
 
@@ -163,10 +310,26 @@ class RouletteWheel:
         elif number in self.red_numbers:
             return "red"
 
-    def _is_even(self, number):
+    def _is_even(self, number: int) -> bool:
+        """Checks if number is even.
+
+        Parameters:
+            number (int): Number to check
+
+        Returns:
+            bool: True if even and not zero, else False
+        """
         return number % 2 == 0 if number != 0 else False
 
-    def _get_range(self, number):
+    def _get_range(self, number: int) -> str:
+        """Determines range
+
+        Parameters:
+            number (int): Winning number
+
+        Returns:
+            str: 'zero' for 0, '1-18' for numbers 1-18, '19-36' for numbers 19-36
+        """
         if number == 0:
             return "zero"
         elif 1 <= number <= 18:
@@ -176,14 +339,38 @@ class RouletteWheel:
 
 
 class RouletteGame:
-    def __init__(self, players, max_rounds=20):
+    """Main game class
+
+    Parameters:
+        players (List[Player]): List of players
+        max_rounds (int): Maximum number of rounds, defaults 20
+
+    Attributes:
+        players (List[Player]): List of players
+        max_rounds (int): Maximum rounds
+        current_round (int): Current round number
+        wheel (RouletteWheel): Roulette wheel
+        history (List[Dict]): History of all rounds
+    """
+
+    def __init__(self, players: List[Player], max_rounds: int = 20):
         self.players = players
         self.max_rounds = max_rounds
         self.current_round = 0
         self.wheel = RouletteWheel()
         self.history = []
 
-    def play_round(self):
+    def play_round(self) -> bool:
+        """Plays one complete round
+
+        1) Players make bets
+        2) Wheel is spun to determine winning number
+        3) Winnings are calculated
+        4) Game state is updated
+
+        Returns:
+            bool: True if game continues, False if game is over
+        """
         if self.is_game_over():
             return False
 
@@ -232,7 +419,16 @@ class RouletteGame:
 
         return True
 
-    def _calculate_winnings(self, bet, winning_result):
+    def _calculate_winnings(self, bet: Bet, winning_result: Dict[str, Any]) -> int:
+        """Calculates winnings for a bet
+
+        Parameters:
+            bet (Bet): Bet to calculate winnings for
+            winning_result (Dict): Result from roulette wheel spin
+
+        Returns:
+            int: Amount won
+        """
         winning_number = winning_result["number"]
 
         if bet.type_bet == "number":
@@ -282,7 +478,26 @@ class RouletteGame:
 
         return 0
 
-    def is_game_over(self):
+    def show_game_state(self) -> None:
+        """Displays current state of all players
+
+        Shows each player's name, balance, and status
+        """
+        print(f"\n--- Game State after Round {self.current_round} ---")
+        for player in self.players:
+            status = "BANKRUPT" if player.balance <= 0 else f"balance: {player.balance}"
+            print(f"  {player._name}: {status}")
+
+    def is_game_over(self) -> bool:
+        """Determines if the game should end
+
+        Checks:
+        1) Maximum rounds reached
+        2) All players are bankrupt
+
+        Returns:
+            bool: True if game ends, else False
+        """
         if self.current_round >= self.max_rounds:
             return True
 
