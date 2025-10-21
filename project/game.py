@@ -59,8 +59,7 @@ class Bots:
         else:
             temp_diapason.append(self.number1_b)
 
-        # Исправлено: убрано переопределение indicator
-        color_indicator: int  # Уникальное имя
+        color_indicator: int
         if len(temp_diapason) == 1:
             color_indicator = randint(1, 2)
         else:
@@ -99,13 +98,12 @@ class Strategies:
     def choose_strategy(curva_bet: int, ifwin: bool, money: Optional[int] = None, indicator: Optional[int] = None) -> int:
         actual_indicator = randint(1, 3)
         '''We choose one of the possible strategies'''
-        # Исправлено: убрано переопределение xbet_result
         if actual_indicator == 1:
-            result_bet: int = Strategies.dalamber(curva_bet, ifwin, money)  # Уникальное имя
+            result_bet: int = Strategies.dalamber(curva_bet, ifwin, money) 
         elif actual_indicator == 2:
-            result_bet = Strategies.martingeil(curva_bet, ifwin, money)  # Без повторного объявления типа
+            result_bet = Strategies.martingeil(curva_bet, ifwin, money)
         else:
-            result_bet = Strategies.all_capital(curva_bet, ifwin, money)  # Без повторного объявления типа
+            result_bet = Strategies.all_capital(curva_bet, ifwin, money)
         return result_bet
 
     @staticmethod
