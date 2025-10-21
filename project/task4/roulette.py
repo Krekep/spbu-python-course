@@ -380,15 +380,20 @@ class RouletteGame:
         current_bets: Dict[Player, Optional[Bet]] = {}
         for player in self.players:
             if player.balance > 0:
-                bet = player.strategy.make_bet(player)
-                if bet.sum_bet > player.balance:
-                    bet.sum_bet = player.balance
-                player.balance -= bet.sum_bet
-                player.current_bets.append(bet)
-                current_bets[player] = bet
-                print(
-                    f"{player._name} puts {bet.sum_bet} on {bet.type_bet} {bet.bet_value}"
-                )
+                bet_result = player.strategy.make_bet(player)
+                if isinstance(bet_result, Bet):
+                    bet = bet_result
+                    if bet.sum_bet > player.balance:
+                        bet.sum_bet = player.balance
+                    player.balance -= bet.sum_bet
+                    player.current_bets.append(bet)
+                    current_bets[player] = bet
+                    print(
+                        f"{player._name} puts {bet.sum_bet} on {bet.type_bet} {bet.bet_value}"
+                    )
+                else:
+                    print(f"{player._name} failed to make a bet")
+                    current_bets[player] = None
             else:
                 print(f"{player._name} dropped out")
                 current_bets[player] = None
@@ -430,50 +435,52 @@ class RouletteGame:
             int: Amount won
         """
         winning_number = winning_result["number"]
-
-        if bet.type_bet == "number":
-            if bet.bet_value == winning_number:
-                return bet.sum_bet * 35
-            else:
+        match bet.type_bet:
+            case "number":
+                return bet.sum_bet * 35 if bet.bet_value == winning_number else 0
+            case "color":
+                return (
+                    bet.sum_bet * 2 if bet.bet_value == winning_result["color"] else 0
+                )
+            case "even_odd":
+                actual_result = "even" if winning_result["is_even"] else "odd"
+                return bet.sum_bet * 2 if bet.bet_value == actual_result else 0
+            case "dozen":
+                if bet.bet_value == "1st" and 1 <= winning_number <= 12:
+                    return bet.sum_bet * 3
+                elif bet.bet_value == "2nd" and 13 <= winning_number <= 24:
+                    return bet.sum_bet * 3
+                elif bet.bet_value == "3rd" and 25 <= winning_number <= 36:
+                    return bet.sum_bet * 3
+                else:
+                    return 0
+            case "column":
+                if (
+                    bet.bet_value == 1
+                    and winning_number % 3 == 1
+                    and winning_number != 0
+                ):
+                    return bet.sum_bet * 3
+                elif (
+                    bet.bet_value == 2
+                    and winning_number % 3 == 2
+                    and winning_number != 0
+                ):
+                    return bet.sum_bet * 3
+                elif (
+                    bet.bet_value == 3
+                    and winning_number % 3 == 0
+                    and winning_number != 0
+                ):
+                    return bet.sum_bet * 3
+                else:
+                    return 0
+            case "half":
+                return (
+                    bet.sum_bet * 2 if bet.bet_value == winning_result["range"] else 0
+                )
+            case _:
                 return 0
-
-        elif bet.type_bet == "color":
-            if bet.bet_value == winning_result["color"]:
-                return bet.sum_bet * 2
-            else:
-                return 0
-
-        elif bet.type_bet == "even_odd":
-            actual_result = "even" if winning_result["is_even"] else "odd"
-            if bet.bet_value == actual_result:
-                return bet.sum_bet * 2
-            else:
-                return 0
-
-        elif bet.type_bet == "dozen":
-            if bet.bet_value == "1st" and 1 <= winning_number <= 12:
-                return bet.sum_bet * 3
-            elif bet.bet_value == "2nd" and 13 <= winning_number <= 24:
-                return bet.sum_bet * 3
-            elif bet.bet_value == "3rd" and 25 <= winning_number <= 36:
-                return bet.sum_bet * 3
-            else:
-                return 0
-
-        elif bet.type_bet == "column":
-            if bet.bet_value == 1 and winning_number % 3 == 1 and winning_number != 0:
-                return bet.sum_bet * 3
-            elif bet.bet_value == 2 and winning_number % 3 == 2 and winning_number != 0:
-                return bet.sum_bet * 3
-            elif bet.bet_value == 3 and winning_number % 3 == 0 and winning_number != 0:
-                return bet.sum_bet * 3
-            else:
-                return 0
-
-        elif bet.type_bet == "half":
-            return bet.sum_bet * 2 if bet.bet_value == winning_result["range"] else 0
-
-        return 0
 
     def show_game_state(self) -> None:
         """Displays current state of all players
