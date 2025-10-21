@@ -74,9 +74,6 @@ class Bots:
     def get_choice(self) -> List[int]:
         return self.diapason
 
-    def show_guys(self)м -> None:
-        print(f'Diapason: {self.diapason}, Color: {self.color_b}')
-
 class Bet777:
     ''' class for bets '''
     def __init__(self, money: int = 1000, xbet: int = 100) -> None:
