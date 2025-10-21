@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from random import randint
-from typing import List, Dict, Any, Optional
+from typing import List, Dict, Any
 
 """
 Roulette game implementation with bots and various strategies.
@@ -36,7 +36,7 @@ class Player:
         self.balance = balance
         self._age = age
         self.strategy = strategy
-        self.current_bets = []
+        self.current_bets: List["Bet"] = []
 
 
 class Bet:
@@ -358,7 +358,7 @@ class RouletteGame:
         self.max_rounds = max_rounds
         self.current_round = 0
         self.wheel = RouletteWheel()
-        self.history = []
+        self.history: List[Dict[str, Any]] = []
 
     def play_round(self) -> bool:
         """Plays one complete round
