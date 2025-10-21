@@ -33,8 +33,8 @@ class Bots:
         self.color_b: Optional[str] = None
         self.indicator: int = randint(1, 3)
         self.ifwin: bool = False
-        self.number1_b: int = number1_b if number1_b is not None else randint(0, 37)
-        self.number2_b: int = number2_b if number2_b is not None else randint(0, 37)
+        self.number1_b: int = number1_b if number1_b is not None else randint(0, 30)
+        self.number2_b: int = number2_b if number2_b is not None else randint(0, 36)
 
     def choice(self) -> Tuple[str, List[int]]:
         self.number1_b = randint(0, 30)
@@ -59,14 +59,16 @@ class Bots:
         else:
             temp_diapason.append(self.number1_b)
 
+        # Исправлено: убрано переопределение indicator
+        color_indicator: int  # Уникальное имя
         if len(temp_diapason) == 1:
-            indicator: int = randint(1, 2)
+            color_indicator = randint(1, 2)
         else:
-            indicator: int = randint(1, 3)
+            color_indicator = randint(1, 3)
 
-        if indicator == 1:
+        if color_indicator == 1:
             return 'red'
-        elif indicator == 2:
+        elif color_indicator == 2:
             return 'black'
         else:
             return 'green'
@@ -97,13 +99,14 @@ class Strategies:
     def choose_strategy(curva_bet: int, ifwin: bool, money: Optional[int] = None, indicator: Optional[int] = None) -> int:
         actual_indicator = randint(1, 3)
         '''We choose one of the possible strategies'''
+        # Исправлено: убрано переопределение xbet_result
         if actual_indicator == 1:
-            xbet_result: int = Strategies.dalamber(curva_bet, ifwin, money)
+            result_bet: int = Strategies.dalamber(curva_bet, ifwin, money)  # Уникальное имя
         elif actual_indicator == 2:
-            xbet_result: int = Strategies.martingeil(curva_bet, ifwin, money)
+            result_bet = Strategies.martingeil(curva_bet, ifwin, money)  # Без повторного объявления типа
         else:
-            xbet_result: int = Strategies.all_capital(curva_bet, ifwin, money)
-        return xbet_result
+            result_bet = Strategies.all_capital(curva_bet, ifwin, money)  # Без повторного объявления типа
+        return result_bet
 
     @staticmethod
     def dalamber(curva_bet: int, ifwin: bool, money: Optional[int] = None) -> int:
