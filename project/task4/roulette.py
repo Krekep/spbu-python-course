@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from random import randint
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 
 """
 Roulette game implementation with bots and various strategies.
@@ -377,7 +377,7 @@ class RouletteGame:
         self.current_round += 1
         print(f"\n=-=-=-=-=Round {self.current_round}=-=-=-=-=")
 
-        current_bets = {}
+        current_bets: Dict[Player, Optional[Bet]] = {}
         for player in self.players:
             if player.balance > 0:
                 bet = player.strategy.make_bet(player)
@@ -471,10 +471,7 @@ class RouletteGame:
                 return 0
 
         elif bet.type_bet == "half":
-            if bet.bet_value == winning_result["range"]:
-                return bet.sum_bet * 2
-            else:
-                return 0
+            return bet.sum_bet * 2 if bet.bet_value == winning_result["range"] else 0
 
         return 0
 
