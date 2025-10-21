@@ -33,8 +33,8 @@ class Bots:
         self.color_b: Optional[str] = None
         self.indicator: int = randint(1, 3)
         self.ifwin: bool = False
-        self.number1_b: Optional[int] = number1_b
-        self.number2_b: Optional[int] = number2_b
+        self.number1_b: int = number1_b
+        self.number2_b: int = number2_b
 
     def choice(self) -> Tuple[str, List[int]]:
         self.number1_b = randint(0, 37)
@@ -42,7 +42,7 @@ class Bots:
       
         self.diapason = []
         ''' feel the range according to the numbers choicen by bots '''
-        if self.number2_b and self.number2_b != 0:
+        if self.number2_b != 0:
             for number in range(self.number1_b, self.number2_b + 1):
                 self.diapason.append(number)
         else:
@@ -53,7 +53,7 @@ class Bots:
     def color_choice(self) -> str:
         ''' find the len of range to choose color '''
         temp_diapason = []
-        if self.number2_b and self.number2_b != 0:
+        if self.number2_b != 0:
             for number in range(self.number1_b, self.number2_b + 1):
                 temp_diapason.append(number)
         else:
@@ -92,15 +92,15 @@ class Bet777:
 class Strategies:
     @staticmethod
     def choose_strategy(curva_bet: int, ifwin: bool, money: Optional[int] = None, indicator: Optional[int] = None) -> int:
-        indicator = randint(1, 3)
+        act_indicator = randint(1, 3)
         '''We choose one of the possible strategies'''
-        if indicator == 1:
-            xbet = Strategies.dalamber(curva_bet, ifwin, money)
-        elif indicator == 2:
-            xbet = Strategies.martingeil(curva_bet, ifwin, money)
+        if act_indicator == 1:
+            onexbet = Strategies.dalamber(curva_bet, ifwin, money)
+        elif act_indicator == 2:
+            onexbet = Strategies.martingeil(curva_bet, ifwin, money)
         else:
-            xbet = Strategies.all_capital(curva_bet, ifwin, money)
-        return xbet
+            onexbet = Strategies.all_capital(curva_bet, ifwin, money)
+        return onexbet
 
     @staticmethod
     def dalamber(curva_bet: int, ifwin: bool, money: Optional[int] = None) -> int:
@@ -148,7 +148,7 @@ class Game:
         '''Making initial bot selections'''
         self.bot1.choice()
         self.bot2.choice()
-        print("~ Начало игры ~")
+        print(" ~ Начало игры ~ ")
 
     def full_money(self) -> int:
         return self.bet1.xbet + self.bet2.xbet
@@ -156,36 +156,36 @@ class Game:
     def apply_strategy_to_bot(self, bot_number: int) -> int:
         ''' choose strategy '''
         if bot_number == 1:
-            bot_bet = self.bet1
-            bot = self.bot1
+            curva_bot_bet: Bet777 = self.bet1
+            curva_bot: Bots = self.bot1
         else:
-            bot_bet = self.bet2
-            bot = self.bot2
+            curva_bot_bet: Bet777 = self.bet2
+            curva_bot: Bots = self.bot2
 
-        new_bet: int = Strategies.choose_strategy(
+        new_bet_val: int = Strategies.choose_strategy(
             curva_bet = bot_bet.xbet,
             ifwin = bot.ifwin,
             money = bot_bet.money,
             indicator = bot.indicator
         )
-        bot_bet.bet(new_bet)
-        return new_bet
+        curva_bot_bet.bet(new_bet)
+        return new_bet_val
 
     def play_round(self, bot_number: int) -> None:
         ''' start 1 raund for choicen bot '''
         print(f"Ход для Бота{bot_number} ---")
 
-        new_bet: int = self.apply_strategy_to_bot(bot_number)
-        print(f"Бот{bot_number} сделал ставку: {new_bet}")
+        new_bet_val: int = self.apply_strategy_to_bot(bot_number)
+        print(f"Бот{bot_number} сделал ставку: {new_bet_val}")
 
-        new_bet: int = self.apply_strategy_to_bot(bot_number)
-        print(f"Бот{bot_number} сделал ставку: {new_bet}")
+        new_bet_val: int = self.apply_strategy_to_bot(bot_number)
+        print(f"Бот{bot_number} сделал ставку: {new_bet_val}")
 
         if bot_number == 1:
-            bot_choice: Tuple[str, List[int]] = self.bot1.choice()
+            bot_choice_r: Tuple[str, List[int]] = self.bot1.choice()
         else:
-            bot_choice: Tuple[str, List[int]] = self.bot2.choice()
-        print(f"Бот{bot_number} выбрал: {bot_choice}")
+            bot_choice_r: Tuple[str, List[int]] = self.bot2.choice()
+        print(f"Бот{bot_number} выбрал: {bot_choice_r}")
 
         roulette_result: Tuple[int, str] = self.roulette.ruller_spin()
         print(f"Рулетка выпала: число {roulette_result[0]}, цвет {roulette_result[1]}")
@@ -196,45 +196,45 @@ class Game:
         ''' checking if bot win'''
         strategies: Dict[int, str] = {1: "Даламбер", 2: "Мартингейл", 3: "Все в игру"}
         if bot_number == 1:
-            bot: Bots = self.bot1
-            bot_bet: Bet777 = self.bet1
+            curva_bot: Bots = self.bot1
+            curva_bot_bet: Bet777 = self.bet1
         else:
-            bot: Bots = self.bot2
-            bot_bet: Bet777 = self.bet2
+            curva_bot: Bots = self.bot2
+            curva_bot_bet: Bet777 = self.bet2
     
-        bot_choice: List[int] = bot.get_choice()
+        bot_choice: List[int] = curva_bot.get_choice()
     
         if len(bot_choice) == 1:
-            if bot.color_b == roulette_result[1] and (roulette_result[0] in bot_choice):
+            if curva_bot.color_b == roulette_result[1] and (roulette_result[0] in bot_choice):
                 self.gain = self.full_money()
                 self.ifwin = True
                 print(f'  Поплное попадание!')
-                print(f" - была выбрана стратегия {strategies[bot.indicator]}, капитал теперь {bot_bet.money}\n")
+                print(f" - была выбрана стратегия {strategies[curva_bot.indicator]}, капитал теперь {curva_bot_bet.money + self.gain - curva_bot_bet.xbet}\n")
             else:
                 self.gain = 0
                 self.ifwin = False
                 print(f'  Было близко...')
-                print(f" - была выбрана стратегия {strategies[bot.indicator]}, капитал теперь {bot_bet.money + self.gain - bot_bet.xbet}\n")       
+                print(f" - была выбрана стратегия {strategies[curva_bot.indicator]}, капитал теперь {curva_bot_bet.money + self.gain - curva_bot_bet.xbet}\n")       
         else:
-            if (roulette_result[0] in bot_choice) and (roulette_result[1] == bot.color_b):
+            if (roulette_result[0] in bot_choice) and (roulette_result[1] == curva_bot.color_b):
                 self.gain = int(self.full_money()*0.75)
                 self.ifwin = True
                 print(f'  Попал в диапазон и угадал с цветом')
-                print(f" - была выбрана стратегия {strategies[bot.indicator]}, капитал теперь {bot_bet.money + self.gain - bot_bet.xbet}\n")
-            elif (roulette_result[0] in bot_choice) and (roulette_result[1] != bot.color_b):
+                print(f" - была выбрана стратегия {strategies[curva_bot.indicator]}, капитал теперь {curva_bot_bet.money + self.gain - curva_bot_bet.xbet}\n")
+            elif (roulette_result[0] in bot_choice) and (roulette_result[1] != curva_bot.color_b):
                 self.gain = int(self.full_money() * 0.5)
                 self.ifwin = False
                 print(f'  Попал в диапазон, но цвет мимо')
-                print(f" - была выбрана стратегия {strategies[bot.indicator]}, капитал теперь {bot_bet.money + self.gain - bot_bet.xbet}\n")
+                print(f" - была выбрана стратегия {strategies[curva_bot.indicator]}, капитал теперь {curva_bot_bet.money + self.gain - curva_bot_bet.xbet}\n")
             else:
                 self.gain = 0
                 self.ifwin = False
                 print(f'  Ни одного попадания!')
-                print(f" - была выбрана стратегия {strategies[bot.indicator]}, капитал теперь {bot_bet.money + self.gain - bot_bet.xbet}\n")
+                print(f" - была выбрана стратегия {strategies[curva_bot.indicator]}, капитал теперь {curva_bot_bet.money + self.gain - curva_bot_bet.xbet}\n")
 
-        bot_bet.money += self.gain - bot_bet.xbet
+        curva_bot_bet.money += self.gain - curva_bot_bet.xbet
 
-    def play_game(self, max_rounds: int = 30) -> None:
+    def play_game(self, max_rounds: int = 100) -> None:
         '''game start'''
         print(f"Начальные деньги: Бот1 - ${self.bet1.money}, Бот2 - ${self.bet2.money}")
 
