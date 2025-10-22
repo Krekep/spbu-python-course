@@ -1,5 +1,5 @@
 import pytest
-from game import Ruller, Bots, Bet777, Strategies, Game
+from project.game import Ruller, Bots, Bet777, Strategies, Game
 
 
 class TestRuller:
