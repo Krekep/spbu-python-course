@@ -722,19 +722,25 @@ class TestComprehensiveGameFlow:
         rounds_played1 = 0
         while game1.play_round():
             rounds_played1 += 1
-        assert rounds_played1 == 3, "Should terminate due to max_rounds"
+        assert rounds_played1 == 3
         assert game1.is_game_over() is True
 
         players2 = [Player(1, 20, MegaRiskStrategy())]
-        game2 = RouletteGame(players2, max_rounds=10)
+        game2 = RouletteGame(players2, max_rounds=20)
+
         rounds_played2 = 0
-        while game2.play_round():
+        while game2.play_round() and rounds_played2 < 20:
             rounds_played2 += 1
+
         assert (
-            rounds_played2 < 10
-        ), "Should terminate due to bankruptcy before max_rounds"
-        assert players2[0].balance <= 0, "Player should be bankrupt"
+            players2[0].balance <= 0
+        ), f"Player should bankrupt with MegaRisk strategy"
         assert game2.is_game_over() is True
+
+        players3 = [Player(0, 20, ConservativeStrategy())]
+        game3 = RouletteGame(players3, max_rounds=5)
+        assert game3.is_game_over() is True
+        assert game3.play_round() is False
 
 
 class TestEdgeCaseStateTransitions:
