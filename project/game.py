@@ -75,9 +75,6 @@ class Bots:
     def get_choice(self) -> List[int]:
         return self.diapason
 
-    def show_guys(self) -> None:
-        print(f'Diapason: {self.diapason}, Color: {self.color_b}')
-
 class Bet777:
     ''' class for bets '''
     def __init__(self, money: int = 1000, xbet: int = 100) -> None:
@@ -123,7 +120,7 @@ class Strategies:
             return curva_bet
 
     @staticmethod
-    def all_capital(curva_bet: int, ifwin: bool, money: Optional[int] = None) -> int:
+    def all_capital(curva_bet: int, ifwin: bool, money: int) -> int:
         ''' strategy all or nothing'''
         if ifwin:
             return max(0, money - curva_bet)
