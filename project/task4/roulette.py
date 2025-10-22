@@ -191,7 +191,7 @@ class MathematicalStrategy(Strategy):
     def __init__(self):
         self.last_bet_amount = 1
         self.last_color = "red"
-        self.last_win = True
+        self.consecutive_losses = 0
 
     def make_bet(self, player: Player) -> Bet:
         """Makes bet using Martingale
@@ -202,18 +202,18 @@ class MathematicalStrategy(Strategy):
         Returns:
             Bet: Color bet
         """
-        if not self.last_win:
-            self.last_bet_amount *= 2
-        else:
-            self.last_bet_amount = 1
 
         self.last_color = "black" if self.last_color == "red" else "red"
 
-        amount = min(self.last_bet_amount, player.balance)
-        if amount <= 0:
-            amount = 1
+        new_bet_amount = 1 * (2**self.consecutive_losses)
 
-        return Bet("color", self.last_color, amount)
+        new_bet_amount = min(new_bet_amount, player.balance)
+        if new_bet_amount == 0 and player.balance > 0:
+            new_bet_amount = 1
+
+        self.last_bet_amount = new_bet_amount
+
+        return Bet("color", self.last_color, new_bet_amount)
 
     def update_result(self, won: bool) -> None:
         """Updates strategy with result of last bet.
@@ -221,7 +221,10 @@ class MathematicalStrategy(Strategy):
         Parameters:
             won (bool): True if last bet won, else False
         """
-        self.last_win = won
+        if won:
+            self.consecutive_losses = 0
+        else:
+            self.consecutive_losses += 1
 
 
 class RouletteWheel:
