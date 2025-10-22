@@ -551,7 +551,7 @@ class TestGameStateEvolutionOverTime:
 
     def test_player_status_evolution(self):
         """Track how player status evolves from active to bankrupt over time"""
-        players = [Player(5, 20, MegaRiskStrategy(), "QuickBankrupt")]
+        players = [Player(2, 20, MegaRiskStrategy(), "QuickBankrupt")]
         game = RouletteGame(players, max_rounds=10)
 
         status_evolution = []
@@ -692,7 +692,7 @@ class TestComprehensiveGameFlow:
         strategy_behavior = []
 
         for _ in range(3):
-            bet_before = player.strategy.last_bet_amount
+            bet_before = player.strategy.previous_bet_amount
             color_before = player.strategy.last_color
 
             game.play_round()
