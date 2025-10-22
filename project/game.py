@@ -33,7 +33,7 @@ class Bots:
         self.color_b: Optional[str] = None
         self.indicator: int = randint(1, 3)
         self.ifwin: bool = False
-        self.number1_b: int = number1_b if number1_b is not None else randint(0, 30)
+        self.number1_b: int = number1_b if number1_b is not None else randint(0, 36)
         self.number2_b: int = number2_b if number2_b is not None else randint(0, 36)
 
     def choice(self) -> Tuple[str, List[int]]:
@@ -95,7 +95,7 @@ class Bet777:
 
 class Strategies:
     @staticmethod
-    def choose_strategy(curva_bet: int, ifwin: bool, money: Optional[int] = None, indicator: Optional[int] = None) -> int:
+    def choose_strategy(curva_bet: int, ifwin: bool, money: int, indicator: Optional[int] = None) -> int:
         actual_indicator = randint(1, 3)
         '''We choose one of the possible strategies'''
         if actual_indicator == 1:
@@ -125,9 +125,6 @@ class Strategies:
     @staticmethod
     def all_capital(curva_bet: int, ifwin: bool, money: Optional[int] = None) -> int:
         ''' strategy all or nothing'''
-        if money is None:
-            return curva_bet
-
         if ifwin:
             return max(0, money - curva_bet)
         else:
