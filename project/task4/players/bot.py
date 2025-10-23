@@ -7,12 +7,13 @@ if TYPE_CHECKING:
 
 import random
 
+
 class Bot(Player):
     """
     AI player that makes decisions based on assigned strategy.
     """
-    
-    def __init__(self, name: str, strategy: 'Strategy', chips: int = 1000) -> None:
+
+    def __init__(self, name: str, strategy: "Strategy", chips: int = 1000) -> None:
         """
         Initializes a bot player with strategy.
 
@@ -23,8 +24,8 @@ class Bot(Player):
         """
         super().__init__(name, chips)
         self.strategy = strategy
-    
-    def make_decision(self, dealer_up_card: 'Card') -> str:
+
+    def make_decision(self, dealer_up_card: "Card") -> str:
         """
         Makes decision based on strategy and current game state.
 
@@ -35,13 +36,13 @@ class Bot(Player):
             str: "hit" or "stand" based on strategy decision
         """
         decision = self.strategy.should_hit(self.hand, dealer_up_card)
-        
+
         if decision and not self.is_standing:
             return "hit"
         else:
             self.is_standing = True
             return "stand"
-        
+
     def make_bet(self) -> bool:
         """
         Places bet based on bot's betting strategy and chip count.
@@ -62,10 +63,10 @@ class Bot(Player):
             # Стандартно: 10-20% от баланса
             min_bet = max(15, self.chips // 10)
             max_bet = max(30, self.chips // 5)
-        
+
         bet_amount = random.randint(min_bet, max_bet)
         bet_amount = min(bet_amount, self.chips)  # Не больше чем есть
-        
+
         success = self.place_bet(bet_amount)
         if success:
             print(f"🤖 {self.name} ставит {bet_amount} фишек")

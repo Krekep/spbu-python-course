@@ -5,13 +5,14 @@ if TYPE_CHECKING:
     from core.hand import Hand
     from core.card import Card
 
+
 class Strategy(ABC):
     """
     Abstract base class for Blackjack decision strategies.
     """
-    
+
     @abstractmethod
-    def should_hit(self, player_hand: 'Hand', dealer_up_card: 'Card') -> bool:
+    def should_hit(self, player_hand: "Hand", dealer_up_card: "Card") -> bool:
         """
         Determines whether player should hit based on strategy.
 
@@ -23,7 +24,7 @@ class Strategy(ABC):
             bool: True if player should hit, False to stand
         """
         pass
-    
+
     def __str__(self) -> str:
         """
         Returns strategy class name as string representation.

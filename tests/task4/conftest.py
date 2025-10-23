@@ -26,47 +26,51 @@ def pytest_configure(config):
     config.addinivalue_line(
         "markers", "slow: marks tests as slow (deselect with '-m \"not slow\"')"
     )
-    config.addinivalue_line(
-        "markers", "integration: marks tests as integration tests"
-    )
-    config.addinivalue_line(
-        "markers", "unit: marks tests as unit tests"
-    )
+    config.addinivalue_line("markers", "integration: marks tests as integration tests")
+    config.addinivalue_line("markers", "unit: marks tests as unit tests")
+
 
 @pytest.fixture
 def sample_card():
     """Фикстура для создания тестовой карты"""
     return Card("Hearts", "A", 11)
 
+
 @pytest.fixture
 def sample_deck():
     """Фикстура для создания тестовой колоды"""
     return Deck(1)
+
 
 @pytest.fixture
 def sample_hand():
     """Фикстура для создания тестовой руки"""
     return Hand()
 
+
 @pytest.fixture
 def sample_player():
     """Фикстура для создания тестового игрока"""
     return Bot("TestPlayer", ConservativeStrategy(), 1000)
+
 
 @pytest.fixture
 def sample_bot():
     """Фикстура для создания тестового бота"""
     return Bot("TestBot", ConservativeStrategy(), 1000)
 
+
 @pytest.fixture
 def sample_human():
     """Фикстура для создания тестового человеческого игрока"""
     return HumanPlayer("TestHuman", 1000)
 
+
 @pytest.fixture
 def sample_dealer():
     """Фикстура для создания тестового дилера"""
     return Dealer()
+
 
 @pytest.fixture
 def sample_game():
@@ -76,14 +80,16 @@ def sample_game():
     game.add_bot("TestBot2", AggressiveStrategy(), 500)
     return game
 
+
 @pytest.fixture
 def strategies():
     """Фикстура для создания всех стратегий"""
     return {
-        'conservative': ConservativeStrategy(),
-        'aggressive': AggressiveStrategy(),
-        'basic': BasicStrategy()
+        "conservative": ConservativeStrategy(),
+        "aggressive": AggressiveStrategy(),
+        "basic": BasicStrategy(),
     }
+
 
 @pytest.fixture
 def blackjack_hand():
@@ -93,6 +99,7 @@ def blackjack_hand():
     hand.add_card(Card("Spades", "K", 10))
     return hand
 
+
 @pytest.fixture
 def busted_hand():
     """Фикстура для создания руки с перебором"""
@@ -101,6 +108,7 @@ def busted_hand():
     hand.add_card(Card("Diamonds", "9", 9))
     hand.add_card(Card("Clubs", "5", 5))
     return hand
+
 
 @pytest.fixture
 def soft_hand():

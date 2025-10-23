@@ -2,11 +2,12 @@ from .strategy import Strategy
 from core.hand import Hand
 from core.card import Card
 
+
 class AggressiveStrategy(Strategy):
     """
     Aggressive strategy: frequently hits, takes more risks.
     """
-    
+
     def should_hit(self, player_hand: Hand, dealer_up_card: Card) -> bool:
         """
         Hits on most hands, even relatively high values against strong dealer cards.

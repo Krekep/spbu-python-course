@@ -2,7 +2,7 @@ class Card:
     """
     Represents a playing card with suit, rank and value.
     """
-    
+
     def __init__(self, suit: str, rank: str, value: int) -> None:
         """
         Initializes a card with given suit, rank and value.
@@ -15,7 +15,7 @@ class Card:
         self.suit = suit
         self.rank = rank
         self.value = value
-    
+
     def __str__(self) -> str:
         """
         Returns string representation of the card.
@@ -24,7 +24,7 @@ class Card:
             str: String in format "rank of suit"
         """
         return f"{self.rank} of {self.suit}"
-    
+
     def __repr__(self) -> str:
         """
         Returns detailed string representation for debugging.
@@ -33,7 +33,7 @@ class Card:
             str: String in format "Card('suit', 'rank', value)"
         """
         return f"Card('{self.suit}', '{self.rank}', {self.value})"
-    
+
     def __eq__(self, other: object) -> bool:
         """
         Checks if two cards are equal by comparing suit, rank and value.
@@ -46,6 +46,8 @@ class Card:
         """
         if not isinstance(other, Card):
             return False
-        return (self.suit == other.suit and 
-                self.rank == other.rank and 
-                self.value == other.value)
+        return (
+            self.suit == other.suit
+            and self.rank == other.rank
+            and self.value == other.value
+        )
