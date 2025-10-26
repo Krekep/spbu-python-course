@@ -1,6 +1,6 @@
 import pytest
 from collections.abc import MutableMapping
-from hesh_table import*
+from hash_table import*
 
 class TestHashTable:
     def test_init_data(self):
