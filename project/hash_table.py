@@ -1,20 +1,38 @@
 from collections.abc import MutableMapping
+from typing import Any, Dict, Iterator, List, Tuple, Union, Optional
 
 class HashTable(MutableMapping):
-    def __init__(self, dict_data=None):
+    def __init__(self, dict_data: [Dict[Any, Any]] = None) -> None:
+        """
+        Initialize the hash table.
+        Args:
+            dict_data: Dictionary with initial data to populate the table.
+        """
         self.dict_data = dict_data
-        self.hesh_table = self.make_hesh_table(self.dict_data)
+        self.hesh_table: Dict[int, Union[Tuple[Any, Any], List[Tuple[Any, Any]]]] = (
+            self.make_hesh_table(self.dict_data)
+        )
     
     @staticmethod
-    def hesh_function(key):
+    def hesh_function(key: Any) -> int:
+        """
+        Static method to compute the hash of a key.
+        Args:
+            key: Key to be hashed.
+        """
         data = str(key).encode('utf-8')
         my_hash = hash(data)
         id = abs(my_hash) % 1000
         return id
 
     @staticmethod
-    def make_hesh_table(dict_data):
-        hesh_table = {}
+    def make_hesh_table(dict_data: Dict[Any, Any]) -> Dict[int, Union[Tuple[Any, Any], List[Tuple[Any, Any]]]]:
+        """
+        Create a hash table from a dictionary.
+        Args:
+            dict_data: Source dictionary to convert to hash table.
+        """
+        hesh_table: Dict[int, Union[Tuple[Any, Any], List[Tuple[Any, Any]]]] = {}
         for key in dict_data:
             k = HashTable.hesh_function(key)
             if k in hesh_table:
@@ -26,7 +44,12 @@ class HashTable(MutableMapping):
                 hesh_table[k] = (key, dict_data[key])
         return hesh_table
     
-    def __getitem__(self, key):
+    def __getitem__(self, key: Any) -> Any:
+        """
+        Get the value associated with the key.
+        Args:
+            key: Key to look up.
+        """
         hesh_k = self.hesh_function(key)
         if hesh_k not in self.hesh_table:
             raise KeyError(f"Key not found")    
@@ -40,8 +63,15 @@ class HashTable(MutableMapping):
             k, v = data2
             if k == key:
                 return v
+        raise KeyError(f"Key not found")
 
-    def __setitem__(self, key, value):
+    def __setitem__(self, key: Any, value: Any) -> None:
+        """
+        Set the value for the key in the table.
+        Args:
+            key: Key to set.
+            value: Value to associate with the key.
+        """
         hesh_k = self.hesh_function(key)
         
         if hesh_k not in self.hesh_table:
@@ -63,7 +93,12 @@ class HashTable(MutableMapping):
             else:
                 self.hesh_table[hesh_k] = [data2, (key, value)]
 
-    def __delitem__(self, key):
+    def __delitem__(self, key: Any) -> None:
+        """
+        Delete the key-value pair from the table.
+        Args:
+            key: Key to delete.
+        """
         hesh_k = self.hesh_function(key)
         if hesh_k not in self.hesh_table:
             raise KeyError(f"Key not found")
@@ -87,7 +122,10 @@ class HashTable(MutableMapping):
                 
         raise KeyError(f"Key not found")
     
-    def __iter__(self):
+    def __iter__(self) -> Iterator[Any]:
+        """
+        Iterate over all keys in the table.
+        """
         for bucket in self.hesh_table.values():
             if isinstance(bucket, list):
                 for k, v in bucket:
@@ -96,7 +134,10 @@ class HashTable(MutableMapping):
                 k, v = bucket
                 yield k
 
-    def __len__(self):
+    def __len__(self) -> int:
+        """
+        Get the number of key-value pairs in the table.
+        """
         lens = 0
         for data2 in self.hesh_table.values():
             if isinstance(data2, list):
@@ -105,7 +146,12 @@ class HashTable(MutableMapping):
                 lens += 1
         return lens
     
-    def __contains__(self, key):
+    def __contains__(self, key: Any) -> bool:
+        """
+        Check if the key exists in the table.
+        Args:
+            key: Key to check.
+        """
         hesh_k = self.hesh_function(key)
         if hesh_k not in self.hesh_table:
             return False   
