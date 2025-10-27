@@ -1,6 +1,7 @@
 from collections.abc import MutableMapping
 from typing import Any, Dict, Iterator, List, Tuple, Union, Optional
 
+
 class HashTable(MutableMapping):
     def __init__(self, dict_data: Optional[dict] = None) -> None:
         """
@@ -9,10 +10,8 @@ class HashTable(MutableMapping):
             dict_data: Dictionary with initial data to populate the table.
         """
         self.dict_data = dict_data or {}
-        self.hesh_table: Dict[int, Union[Tuple[Any, Any], List[Tuple[Any, Any]]]] = (
-            self.make_hesh_table(self.dict_data)
-        )
-    
+        self.hesh_table: Dict[int, Union[Tuple[Any, Any], List[Tuple[Any, Any]]]] = self.make_hesh_table(self.dict_data)
+        
     @staticmethod
     def hesh_function(key: Any) -> int:
         """
@@ -53,7 +52,7 @@ class HashTable(MutableMapping):
         """
         hesh_k = self.hesh_function(key)
         if hesh_k not in self.hesh_table:
-            raise KeyError(f"Key not found")    
+            raise KeyError(f"Key not found")
         data2 = self.hesh_table[hesh_k]
         
         if isinstance(data2, list):
@@ -162,5 +161,5 @@ class HashTable(MutableMapping):
         else:
             k, v = data2
             if k == key:
-                return True       
+                return True
         return False
