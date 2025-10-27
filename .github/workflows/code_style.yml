@@ -23,6 +23,11 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Auto-format code
+        run: |
+          python -m black .
+          python -m isort . --profile black
+
       - name: Check formatting
         run: |
           python -m black . --check
