@@ -10,8 +10,10 @@ class HashTable(MutableMapping):
             dict_data: Dictionary with initial data to populate the table.
         """
         self.dict_data = dict_data or {}
-        self.hesh_table: Dict[int, Union[Tuple[Any, Any], List[Tuple[Any, Any]]]] = self.make_hesh_table(self.dict_data)
-        
+        self.hesh_table: Dict[
+            int, Union[Tuple[Any, Any], List[Tuple[Any, Any]]]
+        ] = self.make_hesh_table(self.dict_data)
+
     @staticmethod
     def hesh_function(key: Any) -> int:
         """
@@ -19,19 +21,23 @@ class HashTable(MutableMapping):
         Args:
             key: Key to be hashed.
         """
-        data = str(key).encode('utf-8')
+        data = str(key).encode("utf-8")
         my_hash = hash(data)
         id = abs(my_hash) % 1000
         return id
 
     @staticmethod
-    def make_hesh_table(dict_data: Dict[Any, Any]) -> Dict[int, Union[Tuple[Any, Any], List[Tuple[Any, Any]]]]:
+    def make_hesh_table(
+        dict_data: Dict[Any, Any]
+    ) -> Dict[int, Union[Tuple[Any, Any], List[Tuple[Any, Any]]]]:
         """
         Create a hash table from a dictionary.
         Args:
             dict_data: Source dictionary to convert to hash table.
         """
-        hesh_table: Dict[int, Union[Tuple[Any, Any], List[Tuple[Any, Any]]]] = {}
+        hesh_table: Dict[
+            int, Union[Tuple[Any, Any], List[Tuple[Any, Any]]]
+        ] = {}
         for key in dict_data:
             k = HashTable.hesh_function(key)
             if k in hesh_table:
@@ -43,7 +49,7 @@ class HashTable(MutableMapping):
             else:
                 hesh_table[k] = (key, dict_data[key])
         return hesh_table
-    
+
     def __getitem__(self, key: Any) -> Any:
         """
         Get the value associated with the key.
@@ -54,7 +60,7 @@ class HashTable(MutableMapping):
         if hesh_k not in self.hesh_table:
             raise KeyError(f"Key not found")
         data2 = self.hesh_table[hesh_k]
-        
+
         if isinstance(data2, list):
             for k, v in data2:
                 if k == key:
@@ -72,13 +78,13 @@ class HashTable(MutableMapping):
             value: Value to associate with the key.
         """
         hesh_k = self.hesh_function(key)
-        
+
         if hesh_k not in self.hesh_table:
             self.hesh_table[hesh_k] = (key, value)
             return
-            
+
         data2 = self.hesh_table[hesh_k]
-        
+
         if isinstance(data2, list):
             for i, (k, v) in enumerate(data2):
                 if k == key:
@@ -101,9 +107,9 @@ class HashTable(MutableMapping):
         hesh_k = self.hesh_function(key)
         if hesh_k not in self.hesh_table:
             raise KeyError(f"Key not found")
-            
+
         data2 = self.hesh_table[hesh_k]
-        
+
         if isinstance(data2, list):
             for i, (k, v) in enumerate(data2):
                 if k == key:
@@ -118,7 +124,7 @@ class HashTable(MutableMapping):
             if k == key:
                 del self.hesh_table[hesh_k]
                 return
-    
+
     def __iter__(self) -> Iterator[Any]:
         """
         Iterate over all keys in the table.
@@ -142,7 +148,7 @@ class HashTable(MutableMapping):
             else:
                 lens += 1
         return lens
-    
+
     def __contains__(self, key: Any) -> bool:
         """
         Check if the key exists in the table.
@@ -151,9 +157,9 @@ class HashTable(MutableMapping):
         """
         hesh_k = self.hesh_function(key)
         if hesh_k not in self.hesh_table:
-            return False   
+            return False
         data2 = self.hesh_table[hesh_k]
-        
+
         if isinstance(data2, list):
             for k, v in data2:
                 if k == key:
