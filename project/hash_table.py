@@ -36,10 +36,11 @@ class HashTable(MutableMapping):
         for key in dict_data:
             k = HashTable.hesh_function(key)
             if k in hesh_table:
+                k_value = hesh_table[k]
                 if isinstance(hesh_table[k], list):
-                    hesh_table[k].append((key, dict_data[key]))
+                    k_value.append((key, dict_data[key]))
                 else:
-                    hesh_table[k] = [hesh_table[k], (key, dict_data[key])]
+                    k_value = [k_value, (key, dict_data[key])]
             else:
                 hesh_table[k] = (key, dict_data[key])
         return hesh_table
@@ -126,12 +127,12 @@ class HashTable(MutableMapping):
         """
         Iterate over all keys in the table.
         """
-        for bucket in self.hesh_table.values():
-            if isinstance(bucket, list):
-                for k, v in bucket:
+        for data2 in self.hesh_table.values():
+            if isinstance(data2, list):
+                for k, v in data2:
                     yield k
             else:
-                k, v = bucket
+                k, v = data2
                 yield k
 
     def __len__(self) -> int:
