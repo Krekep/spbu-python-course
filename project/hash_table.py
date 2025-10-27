@@ -40,7 +40,7 @@ class HashTable(MutableMapping):
                 if isinstance(hesh_table[k], list):
                     k_value.append((key, dict_data[key]))
                 else:
-                    k_value = [k_value, (key, dict_data[key])]
+                    hesh_table[k] = [k_value, (key, dict_data[key])]
             else:
                 hesh_table[k] = (key, dict_data[key])
         return hesh_table
