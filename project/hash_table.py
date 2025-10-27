@@ -2,7 +2,7 @@ from collections.abc import MutableMapping
 from typing import Any, Dict, Iterator, List, Tuple, Union, Optional
 
 class HashTable(MutableMapping):
-    def __init__(self, dict_data: [Dict[Any, Any]] = None) -> None:
+    def __init__(self, dict_data: Optional[Dict[Any, Any]] = None) -> None:
         """
         Initialize the hash table.
         Args:
