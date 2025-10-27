@@ -8,7 +8,7 @@ class HashTable(MutableMapping):
         Args:
             dict_data: Dictionary with initial data to populate the table.
         """
-        self.dict_data = dict_data
+        self.dict_data = dict_data or {}
         self.hesh_table: Dict[int, Union[Tuple[Any, Any], List[Tuple[Any, Any]]]] = (
             self.make_hesh_table(self.dict_data)
         )
