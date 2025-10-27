@@ -64,7 +64,6 @@ class HashTable(MutableMapping):
             k, v = data2
             if k == key:
                 return v
-        raise KeyError(f"Key not found")
 
     def __setitem__(self, key: Any, value: Any) -> None:
         """
@@ -120,8 +119,6 @@ class HashTable(MutableMapping):
             if k == key:
                 del self.hesh_table[hesh_k]
                 return
-                
-        raise KeyError(f"Key not found")
     
     def __iter__(self) -> Iterator[Any]:
         """
