@@ -53,7 +53,7 @@ class TestFuncSupport:
         assert final == [0, 2, 4]
 
     def test_zip(self, small_dataset: Iterator[int]) -> None:
-        result = pipeline(small_dataset, lambda x: zip(x, (y + 10 for y in x))
+        result = pipeline(small_dataset, lambda x: zip(x, (y + 10 for y in x)))
         final = to_collect(result, flag="l")
         assert final == [(0, 10), (1, 11), (2, 12), (3, 13), (4, 14)]
 
