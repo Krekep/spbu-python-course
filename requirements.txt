@@ -1,6 +1,6 @@
+autoflake
 black
+isort
+mypy
 pre-commit
 pytest
-isort
-autoflake
-mypy
