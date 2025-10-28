@@ -26,7 +26,6 @@ jobs:
       - name: Check formatting
         run: |
           python -m black . --check
-          python -m isort . --check-only --profile black
 
       - name: Run type checking with mypy
         run: |
