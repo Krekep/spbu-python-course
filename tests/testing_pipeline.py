@@ -43,17 +43,17 @@ class TestPipeline:
 
 class TestFuncSupport:
     def test_map(self, small_dataset: Iterator[int]) -> None:
-        result = pipeline(small_dataset, lambda x: map(lambda y: y * 2, x))
+        result = pipeline(small_dataset, lambda x: (y * 2 for y in x))
         final = to_collect(result, flag="l")
         assert final == [0, 2, 4, 6, 8]
 
     def test_filter(self, small_dataset: Iterator[int]) -> None:
-        result = pipeline(small_dataset, lambda x: filter(lambda y: y % 2 == 0, x))
+        result = pipeline(small_dataset, lambda x: (y for y in x if y % 2 == 0))
         final = to_collect(result, flag="l")
         assert final == [0, 2, 4]
 
     def test_zip(self, small_dataset: Iterator[int]) -> None:
-        result = pipeline(small_dataset, lambda x: zip(x, map(lambda y: y + 10, x)))
+        result = pipeline(small_dataset, lambda x: zip(x, (y + 10 for y in x))
         final = to_collect(result, flag="l")
         assert final == [(0, 10), (1, 11), (2, 12), (3, 13), (4, 14)]
 
