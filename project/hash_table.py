@@ -10,9 +10,7 @@ class HashTable(MutableMapping):
             dict_data: Dictionary with initial data to populate the table.
         """
         self.dict_data = dict_data or {}
-        self.hesh_table: Dict[
-            int, Union[Tuple[Any, Any], List[Tuple[Any, Any]]]
-        ] = self.make_hesh_table(self.dict_data)
+        self.hesh_table: Dict[int, Union[Tuple[Any, Any], List[Tuple[Any, Any]]]] = self.make_hesh_table(self.dict_data)
 
     @staticmethod
     def hesh_function(key: Any) -> int:
@@ -35,9 +33,7 @@ class HashTable(MutableMapping):
         Args:
             dict_data: Source dictionary to convert to hash table.
         """
-        hesh_table: Dict[
-            int, Union[Tuple[Any, Any], List[Tuple[Any, Any]]]
-        ] = {}
+        hesh_table: Dict[int, Union[Tuple[Any, Any], List[Tuple[Any, Any]]]] = {}
         for key in dict_data:
             k = HashTable.hesh_function(key)
             if k in hesh_table:
