@@ -13,7 +13,7 @@ class HashTable(MutableMapping):
         self.hesh_table: Dict[
             int, Union[Tuple[Any, Any], List[Tuple[Any, Any]]]
         ] = self.make_hesh_table(self.dict_data)
-    
+
     @staticmethod
     def hesh_function(key: Any) -> int:
         """
