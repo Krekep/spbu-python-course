@@ -29,21 +29,6 @@ jobs:
         run: |
           python -m mypy ./project
 
-      - name: Debug test discovery
-        run: |
-          echo "=== Current directory ==="
-          pwd
-          echo "=== File structure ==="
-          find . -name "*.py" | sort
-          echo "=== Tests directory contents ==="
-          ls -la tests/ || echo "No tests directory"
-          echo "=== Python path ==="
-          python -c "import sys; print('\n'.join(sys.path))"
-          echo "=== Try to import manually ==="
-          python -c "from project.hash_table import HashTable; print('Import successful')" || echo "Import failed"
-          echo "=== Run pytest with discovery debug ==="
-          python -m pytest tests/ -v --collect-only
-
       - name: Run tests with pytest
         run: |
           python -m pytest tests/tests_hesh_table.py
