@@ -31,7 +31,6 @@ jobs:
 
       - name: Run tests with pytest
         run: |
-          python -m pytest -v --tb=short
           python -m pytest tests/ -v
 
       - name: Run pre-commit
