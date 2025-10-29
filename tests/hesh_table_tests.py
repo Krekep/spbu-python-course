@@ -14,7 +14,7 @@ class TestHashTable:
     def test_delit_all(self):
         """Test of deleting all items"""
         ht = HashTable({"a": 1, "b": 2, "c": 3})
-        
+
         keys = list(ht)
         for key in keys:
             del ht[key]
@@ -83,7 +83,7 @@ class TestHashTable:
         ht = HashTable()
         ht["key1"] = "value1"
         ht["key2"] = "value2"
-        
+
         assert ht["key1"] == "value1"
         assert ht["key2"] == "value2"
 
@@ -111,7 +111,7 @@ class TestHashTable:
         ht["key"] = "value1"
         del ht["key"]
         ht["key"] = "value2"
-        
+
         assert ht["key"] == "value2"
         assert len(ht) == 1
 
@@ -121,6 +121,6 @@ class TestHashTable:
         ht["key"] = "value1"
         ht["key"] = "value2"
         ht["key"] = "value3"
-        
+
         assert ht["key"] == "value3"
         assert len(ht) == 1
