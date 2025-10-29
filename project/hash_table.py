@@ -12,7 +12,7 @@ class HashTable(MutableMapping):
         self.dict_data = dict_data or {}
         self.hesh_table = self._init_hesh_table()
 
-    def _init_hesh_table(self) -> List[Optional[Union[Tuple[Any, Any], List[Tuple[Any, Any]]]]]:
+    def init_hesh_table(self) -> List[Optional[Union[Tuple[Any, Any], List[Tuple[Any, Any]]]]]:
         """
         Initialize hash table from dictionary data.
         Returns:
