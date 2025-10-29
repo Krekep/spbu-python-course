@@ -12,13 +12,17 @@ class HashTable(MutableMapping):
         self.dict_data = dict_data or {}
         self.hesh_table = self._init_hesh_table()
 
-    def init_hesh_table(self) -> List[Optional[Union[Tuple[Any, Any], List[Tuple[Any, Any]]]]]:
+    def _init_hesh_table(
+        self,
+    ) -> List[Optional[Union[Tuple[Any, Any], List[Tuple[Any, Any]]]]]:
         """
         Initialize hash table from dictionary data.
         Returns:
             List representing the hash table.
         """
-        hesh_table: List[Optional[Union[Tuple[Any, Any], List[Tuple[Any, Any]]]]] = [None] * 1000
+        hesh_table: List[Optional[Union[Tuple[Any, Any], List[Tuple[Any, Any]]]]] = [
+            None
+        ] * 1000
         for key, value in self.dict_data.items():
             k = self.hesh_function(key)
             if hesh_table[k] is not None:
@@ -51,7 +55,7 @@ class HashTable(MutableMapping):
         """
         hesh_k = self.hesh_function(key)
         data2 = self.hesh_table[hesh_k]
-        
+
         if data2 is None:
             raise KeyError(f"Key not found")
 
@@ -100,7 +104,7 @@ class HashTable(MutableMapping):
         """
         hesh_k = self.hesh_function(key)
         data2 = self.hesh_table[hesh_k]
-        
+
         if data2 is None:
             raise KeyError(f"Key not found")
 
@@ -154,7 +158,7 @@ class HashTable(MutableMapping):
         """
         hesh_k = self.hesh_function(key)
         data2 = self.hesh_table[hesh_k]
-        
+
         if data2 is None:
             return False
 
