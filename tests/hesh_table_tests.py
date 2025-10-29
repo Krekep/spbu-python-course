@@ -11,6 +11,16 @@ class TestHashTable:
         assert ht["a"] == 1
         assert ht["b"] == 2
 
+    def test_delit_all(self):
+        """Test of deliting all item"""
+        ht = HashTable({"a": 1, "b": 2, "c": 3})
+        for key in ht:
+            del ht[key]
+
+        assert "a" not in ht
+        assert "b" not in ht
+        assert "c" not in ht
+
     def test_set(self):
         """Testing set the element"""
         ht = HashTable()
@@ -39,7 +49,7 @@ class TestHashTable:
         assert len(ht) == 2
 
     def test_contains(self):
-        """Test ' in'"""
+        """Test contains in table'"""
         ht = HashTable({"a": 1, "b": 2})
         assert "a" in ht
         assert "b" in ht
