@@ -10,7 +10,7 @@ class HashTable(MutableMapping):
             dict_data: Dictionary with initial data to populate the table.
         """
         self.dict_data = dict_data or {}
-        self.hesh_table = self._init_hesh_table()
+        self.hesh_table = self.init_hesh_table()
 
     def init_hesh_table(
         self,
@@ -20,9 +20,9 @@ class HashTable(MutableMapping):
         Returns:
             List representing the hash table.
         """
-        hesh_table: List[Optional[Union[Tuple[Any, Any], List[Tuple[Any, Any]]]]] = [
-            None
-        ] * 1000
+        hesh_table: List[Optional[Union[Tuple[Any, Any], List[Tuple[Any, Any]]]]] = []
+        for _ in range(1000):
+            hesh_table.append(None)
         for key, value in self.dict_data.items():
             k = self.hesh_function(key)
             if hesh_table[k] is not None:
