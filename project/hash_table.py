@@ -22,8 +22,9 @@ class HashTable(MutableMapping):
         
         for key, value in self.dict_data.items():
             k = self.hesh_function(key)
-            if hesh_table[k] is not None:
-                hesh_table[k].append((key, value))
+            exist_list = hesh_table[k]
+            if exist_list is not None:
+                exist_list.append((key, value))
             else:
                 hesh_table[k] = [(key, value)]
         return hesh_table
