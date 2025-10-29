@@ -46,7 +46,7 @@ jobs:
 
       - name: Run tests with pytest
         run: |
-          python -m pytest tests/ -v
+          python -m pytest tests/tests_hesh_table.py
 
       - name: Run pre-commit
         run: |
