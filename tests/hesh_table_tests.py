@@ -12,14 +12,17 @@ class TestHashTable:
         assert ht["b"] == 2
 
     def test_delit_all(self):
-        """Test of deliting all item"""
+        """Test of deleting all items"""
         ht = HashTable({"a": 1, "b": 2, "c": 3})
-        for key in ht:
+        
+        keys = list(ht)
+        for key in keys:
             del ht[key]
 
         assert "a" not in ht
         assert "b" not in ht
         assert "c" not in ht
+        assert len(ht) == 0
 
     def test_set(self):
         """Testing set the element"""
@@ -39,7 +42,7 @@ class TestHashTable:
         assert len(ht) == 1
 
     def test_delit(self):
-        """Test of deliting item"""
+        """Test of deleting item"""
         ht = HashTable({"a": 1, "b": 2, "c": 3})
         del ht["b"]
 
@@ -49,7 +52,7 @@ class TestHashTable:
         assert len(ht) == 2
 
     def test_contains(self):
-        """Test contains in table'"""
+        """Test contains in table"""
         ht = HashTable({"a": 1, "b": 2})
         assert "a" in ht
         assert "b" in ht
@@ -74,3 +77,50 @@ class TestHashTable:
 
         assert set(keys) == {"a", "b", "c"}
         assert len(keys) == 3
+
+    def test_collisions(self):
+        """Test handling hash collisions"""
+        ht = HashTable()
+        ht["key1"] = "value1"
+        ht["key2"] = "value2"
+        
+        assert ht["key1"] == "value1"
+        assert ht["key2"] == "value2"
+
+    def test_delete_nonexistent(self):
+        """Test deleting non-existent key"""
+        ht = HashTable({"a": 1})
+        with pytest.raises(KeyError):
+            del ht["nonexistent"]
+
+    def test_get_nonexistent(self):
+        """Test getting non-existent key"""
+        ht = HashTable({"a": 1})
+        with pytest.raises(KeyError):
+            _ = ht["nonexistent"]
+
+    def test_empty_iteration(self):
+        """Test iteration over empty table"""
+        ht = HashTable()
+        keys = list(ht)
+        assert len(keys) == 0
+
+    def test_reinsert_after_delete(self):
+        """Test reinserting key after deletion"""
+        ht = HashTable()
+        ht["key"] = "value1"
+        del ht["key"]
+        ht["key"] = "value2"
+        
+        assert ht["key"] == "value2"
+        assert len(ht) == 1
+
+    def test_multiple_updates(self):
+        """Test multiple updates to same key"""
+        ht = HashTable()
+        ht["key"] = "value1"
+        ht["key"] = "value2"
+        ht["key"] = "value3"
+        
+        assert ht["key"] == "value3"
+        assert len(ht) == 1
