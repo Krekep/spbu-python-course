@@ -1,0 +1,160 @@
+=-=-= DEMO GAME 1=-=-=
+
+Players:
+  Kolya_228_pro_gamer (balance: 100)
+  Mellstroy (balance: 100)
+  Ivan_Zolo (balance: 100)
+  Drakula (balance: 100)
+
+=-=-= START =-=-=
+
+
+=-=-=-=-=Round 1=-=-=-=-=
+Kolya_228_pro_gamer puts 10 on color red
+Mellstroy puts 10 on number 9
+Ivan_Zolo puts 50 on number 0
+Drakula puts 1 on color black
+Came up: 15 (black)
+Drakula won 2!
+
+--- Game State after Round 1 ---
+  Kolya_228_pro_gamer: balance: 90
+  Mellstroy: balance: 90
+  Ivan_Zolo: balance: 50
+  Drakula: balance: 101
+
+=-=-=-=-=Round 2=-=-=-=-=
+Kolya_228_pro_gamer puts 9 on color black
+Mellstroy puts 9 on number 2
+Ivan_Zolo puts 25 on number 0
+Drakula puts 1 on color red
+Came up: 26 (black)
+Kolya_228_pro_gamer won 18!
+
+--- Game State after Round 2 ---
+  Kolya_228_pro_gamer: balance: 99
+  Mellstroy: balance: 81
+  Ivan_Zolo: balance: 25
+  Drakula: balance: 100
+
+=-=-=-=-=Round 3=-=-=-=-=
+Kolya_228_pro_gamer puts 9 on color red
+Mellstroy puts 8 on number 31
+Ivan_Zolo puts 12 on number 0
+Drakula puts 2 on color black
+Came up: 6 (black)
+Drakula won 4!
+
+--- Game State after Round 3 ---
+  Kolya_228_pro_gamer: balance: 90
+  Mellstroy: balance: 73
+  Ivan_Zolo: balance: 13
+  Drakula: balance: 102
+
+=-=-=-=-=Round 4=-=-=-=-=
+Kolya_228_pro_gamer puts 9 on color black
+Mellstroy puts 7 on number 4
+Ivan_Zolo puts 6 on number 0
+Drakula puts 1 on color red
+Came up: 8 (black)
+Kolya_228_pro_gamer won 18!
+
+--- Game State after Round 4 ---
+  Kolya_228_pro_gamer: balance: 99
+  Mellstroy: balance: 66
+  Ivan_Zolo: balance: 7
+  Drakula: balance: 101
+
+=-=-=-=-=Round 5=-=-=-=-=
+Kolya_228_pro_gamer puts 9 on color red
+Mellstroy puts 6 on number 19
+Ivan_Zolo puts 3 on number 0
+Drakula puts 2 on color black
+Came up: 1 (red)
+Kolya_228_pro_gamer won 18!
+
+--- Game State after Round 5 ---
+  Kolya_228_pro_gamer: balance: 108
+  Mellstroy: balance: 60
+  Ivan_Zolo: balance: 4
+  Drakula: balance: 99
+
+=-=-=-=-=Round 6=-=-=-=-=
+Kolya_228_pro_gamer puts 10 on color black
+Mellstroy puts 6 on number 7
+Ivan_Zolo puts 2 on number 0
+Drakula puts 4 on color red
+Came up: 25 (red)
+Drakula won 8!
+
+--- Game State after Round 6 ---
+  Kolya_228_pro_gamer: balance: 98
+  Mellstroy: balance: 54
+  Ivan_Zolo: balance: 2
+  Drakula: balance: 103
+
+=-=-=-=-=Round 7=-=-=-=-=
+Kolya_228_pro_gamer puts 9 on color red
+Mellstroy puts 5 on number 14
+Ivan_Zolo puts 1 on number 0
+Drakula puts 1 on color black
+Came up: 14 (red)
+Kolya_228_pro_gamer won 18!
+Mellstroy won 175!
+
+--- Game State after Round 7 ---
+  Kolya_228_pro_gamer: balance: 107
+  Mellstroy: balance: 224
+  Ivan_Zolo: balance: 1
+  Drakula: balance: 102
+
+=-=-=-=-=Round 8=-=-=-=-=
+Kolya_228_pro_gamer puts 10 on color black
+Mellstroy puts 22 on number 12
+Ivan_Zolo puts 1 on number 0
+Drakula puts 2 on color red
+Came up: 6 (black)
+Kolya_228_pro_gamer won 20!
+
+--- Game State after Round 8 ---
+  Kolya_228_pro_gamer: balance: 117
+  Mellstroy: balance: 202
+  Ivan_Zolo: BANKRUPT
+  Drakula: balance: 100
+
+=-=-=-=-=Round 9=-=-=-=-=
+Kolya_228_pro_gamer puts 11 on color red
+Mellstroy puts 20 on number 0
+Ivan_Zolo dropped out
+Drakula puts 4 on color black
+Came up: 14 (red)
+Kolya_228_pro_gamer won 22!
+
+--- Game State after Round 9 ---
+  Kolya_228_pro_gamer: balance: 128
+  Mellstroy: balance: 182
+  Ivan_Zolo: BANKRUPT
+  Drakula: balance: 96
+
+=-=-=-=-=Round 10=-=-=-=-=
+Kolya_228_pro_gamer puts 12 on color black
+Mellstroy puts 18 on number 9
+Ivan_Zolo dropped out
+Drakula puts 8 on color red
+Came up: 6 (black)
+Kolya_228_pro_gamer won 24!
+
+--- Game State after Round 10 ---
+  Kolya_228_pro_gamer: balance: 140
+  Mellstroy: balance: 164
+  Ivan_Zolo: BANKRUPT
+  Drakula: balance: 88
+
+=-=-= Game over after 10 rounds =-=-=
+Final balance:
+  Kolya_228_pro_gamer: 140 (In game)
+  Mellstroy: 164 (In game)
+  Ivan_Zolo: 0 (Dropped out)
+  Drakula: 88 (In game)
+
+ Winner: Mellstroy with balance 164!

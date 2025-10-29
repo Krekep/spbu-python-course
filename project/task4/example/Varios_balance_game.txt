@@ -1,0 +1,138 @@
+=-=-= DEMO GAME 1=-=-=
+
+Players:
+  Kolya_228_pro_gamer (balance: 79686250)
+  Mellstroy (balance: 29377679)
+  Drakula (balance: 42688103)
+
+=-=-= START =-=-=
+
+
+=-=-=-=-=Round 1=-=-=-=-=
+Kolya_228_pro_gamer puts 7968625 on color red
+Mellstroy puts 2937767 on number 22
+Drakula puts 1 on color black
+Came up: 32 (red)
+Kolya_228_pro_gamer won 15937250!
+
+--- Game State after Round 1 ---
+  Kolya_228_pro_gamer: balance: 87654875
+  Mellstroy: balance: 26439912
+  Drakula: balance: 42688102
+
+=-=-=-=-=Round 2=-=-=-=-=
+Kolya_228_pro_gamer puts 8765487 on color black
+Mellstroy puts 2643991 on number 13
+Drakula puts 2 on color red
+Came up: 13 (black)
+Kolya_228_pro_gamer won 17530974!
+Mellstroy won 92539685!
+
+--- Game State after Round 2 ---
+  Kolya_228_pro_gamer: balance: 96420362
+  Mellstroy: balance: 116335606
+  Drakula: balance: 42688100
+
+=-=-=-=-=Round 3=-=-=-=-=
+Kolya_228_pro_gamer puts 9642036 on color red
+Mellstroy puts 11633560 on number 17
+Drakula puts 4 on color black
+Came up: 15 (black)
+Drakula won 8!
+
+--- Game State after Round 3 ---
+  Kolya_228_pro_gamer: balance: 86778326
+  Mellstroy: balance: 104702046
+  Drakula: balance: 42688104
+
+=-=-=-=-=Round 4=-=-=-=-=
+Kolya_228_pro_gamer puts 8677832 on color black
+Mellstroy puts 10470204 on number 7
+Drakula puts 1 on color red
+Came up: 30 (red)
+Drakula won 2!
+
+--- Game State after Round 4 ---
+  Kolya_228_pro_gamer: balance: 78100494
+  Mellstroy: balance: 94231842
+  Drakula: balance: 42688105
+
+=-=-=-=-=Round 5=-=-=-=-=
+Kolya_228_pro_gamer puts 7810049 on color red
+Mellstroy puts 9423184 on number 28
+Drakula puts 1 on color black
+Came up: 14 (red)
+Kolya_228_pro_gamer won 15620098!
+
+--- Game State after Round 5 ---
+  Kolya_228_pro_gamer: balance: 85910543
+  Mellstroy: balance: 84808658
+  Drakula: balance: 42688104
+
+=-=-=-=-=Round 6=-=-=-=-=
+Kolya_228_pro_gamer puts 8591054 on color black
+Mellstroy puts 8480865 on number 11
+Drakula puts 2 on color red
+Came up: 2 (black)
+Kolya_228_pro_gamer won 17182108!
+
+--- Game State after Round 6 ---
+  Kolya_228_pro_gamer: balance: 94501597
+  Mellstroy: balance: 76327793
+  Drakula: balance: 42688102
+
+=-=-=-=-=Round 7=-=-=-=-=
+Kolya_228_pro_gamer puts 9450159 on color red
+Mellstroy puts 7632779 on number 26
+Drakula puts 4 on color black
+Came up: 13 (black)
+Drakula won 8!
+
+--- Game State after Round 7 ---
+  Kolya_228_pro_gamer: balance: 85051438
+  Mellstroy: balance: 68695014
+  Drakula: balance: 42688106
+
+=-=-=-=-=Round 8=-=-=-=-=
+Kolya_228_pro_gamer puts 8505143 on color black
+Mellstroy puts 6869501 on number 35
+Drakula puts 1 on color red
+Came up: 2 (black)
+Kolya_228_pro_gamer won 17010286!
+
+--- Game State after Round 8 ---
+  Kolya_228_pro_gamer: balance: 93556581
+  Mellstroy: balance: 61825513
+  Drakula: balance: 42688105
+
+=-=-=-=-=Round 9=-=-=-=-=
+Kolya_228_pro_gamer puts 9355658 on color red
+Mellstroy puts 6182551 on number 6
+Drakula puts 2 on color black
+Came up: 22 (black)
+Drakula won 4!
+
+--- Game State after Round 9 ---
+  Kolya_228_pro_gamer: balance: 84200923
+  Mellstroy: balance: 55642962
+  Drakula: balance: 42688107
+
+=-=-=-=-=Round 10=-=-=-=-=
+Kolya_228_pro_gamer puts 8420092 on color black
+Mellstroy puts 5564296 on number 33
+Drakula puts 1 on color red
+Came up: 21 (red)
+Drakula won 2!
+
+--- Game State after Round 10 ---
+  Kolya_228_pro_gamer: balance: 75780831
+  Mellstroy: balance: 50078666
+  Drakula: balance: 42688108
+
+=-=-= Game over after 10 rounds =-=-=
+Final balance:
+  Kolya_228_pro_gamer: 75780831 (In game)
+  Mellstroy: 50078666 (In game)
+  Drakula: 42688108 (In game)
+
+ Winner: Kolya_228_pro_gamer with balance 75780831!

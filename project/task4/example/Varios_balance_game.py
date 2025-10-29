@@ -2,15 +2,15 @@
 Demo game 2
 """
 
-from project.task4.roulette import (
-    Player,
+from random import randint
+
+from project.task4.example.roulette_game.game import RouletteGame
+from project.task4.example.roulette_game.players import Player
+from project.task4.example.roulette_game.strategies import (
     ConservativeStrategy,
     RiskStrategy,
     MathematicalStrategy,
-    RouletteGame,
 )
-
-from random import randint
 
 
 def main():

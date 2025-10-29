@@ -2,13 +2,13 @@
 Demo game 1
 """
 
-from project.task4.roulette import (
-    Player,
+from project.task4.example.roulette_game.game import RouletteGame
+from project.task4.example.roulette_game.players import Player
+from project.task4.example.roulette_game.strategies import (
     ConservativeStrategy,
     RiskStrategy,
     MegaRiskStrategy,
     MathematicalStrategy,
-    RouletteGame,
 )
 
 
