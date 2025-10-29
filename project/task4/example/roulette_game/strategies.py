@@ -12,8 +12,11 @@ class Strategy(ABC):
     All strategy classes must implement the make_bet method
     """
 
+    def __init__(self):
+        self._last_result: bool = True
+
     @abstractmethod
-    def make_bet(self, player: Player) -> Bet:
+    def make_bet(self, player_balance: int, game_history: list) -> Bet:
         """Creates a strategy logic.
 
         Parameters:
@@ -23,6 +26,14 @@ class Strategy(ABC):
             Bet: Bet object with type, value and amount
         """
         pass
+
+    def update_result(self, won: bool) -> None:
+        """Update strategy with result of last bet"""
+        self._last_result = won
+
+    def last_result(self) -> bool:
+        """Get result of last bet"""
+        return self._last_result
 
 
 class ConservativeStrategy(Strategy):
@@ -35,9 +46,10 @@ class ConservativeStrategy(Strategy):
     """
 
     def __init__(self):
+        super().__init__()
         self.last_color = Color.BLACK
 
-    def make_bet(self, player: Player) -> Bet:
+    def make_bet(self, player_balance: int, game_history: list) -> Bet:
         """Makes a conservative bet
 
         Parameters:
@@ -48,7 +60,7 @@ class ConservativeStrategy(Strategy):
         """
         color = Color.RED if self.last_color == Color.BLACK else Color.BLACK
         self.last_color = color
-        amount = max(1, int(player.balance * 0.1))
+        amount = max(1, int(player_balance * 0.1))
         return Bet(BetType.COLOR, color, amount)
 
 
@@ -58,7 +70,7 @@ class RiskStrategy(Strategy):
     This strategy selects random numbers (0-36) and bets 10% of balance.
     """
 
-    def make_bet(self, player: Player) -> Bet:
+    def make_bet(self, player_balance: int, game_history: list) -> Bet:
         """Makes a risky bet
 
         Parameters:
@@ -68,7 +80,7 @@ class RiskStrategy(Strategy):
             Bet: Number bet
         """
         number = randint(0, 36)
-        amount = max(1, int(player.balance * 0.1))
+        amount = max(1, int(player_balance * 0.1))
         return Bet(BetType.NUMBER, number, amount)
 
 
@@ -78,7 +90,7 @@ class MegaRiskStrategy(Strategy):
     This strategy always bets on number zero with 50% of current balance.
     """
 
-    def make_bet(self, player: Player) -> Bet:
+    def make_bet(self, player_balance: int, game_history: list) -> Bet:
         """Makes a very risky bet on number zero.
 
         Parameters:
@@ -87,7 +99,7 @@ class MegaRiskStrategy(Strategy):
         Returns:
             Bet: Number bet
         """
-        amount = max(1, int(player.balance * 0.5))
+        amount = max(1, int(player_balance * 0.5))
         return Bet(BetType.NUMBER, 0, amount)
 
 
@@ -104,12 +116,13 @@ class MathematicalStrategy(Strategy):
     """
 
     def __init__(self):
+        super().__init__()
         self.last_bet_amount = 1
         self.last_color = Color.RED
         self.consecutive_losses = 0
         self._previous_bet_amount = 1
 
-    def make_bet(self, player: Player) -> Bet:
+    def make_bet(self, player_balance: int, game_history: list) -> Bet:
         """Makes bet using Martingale
 
         Parameters:
@@ -118,12 +131,11 @@ class MathematicalStrategy(Strategy):
         Returns:
             Bet: Color bet
         """
-        self._previous_bet_amount = self.last_bet_amount
         self.last_color = Color.BLACK if self.last_color == Color.RED else Color.RED
 
         new_bet_amount = 1 * (2**self.consecutive_losses)
-        new_bet_amount = min(new_bet_amount, player.balance)
-        if new_bet_amount == 0 and player.balance > 0:
+        new_bet_amount = min(new_bet_amount, player_balance)
+        if new_bet_amount == 0 and player_balance > 0:
             new_bet_amount = 1
 
         self.last_bet_amount = new_bet_amount
@@ -135,11 +147,12 @@ class MathematicalStrategy(Strategy):
         Parameters:
             won (bool): True if last bet won, else False
         """
+        super().update_result(won)
         if won:
             self.consecutive_losses = 0
         else:
             self.consecutive_losses += 1
 
     @property
-    def previous_bet_amount(self):
-        return self._previous_bet_amount
+    def previous_bet_amount(self) -> int:
+        return self.last_bet_amount

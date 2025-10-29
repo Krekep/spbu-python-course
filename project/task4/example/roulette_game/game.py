@@ -44,57 +44,48 @@ class RouletteGame:
         self.current_round += 1
         print(f"\n=-=-=-=-=Round {self.current_round}=-=-=-=-=")
 
-        active_players_bets: Dict = {}
-        bankrupt_players: List = []
-
         for player in self.players:
-            if player.balance > 0:
-                player_bet = player.strategy.make_bet(player)
-                if player_bet.sum_bet > player.balance:
-                    player_bet.sum_bet = player.balance
-                player.balance -= player_bet.sum_bet
-                player.current_bets.append(player_bet)
-                active_players_bets[player] = player_bet
-                bet_value_str = (
-                    player_bet.bet_value.value
-                    if hasattr(player_bet.bet_value, "value")
-                    else str(player_bet.bet_value)
-                )
-                print(
-                    f"{player._name} puts {player_bet.sum_bet} on {player_bet.type_bet.value} {bet_value_str}"
-                )
-            else:
-                print(f"{player._name} dropped out")
-                bankrupt_players.append(player)
+            player.update_game_history(self.history)
 
-            if not active_players_bets:
+        active_bets: Dict = {}
+        for player in self.players:
+            if player.is_active:
+                bet = player.make_bet()
+                if bet:
+                    active_bets[player] = bet
+                    bet_value_str = (
+                        bet.bet_value.value
+                        if hasattr(bet.bet_value, "value")
+                        else str(bet.bet_value)
+                    )
+                    print(
+                        f"{player.name} puts {bet.sum_bet} on {bet.type_bet.value} {bet_value_str}"
+                    )
+            else:
+                print(f"{player.name} dropped out")
+
+            if not active_bets:
                 print("No active players remaining!")
                 return False
 
             winning_result = self.wheel.spin()
-        print(f"Came up: {winning_result['number']} ({winning_result['color'].value})")
+            print(
+                f"Came up: {winning_result['number']} ({winning_result['color'].value})"
+            )
 
-        for player, bet in active_players_bets.items():
+        for player, bet in active_bets.items():
             winnings = self._calculate_winnings(bet, winning_result)
-            player.balance += winnings
-            if winnings > 0:
-                print(f"{player._name} won {winnings}!")
-            player.current_bets = []
+            won = winnings > 0
+            player.process_result(won, winnings)
 
-            if hasattr(player.strategy, "update_result"):
-                player.strategy.update_result(winnings > 0)
-
-        all_bets_info: Dict = {**active_players_bets}
-        for player in bankrupt_players:
-            all_bets_info[player] = None
+            if won:
+                print(f"{player.name} won {winnings}!")
 
         round_info = {
             "round": self.current_round,
             "winning_number": winning_result["number"],
-            "bets": all_bets_info,
-            "player_balances": {
-                player._name: player.balance for player in self.players
-            },
+            "bets": {player.name: bet for player, bet in active_bets.items()},
+            "player_balances": {player.name: player.balance for player in self.players},
         }
         self.history.append(round_info)
 
@@ -151,8 +142,10 @@ class RouletteGame:
         """
         print(f"\n--- Game State after Round {self.current_round} ---")
         for player in self.players:
-            status = "BANKRUPT" if player.balance <= 0 else f"balance: {player.balance}"
-            print(f"  {player._name}: {status}")
+            status = (
+                "BANKRUPT" if not player.is_active else f"balance: {player.balance}"
+            )
+            print(f"  {player.name}: {status}")
 
     def is_game_over(self) -> bool:
         """Determines if the game should end
@@ -166,4 +159,9 @@ class RouletteGame:
         """
         if self.current_round >= self.max_rounds:
             return True
-        return all(player.balance <= 0 for player in self.players)
+
+        all_bankrupt = all(not player.is_active for player in self.players)
+        if all_bankrupt:
+            return True
+
+        return False

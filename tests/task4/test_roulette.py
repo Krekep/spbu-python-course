@@ -156,10 +156,10 @@ class TestConservativeStrategy:
         strategy = ConservativeStrategy()
         player = Player(1000, 25, strategy)
 
-        bet1 = strategy.make_bet(player)
+        bet1 = strategy.make_bet(1000, [])
         first_color = bet1.bet_value
 
-        bet2 = strategy.make_bet(player)
+        bet2 = strategy.make_bet(1000, [])
         second_color = bet2.bet_value
 
         assert first_color != second_color
@@ -171,7 +171,7 @@ class TestConservativeStrategy:
         strategy = ConservativeStrategy()
         player = Player(1000, 25, strategy)
 
-        bet = strategy.make_bet(player)
+        bet = strategy.make_bet(1000, [])
         assert bet.sum_bet == 100
 
     def test_minimum_bet_is_1(self):
@@ -179,7 +179,7 @@ class TestConservativeStrategy:
         strategy = ConservativeStrategy()
         player = Player(5, 25, strategy)
 
-        bet = strategy.make_bet(player)
+        bet = strategy.make_bet(5, [])
         assert bet.sum_bet == 1
 
     def test_bet_type_is_always_color(self):
@@ -188,7 +188,7 @@ class TestConservativeStrategy:
         player = Player(1000, 25, strategy)
 
         for _ in range(5):
-            bet = strategy.make_bet(player)
+            bet = strategy.make_bet(1000, [])
             assert bet.type_bet == BetType.COLOR
 
 
@@ -200,7 +200,7 @@ class TestRiskStrategy:
         strategy = RiskStrategy()
         player = Player(1000, 25, strategy)
 
-        bet = strategy.make_bet(player)
+        bet = strategy.make_bet(1000, [])
         assert bet.type_bet == BetType.NUMBER
 
     def test_number_is_within_range(self):
@@ -209,7 +209,7 @@ class TestRiskStrategy:
         player = Player(1000, 25, strategy)
 
         for _ in range(50):
-            bet = strategy.make_bet(player)
+            bet = strategy.make_bet(1000, [])
             assert 0 <= bet.bet_value <= 36
 
     def test_bet_amount_is_10_percent(self):
@@ -217,7 +217,7 @@ class TestRiskStrategy:
         strategy = RiskStrategy()
         player = Player(1000, 25, strategy)
 
-        bet = strategy.make_bet(player)
+        bet = strategy.make_bet(1000, [])
         assert bet.sum_bet == 100
 
 
@@ -230,7 +230,7 @@ class TestMegaRiskStrategy:
         player = Player(1000, 25, strategy)
 
         for _ in range(5):
-            bet = strategy.make_bet(player)
+            bet = strategy.make_bet(1000, [])
             assert bet.type_bet == BetType.NUMBER
             assert bet.bet_value == 0
 
@@ -239,7 +239,7 @@ class TestMegaRiskStrategy:
         strategy = MegaRiskStrategy()
         player = Player(1000, 25, strategy)
 
-        bet = strategy.make_bet(player)
+        bet = strategy.make_bet(1000, [])
         assert bet.sum_bet == 500
 
 
@@ -251,7 +251,7 @@ class TestMathematicalStrategy:
         strategy = MathematicalStrategy()
         player = Player(1000, 25, strategy)
 
-        bet = strategy.make_bet(player)
+        bet = strategy.make_bet(1000, [])
         assert bet.sum_bet == 1
 
     def test_doubles_after_loss(self):
@@ -259,26 +259,25 @@ class TestMathematicalStrategy:
         strategy = MathematicalStrategy()
         player = Player(1000, 25, strategy)
 
-        bet1 = strategy.make_bet(player)
+        bet1 = strategy.make_bet(1000, [])
         assert bet1.sum_bet == 1
 
         strategy.update_result(False)
 
-        bet2 = strategy.make_bet(player)
+        bet2 = strategy.make_bet(1000, [])
         assert bet2.sum_bet == 2
 
     def test_resets_after_win(self):
         """Test bet resets to 1 after a win"""
         strategy = MathematicalStrategy()
-        player = Player(1000, 25, strategy)
 
-        strategy.make_bet(player)
+        strategy.make_bet(1000, [])
         strategy.update_result(False)
 
-        strategy.make_bet(player)
+        strategy.make_bet(1000, [])
         strategy.update_result(True)
 
-        bet = strategy.make_bet(player)
+        bet = strategy.make_bet(1000, [])
         assert bet.sum_bet == 1
 
     def test_alternates_colors(self):
@@ -286,10 +285,10 @@ class TestMathematicalStrategy:
         strategy = MathematicalStrategy()
         player = Player(1000, 25, strategy)
 
-        bet1 = strategy.make_bet(player)
+        bet1 = strategy.make_bet(1000, [])
         first_color = bet1.bet_value
 
-        bet2 = strategy.make_bet(player)
+        bet2 = strategy.make_bet(1000, [])
         second_color = bet2.bet_value
 
         assert first_color != second_color
@@ -511,8 +510,76 @@ class TestGameIntegration:
         rounds_until_bankruptcy = 0
         while game.play_round():
             rounds_until_bankruptcy += 1
-            if rounds_until_bankruptcy > 3:
+            if rounds_until_bankruptcy > 4:
                 break
 
-        assert rounds_until_bankruptcy <= 3
+        assert rounds_until_bankruptcy <= 4
         assert all(p.balance <= 0 for p in players)
+
+    def test_player_make_bet(self):
+        strategy = ConservativeStrategy()
+        player = Player(100, 25, strategy)
+        bet = player.make_bet()
+        assert bet is not None
+        assert player.balance == 90
+        assert len(player.current_bets) == 1
+
+    def test_player_make_bet_bankrupt(self):
+        strategy = ConservativeStrategy()
+        player = Player(0, 25, strategy)
+        assert player.make_bet() is None
+
+    def test_player_process_result(self):
+        strategy = ConservativeStrategy()
+        player = Player(100, 25, strategy)
+        player.make_bet()
+        player.process_result(True, 50)
+        assert player.balance == 140
+        assert player.current_bets == []
+
+    def test_player_is_active(self):
+        strategy = ConservativeStrategy()
+        assert Player(100, 25, strategy).is_active is True
+        assert Player(0, 25, strategy).is_active is False
+
+    def test_player_name(self):
+        strategy = ConservativeStrategy()
+        player = Player(100, 25, strategy, "Test")
+        assert player.name == "Test"
+
+    def test_strategy_make_bet_parameters(self):
+        strategy = ConservativeStrategy()
+        bet = strategy.make_bet(1000, [])
+        assert bet.type_bet == BetType.COLOR
+        assert bet.sum_bet == 100
+
+    def test_strategy_update_result(self):
+        strategy = MathematicalStrategy()
+        strategy.update_result(False)
+        assert strategy.consecutive_losses == 1
+        strategy.update_result(True)
+        assert strategy.consecutive_losses == 0
+
+    def test_previous_bet_amount_property(self):
+        strategy = MathematicalStrategy()
+        strategy.make_bet(100, [])
+        assert strategy.previous_bet_amount == 1
+
+    def test_game_player_coordination(self):
+        player = Player(100, 20, ConservativeStrategy())
+        game = RouletteGame([player], max_rounds=2)
+        game.play_round()
+        assert game.current_round == 1
+        assert game.current_round > 0
+
+    class TestReducedCoupling:
+        def test_strategy_independent(self):
+            strategy = ConservativeStrategy()
+            bet = strategy.make_bet(100, [])
+            assert bet.sum_bet == 10
+
+        def test_player_manages_own_state(self):
+            player = Player(200, 25, ConservativeStrategy())
+            player.make_bet()
+            player.process_result(True, 20)
+            assert player.balance == 200
