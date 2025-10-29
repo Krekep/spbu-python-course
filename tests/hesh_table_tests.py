@@ -1,6 +1,6 @@
 import pytest
 from collections.abc import MutableMapping
-from project.hash_table import HashTable
+from hash_table import HashTable
 
 
 class TestHashTable:
