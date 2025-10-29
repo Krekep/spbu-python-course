@@ -19,10 +19,11 @@ class HashTable(MutableMapping):
             List representing the hash table.
         """
         hesh_table: List[Optional[List[Tuple[Any, Any]]]] = [None] * 1000
-        
-        for key, value in self.dict_data.items():
-            k = self.hesh_function(key)
-            exist_list = hesh_table[k]
+
+
+         for key, value in self.dict_data.items():
+             k = self.hesh_function(key)
+             exist_list = hesh_table[k]
             if exist_list is not None:
                 exist_list.append((key, value))
             else:
