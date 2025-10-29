@@ -12,7 +12,7 @@ class HashTable(MutableMapping):
         _load_factor : float (Load factor for automatic resizing)
         _buckets : List[List[Tuple[Any, Any]]] (List of buckets, each containing key-value pairs)
     """
-    
+
     def __init__(self, initial_size: int = 8, load_factor: float = 0.75) -> None:
         """
         Initializes the hash table with given parameters.
@@ -28,12 +28,12 @@ class HashTable(MutableMapping):
             raise ValueError("Initial size must be at least 1")
         if not 0 < load_factor <= 1:
             raise ValueError("Load factor must be between 0 and 1")
-        
+
         self._size = 0
         self._capacity = initial_size
         self._load_factor = load_factor
         self._buckets: List[List[Tuple[Any, Any]]] = [[] for _ in range(initial_size)]
-    
+
     def _hash(self, key: Any) -> int:
         """
         Calculates bucket index for the given key.
@@ -45,7 +45,7 @@ class HashTable(MutableMapping):
             int: Bucket index in range [0, capacity - 1]
         """
         return hash(key) % self._capacity
-    
+
     def _should_resize(self) -> bool:
         """
         Checks if table needs to be resized up.
@@ -54,7 +54,7 @@ class HashTable(MutableMapping):
             bool: True if current load factor exceeds threshold, False otherwise
         """
         return self._size / self._capacity > self._load_factor
-    
+
     def _should_shrink(self) -> bool:
         """
         Checks if table needs to be resized down.
@@ -62,10 +62,12 @@ class HashTable(MutableMapping):
         Returns:
             bool: True if table can be shrunk for memory optimization, False otherwise
         """
-        return (self._capacity > 8 and 
-                self._size > 0 and 
-                self._size / self._capacity < self._load_factor / 4)
-    
+        return (
+            self._capacity > 8
+            and self._size > 0
+            and self._size / self._capacity < self._load_factor / 4
+        )
+
     def _resize(self, new_capacity: int) -> None:
         """
         Resizes the hash table and redistributes all elements.
@@ -82,11 +84,11 @@ class HashTable(MutableMapping):
         self._buckets = [[] for _ in range(new_capacity)]
         self._capacity = new_capacity
         self._size = 0
-        
+
         for bucket in old_buckets:
             for key, value in bucket:
                 self._set_item_without_resize_check(key, value)
-    
+
     def _set_item_without_resize_check(self, key: Any, value: Any) -> None:
         """
         Internal method to set value without resize check.
@@ -100,15 +102,15 @@ class HashTable(MutableMapping):
         """
         index = self._hash(key)
         bucket = self._buckets[index]
-        
+
         for i, (k, v) in enumerate(bucket):
             if k == key:
                 bucket[i] = (key, value)
                 return
-        
+
         bucket.append((key, value))
         self._size += 1
-    
+
     def __setitem__(self, key: Any, value: Any) -> None:
         """
         Sets value for the given key.
@@ -124,21 +126,21 @@ class HashTable(MutableMapping):
         """
         index = self._hash(key)
         bucket = self._buckets[index]
-        
+
         key_exists = False
         for i, (k, v) in enumerate(bucket):
             if k == key:
                 bucket[i] = (key, value)
                 key_exists = True
                 break
-        
+
         if not key_exists:
             bucket.append((key, value))
             self._size += 1
-            
+
             if self._should_resize():
                 self._resize(self._capacity * 2)
-    
+
     def __getitem__(self, key: Any) -> Any:
         """
         Returns value for the given key.
@@ -154,13 +156,13 @@ class HashTable(MutableMapping):
         """
         index = self._hash(key)
         bucket = self._buckets[index]
-        
+
         for k, v in bucket:
             if k == key:
                 return v
-        
+
         raise KeyError(f"Key {key!r} not found")
-    
+
     def __delitem__(self, key: Any) -> None:
         """
         Removes key and associated value from the table.
@@ -177,18 +179,18 @@ class HashTable(MutableMapping):
         """
         index = self._hash(key)
         bucket = self._buckets[index]
-        
+
         for i, (k, v) in enumerate(bucket):
             if k == key:
                 del bucket[i]
                 self._size -= 1
-                
+
                 if self._should_shrink():
                     self._resize(max(8, self._capacity // 2))
                 return
-        
+
         raise KeyError(f"Key {key!r} not found")
-    
+
     def __contains__(self, key: Any) -> bool:
         """
         Checks if key exists in the table.
@@ -201,12 +203,12 @@ class HashTable(MutableMapping):
         """
         index = self._hash(key)
         bucket = self._buckets[index]
-        
+
         for k, v in bucket:
             if k == key:
                 return True
         return False
-    
+
     def __len__(self) -> int:
         """
         Returns number of elements in the table.
@@ -215,7 +217,7 @@ class HashTable(MutableMapping):
             int: Current number of elements
         """
         return self._size
-    
+
     def __iter__(self) -> Iterator[Any]:
         """
         Returns iterator over all keys in the table.
@@ -226,7 +228,7 @@ class HashTable(MutableMapping):
         for bucket in self._buckets:
             for key, value in bucket:
                 yield key
-    
+
     def keys(self) -> KeysView[Any]:
         """
         Returns view object for table keys.
@@ -235,7 +237,7 @@ class HashTable(MutableMapping):
             KeysView[Any]: View object supporting set operations
         """
         return _HashTableKeysView(self)
-    
+
     def values(self) -> ValuesView[Any]:
         """
         Returns view object for table values.
@@ -244,7 +246,7 @@ class HashTable(MutableMapping):
             ValuesView[Any]: View object for iterating over values
         """
         return _HashTableValuesView(self)
-    
+
     def items(self) -> ItemsView[Any, Any]:
         """
         Returns view object for key-value pairs.
@@ -253,7 +255,7 @@ class HashTable(MutableMapping):
             ItemsView[Any, Any]: View object for iterating over key-value pairs
         """
         return _HashTableItemsView(self)
-    
+
     def get(self, key: Any, default: Any = None) -> Any:
         """
         Returns value for key or default value if key not found.
@@ -269,7 +271,7 @@ class HashTable(MutableMapping):
             return self[key]
         except KeyError:
             return default
-    
+
     def clear(self) -> None:
         """
         Clears the table by removing all elements.
@@ -281,7 +283,7 @@ class HashTable(MutableMapping):
         """
         self._buckets = [[] for _ in range(self._capacity)]
         self._size = 0
-    
+
     def setdefault(self, key: Any, default: Any = None) -> Any:
         """
         Returns key value if key in table, else sets default.
@@ -298,7 +300,7 @@ class HashTable(MutableMapping):
         else:
             self[key] = default
             return default
-    
+
     def pop(self, key: Any, default: Any = None) -> Any:
         """
         Removes key and returns its value.
@@ -321,7 +323,7 @@ class HashTable(MutableMapping):
             return default
         else:
             raise KeyError(f"Key {key!r} not found")
-    
+
     def popitem(self) -> Tuple[Any, Any]:
         """
         Removes and returns arbitrary key-value pair.
@@ -334,15 +336,15 @@ class HashTable(MutableMapping):
         """
         if self._size == 0:
             raise KeyError("popitem(): hash table is empty")
-        
+
         for bucket in self._buckets:
             if bucket:
                 key, value = bucket.pop()
                 self._size -= 1
                 return key, value
-        
+
         raise KeyError("popitem(): hash table is empty")
-    
+
     def __str__(self) -> str:
         """
         Returns string representation of the table.
@@ -354,7 +356,7 @@ class HashTable(MutableMapping):
         for key, value in self.items():
             items.append(f"{key!r}: {value!r}")
         return "{" + ", ".join(items) + "}"
-    
+
     def __repr__(self) -> str:
         """
         Returns formal string representation of the object.
@@ -363,7 +365,7 @@ class HashTable(MutableMapping):
             str: String that can be used to recreate the object
         """
         return f"HashTable({str(self)})"
-    
+
     @property
     def load_factor(self) -> float:
         """
@@ -373,7 +375,7 @@ class HashTable(MutableMapping):
             float: Ratio of size to capacity
         """
         return self._size / self._capacity
-    
+
     @property
     def capacity(self) -> int:
         """
@@ -392,7 +394,7 @@ class _HashTableKeysView(KeysView):
     Attributes:
         _table : HashTable (Reference to parent hash table)
     """
-    
+
     def __init__(self, table: HashTable) -> None:
         """
         Initializes keys view object.
@@ -401,7 +403,7 @@ class _HashTableKeysView(KeysView):
             table : HashTable (Parent hash table)
         """
         self._table = table
-    
+
     def __iter__(self) -> Iterator[Any]:
         """
         Returns iterator over table keys.
@@ -410,7 +412,7 @@ class _HashTableKeysView(KeysView):
             Iterator[Any]: Iterator over all keys in the table
         """
         return iter(self._table)
-    
+
     def __len__(self) -> int:
         """
         Returns number of keys in view.
@@ -419,7 +421,7 @@ class _HashTableKeysView(KeysView):
             int: Number of keys in the table
         """
         return len(self._table)
-    
+
     def __contains__(self, key: Any) -> bool:
         """
         Checks if key exists in view.
@@ -440,7 +442,7 @@ class _HashTableValuesView(ValuesView):
     Attributes:
         _table : HashTable (Reference to parent hash table)
     """
-    
+
     def __init__(self, table: HashTable) -> None:
         """
         Initializes values view object.
@@ -449,7 +451,7 @@ class _HashTableValuesView(ValuesView):
             table : HashTable (Parent hash table)
         """
         self._table = table
-    
+
     def __iter__(self) -> Iterator[Any]:
         """
         Returns iterator over table values.
@@ -460,7 +462,7 @@ class _HashTableValuesView(ValuesView):
         for bucket in self._table._buckets:
             for key, value in bucket:
                 yield value
-    
+
     def __len__(self) -> int:
         """
         Returns number of values in view.
@@ -478,7 +480,7 @@ class _HashTableItemsView(ItemsView):
     Attributes:
         _table : HashTable (Reference to parent hash table)
     """
-    
+
     def __init__(self, table: HashTable) -> None:
         """
         Initializes items view object.
@@ -487,7 +489,7 @@ class _HashTableItemsView(ItemsView):
             table : HashTable (Parent hash table)
         """
         self._table = table
-    
+
     def __iter__(self) -> Iterator[Tuple[Any, Any]]:
         """
         Returns iterator over key-value pairs.
@@ -498,7 +500,7 @@ class _HashTableItemsView(ItemsView):
         for bucket in self._table._buckets:
             for key, value in bucket:
                 yield key, value
-    
+
     def __len__(self) -> int:
         """
         Returns number of pairs in view.
@@ -507,7 +509,7 @@ class _HashTableItemsView(ItemsView):
             int: Number of key-value pairs in the table
         """
         return len(self._table)
-    
+
     def __contains__(self, item: Any) -> bool:
         """
         Checks if key-value pair exists in view.

@@ -1,3 +1,3 @@
 from .main import HashTable
 
-__all__ = ['HashTable']
+__all__ = ["HashTable"]
