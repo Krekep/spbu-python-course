@@ -79,13 +79,27 @@ class TestHashTable:
         assert len(keys) == 3
 
     def test_collisions(self):
-        """Test handling hash collisions"""
-        ht = HashTable()
-        ht["key1"] = "value1"
-        ht["key2"] = "value2"
-
-        assert ht["key1"] == "value1"
-        assert ht["key2"] == "value2"
+        """Simple collision test"""
+        original_hash = HashTable.hesh_function
+    
+        def simple_hash(key):
+            return 5
+    
+        HashTable.hesh_function = staticmethod(simple_hash)
+    
+        try:
+            ht = HashTable()
+            ht["key1"] = "value1"
+            ht["key2"] = "value2"
+            ht["key3"] = "value3"
+           
+            assert ht["key1"] == "value1"
+            assert ht["key2"] == "value2" 
+            assert ht["key3"] == "value3"
+            assert len(ht) == 3
+        
+        finally:
+            HashTable.hesh_function = original_hash
 
     def test_delete_nonexistent(self):
         """Test deleting non-existent key"""
