@@ -1,5 +1,5 @@
 import pytest
-from algebra import scalar, normal, angle, trans, multiplication, summa
+from project.algebra import scalar, normal, angle, trans, multiplication, summa
 
 
 class TestAlgebra:
