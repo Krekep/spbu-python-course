@@ -80,7 +80,7 @@ class TestHashTable:
 
     def test_collisions(self):
         """Simple collision test"""
-        original_func = HashTable.hesh_function.__func__
+        original_func = HashTable.hesh_function
     
         def simple_hash(key):
             return 5
@@ -99,7 +99,7 @@ class TestHashTable:
             assert len(ht) == 3
         
         finally:
-            HashTable.hesh_function = staticmethod(original_func)
+            HashTable.hesh_function = original_func
 
     def test_delete_nonexistent(self):
         """Test deleting non-existent key"""
