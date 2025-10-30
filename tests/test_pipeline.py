@@ -55,13 +55,16 @@ class TestFuncSupport:
     def test_zip(self, small_dataset: Iterator[int]) -> None:
         result = pipeline(small_dataset, lambda x: zip(x, (y + 10 for y in x)))
         final = to_collect(result, flag="l")
-        assert final == [(0, 10), (1, 11), (2, 12), (3, 13), (4, 14)]
+        assert len(final) == 5
+        for i, (a, b) in enumerate(final):
+            assert a == i
+            assert b == i + 10
 
-    def test_reduce(self, numb_3: Iterator[int]) -> None:
-        data = list(numb_3)
-        result = randomiser(5)
+    def test_reduce(self) -> None:
+        random_data = randomiser(5)
         result = reduce(lambda x, y: x + y, random_data)
         assert isinstance(result, int)
+        assert 5 <= result <= 250
 
 
 class TestCustomSupport:
