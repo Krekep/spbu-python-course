@@ -35,7 +35,7 @@ class TestPipeline:
     def test_basic_flow(
         self, small_dataset: Iterator[int], my_operations: Dict[str, Any]
     ) -> None:
-        result = pipeline(small_dataset, my_operations["randomiser"])
+        result = pipeline(small_dataset, lambda x: my_operations["randomiser"](5))
         final = to_collect(result, flag="l")
         assert len(final) == 5
         assert all(1 <= x <= 50 for x in final)
@@ -52,15 +52,17 @@ class TestFuncSupport:
         final = to_collect(result, flag="l")
         assert final == [0, 2, 4]
 
-    def test_zip(self, small_dataset: Iterator[int]) -> None:
-        result = pipeline(small_dataset, lambda x: zip(x, (y + 10 for y in x)))
+    def test_zip(self) -> None:
+        data = [0, 1, 2, 3, 4]
+        result = pipeline(iter(data), lambda x: zip(x, (y + 10 for y in data)))
         final = to_collect(result, flag="l")
         assert final == [(0, 10), (1, 11), (2, 12), (3, 13), (4, 14)]
 
-    def test_reduce(self, numb_3: Iterator[int]) -> None:
-        data = pipeline(numb_3, randomiser)
-        result = reduce(lambda x, y: x + y, data)
+    def test_reduce(self) -> None:
+        random_data = randomiser(5)
+        result = reduce(lambda x, y: x + y, random_data)
         assert isinstance(result, int)
+        assert 5 <= result <= 250
 
 
 class TestCustomSupport:
