@@ -3,7 +3,7 @@ from random import randint
 
 from project.task4.example.roulette_game.bets import Bet
 from project.task4.example.roulette_game.enums import BetType, Color
-from project.task4.example.roulette_game.players import Player
+from project.task4.example.roulette_game.players import BetType, Color
 
 
 class Strategy(ABC):
