@@ -59,19 +59,17 @@ class TestHashTable:
         assert len(table) == 1
 
     def test_collisions(self):
-        """'
+        """
         Collision handling
 
         """
-        table = HashTable(2)
+        table = HashTable(4)
 
-        table["A"] = 1
-        table["B"] = 2
-        table["C"] = 3
+        table[1] = 1
+        table[5] = 2
 
-        assert table["A"] == 1
-        assert table["B"] == 2
-        assert table["C"] == 3
+        assert table[1] == 1
+        assert table[5] == 2
 
     def test_resize(self):
         """
