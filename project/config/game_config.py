@@ -1,0 +1,20 @@
+from sympy import symbols, tanh, real_root
+
+x, y, z = symbols('x y z')
+
+WORLD_WIDTH = 10
+WORLD_HEIGHT = 10
+
+WORLD_ALTITUDE_FORMULA = real_root(40*tanh(x) + 42*tanh(y), 3)
+WORLD_TEMPERATURE_FORMULA = -10*z
+WORLD_NUTRIENTS_FORMULA = abs(z)*20 + 200
+
+INITIAL_CELL_COUNT = 5
+
+MAX_HEAT_INITIAL = 20
+MAX_COLD_INITIAL = -20
+MAX_HEALTH_INITIAL = 100
+HUNGER_INITIAL = 10
+MUTATION_RATE_INITIAL = 0.5
+
+
